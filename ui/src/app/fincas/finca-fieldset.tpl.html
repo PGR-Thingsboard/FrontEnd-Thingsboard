@@ -1,0 +1,57 @@
+
+
+
+<md-button ng-click="onMakePublic({event: $event})"
+           ng-show="!isEdit && fincaScope === 'tenant' && !isAssignedToCustomer && !isPublic"
+           class="md-raised md-primary">{{ 'finca.make-public' | translate }}</md-button>
+<md-button ng-click="onAssignToCustomer({event: $event})"
+           ng-show="!isEdit && fincaScope === 'tenant' && !isAssignedToCustomer"
+           class="md-raised md-primary">{{ 'finca.assign-to-customer' | translate }}</md-button>
+<md-button ng-click="onUnassignFromCustomer({event: $event, isPublic: isPublic})"
+           ng-show="!isEdit && (fincaScope === 'customer' || fincaScope === 'tenant') && isAssignedToCustomer"
+           class="md-raised md-primary">{{ isPublic ? 'finca.make-private' : 'finca.unassign-from-customer' | translate }}</md-button>
+<md-button ng-click="onDeleteFinca({event: $event})"
+           ng-show="!isEdit && fincaScope === 'tenant'"
+           class="md-raised md-primary">{{ 'finca.delete' | translate }}</md-button>
+
+<div layout="row">
+    <md-button ngclipboard data-clipboard-action="copy"
+               ngclipboard-success="onFincaIdCopied(e)"
+               data-clipboard-text="{{finca.id.id}}" ng-show="!isEdit"
+               class="md-raised">
+        <md-icon md-svg-icon="mdi:clipboard-arrow-left"></md-icon>
+        <span translate>finca.copyId</span>
+    </md-button>
+</div>
+
+<md-content class="md-padding" layout="column">
+    <md-input-container class="md-block"
+                        ng-show="!isEdit && isAssignedToCustomer && !isPublic && fincaScope === 'tenant'">
+        <label translate>finca.assignedToCustomer</label>
+        <input ng-model="assignedCustomer.title" disabled>
+    </md-input-container>
+    <div class="tb-small" style="padding-bottom: 10px; padding-left: 2px;"
+         ng-show="!isEdit && isPublic && (fincaScope === 'customer' || fincaScope === 'tenant')">
+        {{ 'finca.finca-public' | translate }}
+    </div>
+    <fieldset ng-disabled="$root.loading || !isEdit">
+        <md-input-container class="md-block">
+            <label translate>finca.name</label>
+            <input required name="name" ng-model="finca.name">
+            <div ng-messages="theForm.name.$error">
+                <div translate ng-message="required">finca.name-required</div>
+            </div>
+        </md-input-container>
+        <tb-entity-subtype-autocomplete
+                ng-disabled="$root.loading || !isEdit"
+                tb-required="true"
+                the-form="theForm"
+                ng-model="finca.type"
+                entity-type="types.entityType.finca">
+        </tb-entity-subtype-autocomplete>
+        <md-input-container class="md-block">
+            <label translate>finca.description</label>
+            <textarea ng-model="finca.additionalInfo.description" rows="2"></textarea>
+        </md-input-container>
+    </fieldset>
+</md-content>

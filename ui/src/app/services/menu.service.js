@@ -195,6 +195,12 @@ function Menu(userService, $state, $rootScope) {
                             icon: 'domain'
                         },
                         {
+                            name: 'finca.fincas',
+                            type: 'link',
+                            state: 'home.fincas',
+                            icon: 'domain'
+                        },
+                        {
                             name: 'device.devices',
                             type: 'link',
                             state: 'home.devices',
