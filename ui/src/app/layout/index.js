@@ -45,6 +45,7 @@ import thingsboardAdmin from '../admin';
 import thingsboardProfile from '../profile';
 import thingsboardAsset from '../asset';
 import thingsboardFinca from '../fincas';
+import thingsboardCultivo from '../cultivo';
 import thingsboardDevice from '../device';
 import thingsboardWidgetLibrary from '../widget';
 import thingsboardDashboard from '../dashboard';
@@ -82,6 +83,7 @@ export default angular.module('thingsboard.home', [
     thingsboardDashboard,
     thingsboardPlugin,
     thingsboardFinca,
+    thingsboardCultivo,
     thingsboardRule,
     thingsboardJsonForm,
     thingsboardApiDevice,
