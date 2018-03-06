@@ -201,6 +201,12 @@ function Menu(userService, $state, $rootScope) {
                             icon: 'domain'
                         },
                         {
+                            name: 'cultivo.cultivos',
+                            type: 'link',
+                            state: 'home.cultivos',
+                            icon: 'domain'
+                        },
+                        {
                             name: 'device.devices',
                             type: 'link',
                             state: 'home.devices',
