@@ -246,6 +246,7 @@ public class BaseFincaService extends AbstractEntityService implements FincaServ
 
                 @Override
                 protected void validateDataImpl(Finca finca) {
+                    finca.setType("Finca");
                     if (StringUtils.isEmpty(finca.getType())) {
                         throw new DataValidationException("Finca type should be specified!");
                     }

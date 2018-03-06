@@ -51,6 +51,10 @@ public class EntityIdFactory {
                 return new DeviceId(uuid);
             case ASSET:
                 return new AssetId(uuid);
+            case FINCA:
+                return new FincaId(uuid);
+            case CULTIVO:
+                return new CultivoId(uuid);
             case ALARM:
                 return new AlarmId(uuid);
         }

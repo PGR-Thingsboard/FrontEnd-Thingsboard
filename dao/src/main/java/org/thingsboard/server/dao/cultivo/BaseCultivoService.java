@@ -246,6 +246,7 @@ public class BaseCultivoService extends AbstractEntityService implements Cultivo
 
                 @Override
                 protected void validateDataImpl(Cultivo cultivo) {
+                    cultivo.setType("Cultivo");
                     if (StringUtils.isEmpty(cultivo.getType())) {
                         throw new DataValidationException("Cultivo type should be specified!");
                     }

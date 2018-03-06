@@ -24,7 +24,7 @@
         </md-dialog-content>
         <md-dialog-actions layout="row">
             <span flex></span>
-            <md-button ng-disabled="$root.loading || theForm.$invalid || !theForm.$dirty" type="submit" class="md-raised md-primary">
+            <md-button type="submit" class="md-raised md-primary">
                 {{ 'action.add' | translate }}
             </md-button>
             <md-button ng-disabled="$root.loading" ng-click="vm.cancel()" style="margin-right:20px;">{{ 'action.cancel' | translate }}</md-button>

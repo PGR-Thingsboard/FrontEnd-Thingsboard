@@ -288,6 +288,8 @@ export default angular.module('thingsboard.types', [])
             entityType: {
                 device: "DEVICE",
                 asset: "ASSET",
+                finca: "FINCA",
+                cultivo: "CULTIVO",
                 rule: "RULE",
                 plugin: "PLUGIN",
                 tenant: "TENANT",
