@@ -57,6 +57,8 @@ import org.thingsboard.server.service.component.ComponentDiscoveryService;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.Optional;
+import org.thingsboard.server.dao.cultivo.CultivoService;
+import org.thingsboard.server.dao.finca.FincaService;
 
 @Component
 public class ActorSystemContext {
@@ -86,6 +88,12 @@ public class ActorSystemContext {
 
     @Autowired
     @Getter private AssetService assetService;
+    
+    @Autowired
+    @Getter private FincaService fincaService;
+    
+    @Autowired
+    @Getter private CultivoService cultivoService;
 
     @Autowired
     @Getter private TenantService tenantService;

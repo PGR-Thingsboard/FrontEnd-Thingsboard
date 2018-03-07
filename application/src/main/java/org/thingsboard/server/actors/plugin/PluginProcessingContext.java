@@ -54,6 +54,8 @@ import java.util.*;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 import java.util.stream.Collectors;
+import org.thingsboard.server.common.data.cultivo.Cultivo;
+import org.thingsboard.server.common.data.finca.Finca;
 
 @Slf4j
 public final class PluginProcessingContext implements PluginContext {
@@ -327,6 +329,12 @@ public final class PluginProcessingContext implements PluginContext {
                 case ASSET:
                     validateAsset(ctx, entityId, callback);
                     return;
+                case FINCA:
+                    validateFinca(ctx, entityId, callback);
+                    return;
+                case CULTIVO:
+                    validateCultivo(ctx, entityId, callback);
+                    return;
                 case RULE:
                     validateRule(ctx, entityId, callback);
                     return;
@@ -389,6 +397,49 @@ public final class PluginProcessingContext implements PluginContext {
             }));
         }
     }
+    
+    private void validateFinca(final PluginApiCallSecurityContext ctx, EntityId entityId, ValidationCallback callback) {
+        if (ctx.isSystemAdmin()) {
+            callback.onSuccess(this, ValidationResult.accessDenied(SYSTEM_ADMINISTRATOR_IS_NOT_ALLOWED_TO_PERFORM_THIS_OPERATION));
+        } else {
+            ListenableFuture<Finca> fincaFuture = pluginCtx.fincaService.findFincaByIdAsync(new FincaId(entityId.getId()));
+            Futures.addCallback(fincaFuture, getCallback(callback, finca -> {
+                if (finca == null) {
+                    return ValidationResult.entityNotFound("Finca with requested id wasn't found!");
+                } else {
+                    if (!finca.getTenantId().equals(ctx.getTenantId())) {
+                        return ValidationResult.accessDenied("Finca doesn't belong to the current Tenant!");
+                    } else if (ctx.isCustomerUser() && !finca.getCustomerId().equals(ctx.getCustomerId())) {
+                        return ValidationResult.accessDenied("Finca doesn't belong to the current Customer!");
+                    } else {
+                        return ValidationResult.ok();
+                    }
+                }
+            }));
+        }
+    }
+    
+    private void validateCultivo(final PluginApiCallSecurityContext ctx, EntityId entityId, ValidationCallback callback) {
+        if (ctx.isSystemAdmin()) {
+            callback.onSuccess(this, ValidationResult.accessDenied(SYSTEM_ADMINISTRATOR_IS_NOT_ALLOWED_TO_PERFORM_THIS_OPERATION));
+        } else {
+            ListenableFuture<Cultivo> cultivoFuture = pluginCtx.cultivoService.findCultivoByIdAsync(new CultivoId(entityId.getId()));
+            Futures.addCallback(cultivoFuture, getCallback(callback, cultivo -> {
+                if (cultivo == null) {
+                    return ValidationResult.entityNotFound("Cultivo with requested id wasn't found!");
+                } else {
+                    if (!cultivo.getTenantId().equals(ctx.getTenantId())) {
+                        return ValidationResult.accessDenied("Cultivo doesn't belong to the current Tenant!");
+                    } else if (ctx.isCustomerUser() && !cultivo.getCustomerId().equals(ctx.getCustomerId())) {
+                        return ValidationResult.accessDenied("Cultivo doesn't belong to the current Customer!");
+                    } else {
+                        return ValidationResult.ok();
+                    }
+                }
+            }));
+        }
+    }
+
 
     private void validateRule(final PluginApiCallSecurityContext ctx, EntityId entityId, ValidationCallback callback) {
         if (ctx.isCustomerUser()) {
