@@ -33,6 +33,7 @@ import org.thingsboard.server.common.data.page.TextPageLink;
 import org.thingsboard.server.common.data.security.Authority;
 import org.thingsboard.server.dao.exception.IncorrectParameterException;
 import org.thingsboard.server.dao.model.ModelConstants;
+import org.thingsboard.server.dao.model.nosql.FincaEntity;
 import org.thingsboard.server.exception.ThingsboardErrorCode;
 import org.thingsboard.server.exception.ThingsboardException;
 import org.thingsboard.server.service.security.model.SecurityUser;
@@ -320,6 +321,23 @@ public class FincaController extends BaseController {
             TenantId tenantId = user.getTenantId();
             ListenableFuture<List<EntitySubtype>> fincaTypes = fincaService.findFincaTypesByTenantId(tenantId);
             return checkNotNull(fincaTypes.get());
+        } catch (Exception e) {
+            throw handleException(e);
+        }
+    }
+    
+    @PreAuthorize("hasAnyAuthority('TENANT_ADMIN', 'CUSTOMER_USER')")
+    @RequestMapping(value = "/Allfincas", method = RequestMethod.GET)
+    @ResponseBody
+    public List<Finca> getAllFincas() throws ThingsboardException {
+        try {
+            List<FincaEntity> fincaTypes = fincaService.allFincas().get();
+            List<Finca> fincas = new ArrayList<>();
+            for(FincaEntity fe : fincaTypes){
+                System.out.println("Finca"+fe.toData().toString());
+                fincas.add(fe.toData());
+            }
+            return fincas;
         } catch (Exception e) {
             throw handleException(e);
         }

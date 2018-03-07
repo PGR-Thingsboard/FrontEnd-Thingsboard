@@ -344,6 +344,7 @@ export function FincaController($rootScope, userService, fincaService, customerS
         return vm.fincasScope === 'customer_user';
     }
 
+
     function assignToCustomer($event, fincaIds) {
         if ($event) {
             $event.stopPropagation();

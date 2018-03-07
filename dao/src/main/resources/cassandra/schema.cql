@@ -281,6 +281,12 @@ CREATE TABLE IF NOT EXISTS thingsboard.finca (
     PRIMARY KEY (id, tenant_id, customer_id, type)
 );
 
+CREATE MATERIALIZED VIEW IF NOT EXISTS thingsboard.all_fincas AS
+    SELECT *
+    from thingsboard.finca
+    WHERE tenant_id IS NOT NULL AND customer_id IS NOT NULL AND type IS NOT NULL AND name IS NOT NULL AND id IS NOT NULL
+    PRIMARY KEY (id, tenant_id, customer_id, type);
+
 CREATE MATERIALIZED VIEW IF NOT EXISTS thingsboard.finca_by_tenant_and_name AS
     SELECT *
     from thingsboard.finca
@@ -322,6 +328,7 @@ CREATE TABLE IF NOT EXISTS thingsboard.cultivo (
     customer_id timeuuid,
     name text,
     type text,
+    nameFinca text,
     search_text text,
     additional_info text,
     PRIMARY KEY (id, tenant_id, customer_id, type)

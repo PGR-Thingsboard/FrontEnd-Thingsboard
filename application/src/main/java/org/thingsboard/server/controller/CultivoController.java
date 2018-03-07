@@ -25,8 +25,10 @@ import org.thingsboard.server.common.data.EntityType;
 import org.thingsboard.server.common.data.audit.ActionType;
 import org.thingsboard.server.common.data.cultivo.Cultivo;
 import org.thingsboard.server.common.data.cultivo.CultivoSearchQuery;
+import org.thingsboard.server.common.data.finca.Finca;
 import org.thingsboard.server.common.data.id.CultivoId;
 import org.thingsboard.server.common.data.id.CustomerId;
+import org.thingsboard.server.common.data.id.FincaId;
 import org.thingsboard.server.common.data.id.TenantId;
 import org.thingsboard.server.common.data.page.TextPageData;
 import org.thingsboard.server.common.data.page.TextPageLink;
@@ -287,6 +289,7 @@ public class CultivoController extends BaseController{
             throw handleException(e);
         }
     }
+    
 
     @PreAuthorize("hasAnyAuthority('TENANT_ADMIN', 'CUSTOMER_USER')")
     @RequestMapping(value = "/cultivos", method = RequestMethod.POST)

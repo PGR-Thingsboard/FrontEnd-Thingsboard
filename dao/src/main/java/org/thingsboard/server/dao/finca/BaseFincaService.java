@@ -38,6 +38,7 @@ import org.thingsboard.server.dao.customer.CustomerDao;
 import org.thingsboard.server.dao.entity.AbstractEntityService;
 import org.thingsboard.server.dao.exception.DataValidationException;
 import static org.thingsboard.server.dao.model.ModelConstants.NULL_UUID;
+import org.thingsboard.server.dao.model.nosql.FincaEntity;
 import org.thingsboard.server.dao.service.DataValidator;
 import org.thingsboard.server.dao.service.PaginatedRemover;
 import static org.thingsboard.server.dao.service.Validator.validateId;
@@ -142,6 +143,11 @@ public class BaseFincaService extends AbstractEntityService implements FincaServ
         validateId(tenantId, INCORRECT_TENANT_ID + tenantId);
         validateIds(fincaIds, "Incorrect fincaIds " + fincaIds);
         return fincaDao.findFincasByTenantIdAndIdsAsync(tenantId.getId(), toUUIDs(fincaIds));
+    }
+    
+    @Override
+    public ListenableFuture<List<FincaEntity>> allFincas(){
+        return fincaDao.allFincas();
     }
 
     @Override

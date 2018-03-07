@@ -16,6 +16,7 @@ import org.thingsboard.server.common.data.id.FincaId;
 import org.thingsboard.server.common.data.id.TenantId;
 import org.thingsboard.server.common.data.page.TextPageData;
 import org.thingsboard.server.common.data.page.TextPageLink;
+import org.thingsboard.server.dao.model.nosql.FincaEntity;
 
 /**
  *
@@ -30,6 +31,8 @@ public interface FincaService {
     Optional<Finca> findFincaByTenantIdAndName(TenantId tenantId, String name);
 
     Finca saveFinca(Finca finca);
+    
+    ListenableFuture<List<FincaEntity>> allFincas();
 
     Finca assignFincaToCustomer(FincaId fincaId, CustomerId customerId);
 

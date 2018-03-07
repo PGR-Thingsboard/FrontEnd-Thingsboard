@@ -25,6 +25,7 @@ public class Cultivo extends SearchTextBasedWithAdditionalInfo<CultivoId> implem
     private CustomerId customerId;
     private String name;
     private String type;
+    private String nameFinca;
 
     public Cultivo() {
         super();
@@ -33,13 +34,14 @@ public class Cultivo extends SearchTextBasedWithAdditionalInfo<CultivoId> implem
     public Cultivo(CultivoId id) {
         super(id);
     }
-
-    public Cultivo(Cultivo cultivo) {
+    
+    public Cultivo(Cultivo cultivo){
         super(cultivo);
         this.tenantId = cultivo.getTenantId();
         this.customerId = cultivo.getCustomerId();
         this.name = cultivo.getName();
         this.type = cultivo.getType();
+        this.nameFinca=cultivo.getNameFinca();
     }
 
     public TenantId getTenantId() {
@@ -97,8 +99,24 @@ public class Cultivo extends SearchTextBasedWithAdditionalInfo<CultivoId> implem
         builder.append(createdTime);
         builder.append(", id=");
         builder.append(id);
+        builder.append(", nameFinca=");
+        builder.append(nameFinca);
         builder.append("]");
         return builder.toString();
+    }
+
+    /**
+     * @return the finca
+     */
+    public String getNameFinca() {
+        return nameFinca;
+    }
+
+    /**
+     * @param finca the finca to set
+     */
+    public void setNameFinca(String nameFinca) {
+        this.nameFinca = nameFinca;
     }
 
 }

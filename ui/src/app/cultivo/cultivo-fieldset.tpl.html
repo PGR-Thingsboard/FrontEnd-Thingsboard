@@ -42,6 +42,12 @@
             </div>
         </md-input-container>
 
+        <md-input-container style="margin-right: 10px;">
+            <label>Finca</label>
+            <md-select ng-model="size">
+                <md-option ng-repeat="finca in fincas" value="{{finca}}}">{{finca}}</md-option>
+            </md-select>
+        </md-input-container>
         <tb-entity-subtype-autocomplete
                 ng-disabled="$root.loading || !isEdit"
                 tb-required="true"

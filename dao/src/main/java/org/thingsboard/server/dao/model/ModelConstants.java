@@ -193,6 +193,7 @@ public class ModelConstants {
     public static final String FINCA_TYPE_PROPERTY = "type";
     public static final String FINCA_ADDITIONAL_INFO_PROPERTY = ADDITIONAL_INFO_PROPERTY;
 
+    public static final String ALL_FINCAS = "all_fincas";
     public static final String FINCA_BY_TENANT_AND_SEARCH_TEXT_COLUMN_FAMILY_NAME = "finca_by_tenant_and_search_text";
     public static final String FINCA_BY_TENANT_BY_TYPE_AND_SEARCH_TEXT_COLUMN_FAMILY_NAME = "finca_by_tenant_by_type_and_search_text";
     public static final String FINCA_BY_CUSTOMER_AND_SEARCH_TEXT_COLUMN_FAMILY_NAME = "finca_by_customer_and_search_text";
@@ -209,6 +210,7 @@ public class ModelConstants {
     public static final String CULTIVO_CUSTOMER_ID_PROPERTY = CUSTOMER_ID_PROPERTY;
     public static final String CULTIVO_NAME_PROPERTY = "name";
     public static final String CULTIVO_TYPE_PROPERTY = "type";
+    public static final String CULTIVO_FINCA_PROPERTY = "nameFinca";
     public static final String CULTIVO_ADDITIONAL_INFO_PROPERTY = ADDITIONAL_INFO_PROPERTY;
 
     public static final String CULTIVO_BY_TENANT_AND_SEARCH_TEXT_COLUMN_FAMILY_NAME = "cultivo_by_tenant_and_search_text";

@@ -21,6 +21,7 @@ import org.thingsboard.server.common.data.id.TenantId;
 import static org.thingsboard.server.dao.model.ModelConstants.CULTIVO_ADDITIONAL_INFO_PROPERTY;
 import static org.thingsboard.server.dao.model.ModelConstants.CULTIVO_COLUMN_FAMILY_NAME;
 import static org.thingsboard.server.dao.model.ModelConstants.CULTIVO_CUSTOMER_ID_PROPERTY;
+import static org.thingsboard.server.dao.model.ModelConstants.CULTIVO_FINCA_PROPERTY;
 import static org.thingsboard.server.dao.model.ModelConstants.CULTIVO_NAME_PROPERTY;
 import static org.thingsboard.server.dao.model.ModelConstants.CULTIVO_TENANT_ID_PROPERTY;
 import static org.thingsboard.server.dao.model.ModelConstants.CULTIVO_TYPE_PROPERTY;
@@ -37,6 +38,20 @@ import org.thingsboard.server.dao.model.type.JsonCodec;
 @EqualsAndHashCode
 @ToString
 public final class CultivoEntity implements SearchTextEntity<Cultivo> {
+
+    /**
+     * @return the nameFina
+     */
+    public String getNameFinca() {
+        return nameFinca;
+    }
+
+    /**
+     * @param nameFina the nameFina to set
+     */
+    public void setNameFinca(String nameFinca) {
+        this.nameFinca = nameFinca;
+    }
 
     @PartitionKey(value = 0)
     @Column(name = ID_PROPERTY)
@@ -56,6 +71,9 @@ public final class CultivoEntity implements SearchTextEntity<Cultivo> {
 
     @Column(name = CULTIVO_NAME_PROPERTY)
     private String name;
+    
+    @Column(name = CULTIVO_FINCA_PROPERTY)
+    private String nameFinca;
 
     @Column(name = SEARCH_TEXT_PROPERTY)
     private String searchText;
@@ -79,6 +97,7 @@ public final class CultivoEntity implements SearchTextEntity<Cultivo> {
         }
         this.name = cultivo.getName();
         this.type = cultivo.getType();
+        this.nameFinca = cultivo.getNameFinca();
         this.additionalInfo = cultivo.getAdditionalInfo();
     }
 
@@ -155,7 +174,8 @@ public final class CultivoEntity implements SearchTextEntity<Cultivo> {
             cultivo.setCustomerId(new CustomerId(customerId));
         }
         cultivo.setName(name);
-        cultivo.setType(type);
+        cultivo.setType(getType());
+        cultivo.setNameFinca(nameFinca);
         cultivo.setAdditionalInfo(additionalInfo);
         return cultivo;
     }

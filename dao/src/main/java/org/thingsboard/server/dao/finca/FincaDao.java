@@ -13,6 +13,7 @@ import org.thingsboard.server.common.data.EntitySubtype;
 import org.thingsboard.server.common.data.finca.Finca;
 import org.thingsboard.server.common.data.page.TextPageLink;
 import org.thingsboard.server.dao.Dao;
+import org.thingsboard.server.dao.model.nosql.FincaEntity;
 
 /**
  *
@@ -27,6 +28,11 @@ public interface FincaDao extends Dao<Finca> {
      * @return saved finca object
      */
     Finca save(Finca finca);
+    
+    /**
+     * Return all fincas
+     */
+    ListenableFuture<List<FincaEntity>> allFincas();
 
     /**
      * Find fincas by tenantId and page link.

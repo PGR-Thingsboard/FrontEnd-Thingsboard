@@ -31,6 +31,7 @@ import org.thingsboard.server.common.data.finca.Finca;
 import org.thingsboard.server.common.data.page.TextPageLink;
 import org.thingsboard.server.dao.DaoUtil;
 import org.thingsboard.server.dao.model.EntitySubtypeEntity;
+import static org.thingsboard.server.dao.model.ModelConstants.ALL_FINCAS;
 import static org.thingsboard.server.dao.model.ModelConstants.ENTITY_SUBTYPE_COLUMN_FAMILY_NAME;
 import static org.thingsboard.server.dao.model.ModelConstants.ENTITY_SUBTYPE_ENTITY_TYPE_PROPERTY;
 import static org.thingsboard.server.dao.model.ModelConstants.ENTITY_SUBTYPE_TENANT_ID_PROPERTY;
@@ -77,6 +78,7 @@ public class CassandraFincaDao extends CassandraAbstractSearchTextDao<FincaEntit
         executeWrite(saveStatement);
         return savedFinca;
     }
+    
 
     @Override
     public List<Finca> findFincasByTenantId(UUID tenantId, TextPageLink pageLink) {
@@ -178,6 +180,32 @@ public class CassandraFincaDao extends CassandraAbstractSearchTextDao<FincaEntit
             }
         });
     }
+
+    @Override
+    public ListenableFuture<List<FincaEntity>> allFincas() {
+        Select select = select().from(ALL_FINCAS);
+        Select.Where query = select.where();
+        ResultSetFuture resultSetFuture = getSession().executeAsync(query);
+        return Futures.transform(resultSetFuture, new Function<ResultSet, List<FincaEntity>>() {
+            @Nullable
+            @Override
+            public List<FincaEntity> apply(@Nullable ResultSet resultSet) {
+                System.out.println("Result set Finca"+resultSet.toString());
+                Result<FincaEntity> result = cluster.getMapper(FincaEntity.class).map(resultSet);
+                if (result != null) {
+                    List<FincaEntity> fincas = new ArrayList<>();
+                    result.all().forEach((finca) ->
+                            fincas.add(finca)
+                    );
+                    return fincas;
+                } else {
+                    return Collections.emptyList();
+                }
+            }
+        });
+    }
+
+    
 
 }
 
