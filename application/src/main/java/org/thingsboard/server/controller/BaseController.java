@@ -308,6 +308,12 @@ public abstract class BaseController {
                 case ASSET:
                     checkAsset(assetService.findAssetById(new AssetId(entityId.getId())));
                     return;
+                case FINCA:
+                    checkFinca(fincaService.findFincaById(new FincaId(entityId.getId())));
+                    return;
+                case CULTIVO:
+                    checkCultivo(cultivoService.findCultivoById(new CultivoId(entityId.getId())));
+                    return;
                 case DASHBOARD:
                     checkDashboardId(new DashboardId(entityId.getId()));
                     return;
