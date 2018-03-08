@@ -44,8 +44,8 @@
 
         <md-input-container style="margin-right: 10px;">
             <label>Finca</label>
-            <md-select ng-model="size">
-                <md-option ng-repeat="finca in fincas" value="{{finca}}}">{{finca}}</md-option>
+            <md-select ng-model="cultivo.nameFinca">
+                <md-option ng-repeat="finca in fincas" value="{{finca.name}}">{{finca.name}}</md-option>
             </md-select>
         </md-input-container>
         <tb-entity-subtype-autocomplete

@@ -6,7 +6,7 @@ import cultivoFieldsetTemplate from './cultivo-fieldset.tpl.html';
 /* eslint-enable import/no-unresolved, import/default */
 
 /*@ngInject*/
-export default function CultivoDirective($compile, $templateCache, toast, $translate, types, cultivoService, fincaService, customerService) {
+export default function CultivoDirective($compile, $templateCache, toast, $translate, types, cultivoService, fincaService, customerService, $log) {
     var linker = function (scope, element) {
         var template = $templateCache.get(cultivoFieldsetTemplate);
         element.html(template);
@@ -15,7 +15,10 @@ export default function CultivoDirective($compile, $templateCache, toast, $trans
         scope.isAssignedToCustomer = false;
         scope.isPublic = false;
         scope.assignedCustomer = null;
-        scope.fincas = ["Finca 1","Finca 2","Finca 3"];
+        fincaService.getAllFincas().then(function(result){
+            $log.log(result[0].name);
+            scope.fincas=result
+        });
 
         scope.$watch('cultivo', function(newVal) {
             if (newVal) {

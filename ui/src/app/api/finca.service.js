@@ -10,7 +10,7 @@ function FincaService($http, $q, customerService, userService, $log) {
     var service = {
         getFinca: getFinca,
         getFincas: getFincas,
-        getAllFincas : getAllFincas(),
+        getAllFincas : getAllFincas,
         saveFinca: saveFinca,
         deleteFinca: deleteFinca,
         assignFincaToCustomer: assignFincaToCustomer,
@@ -71,12 +71,12 @@ function FincaService($http, $q, customerService, userService, $log) {
         var fincas;
         var url = '/api/Allfincas';
         $http.get(url,config).then(function success(response) {
-            fincas = response.data;
-            $log.log(fincas)
+            fincas=response.data;
             deferred.resolve(fincas);
         }, function fail() {
             deferred.reject();
         });
+        $log.log(deferred.promise);
         return deferred.promise;
     }
 

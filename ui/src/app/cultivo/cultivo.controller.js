@@ -32,7 +32,7 @@ export function CultivoCardController(types) {
 
 /*@ngInject*/
 export function CultivoController($rootScope, userService, cultivoService, customerService, $state, $stateParams,
-                                $document, $mdDialog, $q, $translate, types) {
+                                $document, $mdDialog, $q, $translate, types, $log) {
 
     var customerId = $stateParams.customerId;
 
@@ -315,6 +315,8 @@ export function CultivoController($rootScope, userService, cultivoService, custo
     }
 
     function saveCultivo(cultivo) {
+        $log.log("TTTTTTTTTTTTTTTTTTTTTTTTT");
+        $log.log(cultivo)
         var deferred = $q.defer();
         cultivoService.saveCultivo(cultivo).then(
             function success(savedCultivo) {

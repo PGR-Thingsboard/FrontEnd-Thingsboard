@@ -5,7 +5,7 @@ export default angular.module('thingsboard.api.cultivo', [])
     .name;
 
 /*@ngInject*/
-function CultivoService($http, $q, customerService, userService) {
+function CultivoService($http, $q, customerService, userService, $log) {
 
     var service = {
         getCultivo: getCultivo,
@@ -66,6 +66,7 @@ function CultivoService($http, $q, customerService, userService) {
     }
 
     function saveCultivo(cultivo, ignoreErrors, config) {
+        $log.log(cultivo);
         var deferred = $q.defer();
         var url = '/api/cultivo';
         if (!config) {
