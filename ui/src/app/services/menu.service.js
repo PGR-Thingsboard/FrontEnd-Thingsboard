@@ -195,15 +195,15 @@ function Menu(userService, $state, $rootScope) {
                             icon: 'domain'
                         },
                         {
-                            name: 'finca.fincas',
+                            name: 'farm.farms',
                             type: 'link',
-                            state: 'home.fincas',
+                            state: 'home.farms',
                             icon: 'domain'
                         },
                         {
-                            name: 'cultivo.cultivos',
+                            name: 'crop.crops',
                             type: 'link',
-                            state: 'home.cultivos',
+                            state: 'home.crops',
                             icon: 'domain'
                         },
                         {

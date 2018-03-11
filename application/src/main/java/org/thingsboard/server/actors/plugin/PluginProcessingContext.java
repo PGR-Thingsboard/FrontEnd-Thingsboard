@@ -54,8 +54,8 @@ import java.util.*;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 import java.util.stream.Collectors;
-import org.thingsboard.server.common.data.cultivo.Cultivo;
-import org.thingsboard.server.common.data.finca.Finca;
+import org.thingsboard.server.common.data.crop.Crop;
+import org.thingsboard.server.common.data.farm.Farm;
 
 @Slf4j
 public final class PluginProcessingContext implements PluginContext {
@@ -329,11 +329,11 @@ public final class PluginProcessingContext implements PluginContext {
                 case ASSET:
                     validateAsset(ctx, entityId, callback);
                     return;
-                case FINCA:
-                    validateFinca(ctx, entityId, callback);
+                case FARM:
+                    validateFarm(ctx, entityId, callback);
                     return;
-                case CULTIVO:
-                    validateCultivo(ctx, entityId, callback);
+                case CROP:
+                    validateCrop(ctx, entityId, callback);
                     return;
                 case RULE:
                     validateRule(ctx, entityId, callback);
@@ -398,19 +398,19 @@ public final class PluginProcessingContext implements PluginContext {
         }
     }
     
-    private void validateFinca(final PluginApiCallSecurityContext ctx, EntityId entityId, ValidationCallback callback) {
+    private void validateFarm(final PluginApiCallSecurityContext ctx, EntityId entityId, ValidationCallback callback) {
         if (ctx.isSystemAdmin()) {
             callback.onSuccess(this, ValidationResult.accessDenied(SYSTEM_ADMINISTRATOR_IS_NOT_ALLOWED_TO_PERFORM_THIS_OPERATION));
         } else {
-            ListenableFuture<Finca> fincaFuture = pluginCtx.fincaService.findFincaByIdAsync(new FincaId(entityId.getId()));
-            Futures.addCallback(fincaFuture, getCallback(callback, finca -> {
-                if (finca == null) {
-                    return ValidationResult.entityNotFound("Finca with requested id wasn't found!");
+            ListenableFuture<Farm> farmFuture = pluginCtx.farmService.findFarmByIdAsync(new FarmId(entityId.getId()));
+            Futures.addCallback(farmFuture, getCallback(callback, farm -> {
+                if (farm == null) {
+                    return ValidationResult.entityNotFound("Farm with requested id wasn't found!");
                 } else {
-                    if (!finca.getTenantId().equals(ctx.getTenantId())) {
-                        return ValidationResult.accessDenied("Finca doesn't belong to the current Tenant!");
-                    } else if (ctx.isCustomerUser() && !finca.getCustomerId().equals(ctx.getCustomerId())) {
-                        return ValidationResult.accessDenied("Finca doesn't belong to the current Customer!");
+                    if (!farm.getTenantId().equals(ctx.getTenantId())) {
+                        return ValidationResult.accessDenied("Farm doesn't belong to the current Tenant!");
+                    } else if (ctx.isCustomerUser() && !farm.getCustomerId().equals(ctx.getCustomerId())) {
+                        return ValidationResult.accessDenied("Farm doesn't belong to the current Customer!");
                     } else {
                         return ValidationResult.ok();
                     }
@@ -419,19 +419,19 @@ public final class PluginProcessingContext implements PluginContext {
         }
     }
     
-    private void validateCultivo(final PluginApiCallSecurityContext ctx, EntityId entityId, ValidationCallback callback) {
+    private void validateCrop(final PluginApiCallSecurityContext ctx, EntityId entityId, ValidationCallback callback) {
         if (ctx.isSystemAdmin()) {
             callback.onSuccess(this, ValidationResult.accessDenied(SYSTEM_ADMINISTRATOR_IS_NOT_ALLOWED_TO_PERFORM_THIS_OPERATION));
         } else {
-            ListenableFuture<Cultivo> cultivoFuture = pluginCtx.cultivoService.findCultivoByIdAsync(new CultivoId(entityId.getId()));
-            Futures.addCallback(cultivoFuture, getCallback(callback, cultivo -> {
-                if (cultivo == null) {
-                    return ValidationResult.entityNotFound("Cultivo with requested id wasn't found!");
+            ListenableFuture<Crop> cropFuture = pluginCtx.cropService.findCropByIdAsync(new CropId(entityId.getId()));
+            Futures.addCallback(cropFuture, getCallback(callback, crop -> {
+                if (crop == null) {
+                    return ValidationResult.entityNotFound("Crop with requested id wasn't found!");
                 } else {
-                    if (!cultivo.getTenantId().equals(ctx.getTenantId())) {
-                        return ValidationResult.accessDenied("Cultivo doesn't belong to the current Tenant!");
-                    } else if (ctx.isCustomerUser() && !cultivo.getCustomerId().equals(ctx.getCustomerId())) {
-                        return ValidationResult.accessDenied("Cultivo doesn't belong to the current Customer!");
+                    if (!crop.getTenantId().equals(ctx.getTenantId())) {
+                        return ValidationResult.accessDenied("Crop doesn't belong to the current Tenant!");
+                    } else if (ctx.isCustomerUser() && !crop.getCustomerId().equals(ctx.getCustomerId())) {
+                        return ValidationResult.accessDenied("Crop doesn't belong to the current Customer!");
                     } else {
                         return ValidationResult.ok();
                     }

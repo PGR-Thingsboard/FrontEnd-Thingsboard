@@ -184,41 +184,41 @@ public class ModelConstants {
     public static final String ASSET_TYPES_BY_TENANT_VIEW_NAME = "asset_types_by_tenant";
     
     /**
-     * Cassandra finca constants.
+     * Cassandra farm constants.
      */
-    public static final String FINCA_COLUMN_FAMILY_NAME = "finca";
-    public static final String FINCA_TENANT_ID_PROPERTY = TENANT_ID_PROPERTY;
-    public static final String FINCA_CUSTOMER_ID_PROPERTY = CUSTOMER_ID_PROPERTY;
-    public static final String FINCA_NAME_PROPERTY = "name";
-    public static final String FINCA_TYPE_PROPERTY = "type";
-    public static final String FINCA_ADDITIONAL_INFO_PROPERTY = ADDITIONAL_INFO_PROPERTY;
+    public static final String FARM_COLUMN_FAMILY_NAME = "farm";
+    public static final String FARM_TENANT_ID_PROPERTY = TENANT_ID_PROPERTY;
+    public static final String FARM_CUSTOMER_ID_PROPERTY = CUSTOMER_ID_PROPERTY;
+    public static final String FARM_NAME_PROPERTY = "name";
+    public static final String FARM_TYPE_PROPERTY = "type";
+    public static final String FARM_ADDITIONAL_INFO_PROPERTY = ADDITIONAL_INFO_PROPERTY;
 
-    public static final String ALL_FINCAS = "all_fincas";
-    public static final String FINCA_BY_TENANT_AND_SEARCH_TEXT_COLUMN_FAMILY_NAME = "finca_by_tenant_and_search_text";
-    public static final String FINCA_BY_TENANT_BY_TYPE_AND_SEARCH_TEXT_COLUMN_FAMILY_NAME = "finca_by_tenant_by_type_and_search_text";
-    public static final String FINCA_BY_CUSTOMER_AND_SEARCH_TEXT_COLUMN_FAMILY_NAME = "finca_by_customer_and_search_text";
-    public static final String FINCA_BY_CUSTOMER_BY_TYPE_AND_SEARCH_TEXT_COLUMN_FAMILY_NAME = "finca_by_customer_by_type_and_search_text";
-    public static final String FINCA_BY_TENANT_AND_NAME_VIEW_NAME = "finca_by_tenant_and_name";
-    public static final String FINCA_TYPES_BY_TENANT_VIEW_NAME = "finca_types_by_tenant";
+    public static final String ALL_FARMS = "all_farms";
+    public static final String FARM_BY_TENANT_AND_SEARCH_TEXT_COLUMN_FAMILY_NAME = "farm_by_tenant_and_search_text";
+    public static final String FARM_BY_TENANT_BY_TYPE_AND_SEARCH_TEXT_COLUMN_FAMILY_NAME = "farm_by_tenant_by_type_and_search_text";
+    public static final String FARM_BY_CUSTOMER_AND_SEARCH_TEXT_COLUMN_FAMILY_NAME = "farm_by_customer_and_search_text";
+    public static final String FARM_BY_CUSTOMER_BY_TYPE_AND_SEARCH_TEXT_COLUMN_FAMILY_NAME = "farm_by_customer_by_type_and_search_text";
+    public static final String FARM_BY_TENANT_AND_NAME_VIEW_NAME = "farm_by_tenant_and_name";
+    public static final String FARM_TYPES_BY_TENANT_VIEW_NAME = "farm_types_by_tenant";
     
     
      /**
-     * Cassandra cultivo constants.
+     * Cassandra crop constants.
      */
-    public static final String CULTIVO_COLUMN_FAMILY_NAME = "cultivo";
-    public static final String CULTIVO_TENANT_ID_PROPERTY = TENANT_ID_PROPERTY;
-    public static final String CULTIVO_CUSTOMER_ID_PROPERTY = CUSTOMER_ID_PROPERTY;
-    public static final String CULTIVO_NAME_PROPERTY = "name";
-    public static final String CULTIVO_TYPE_PROPERTY = "type";
-    public static final String CULTIVO_FINCA_PROPERTY = "nameFinca";
-    public static final String CULTIVO_ADDITIONAL_INFO_PROPERTY = ADDITIONAL_INFO_PROPERTY;
+    public static final String CROP_COLUMN_FAMILY_NAME = "crop";
+    public static final String CROP_TENANT_ID_PROPERTY = TENANT_ID_PROPERTY;
+    public static final String CROP_CUSTOMER_ID_PROPERTY = CUSTOMER_ID_PROPERTY;
+    public static final String CROP_NAME_PROPERTY = "name";
+    public static final String CROP_TYPE_PROPERTY = "type";
+    public static final String CROP_FARM_PROPERTY = "nameFarm";
+    public static final String CROP_ADDITIONAL_INFO_PROPERTY = ADDITIONAL_INFO_PROPERTY;
 
-    public static final String CULTIVO_BY_TENANT_AND_SEARCH_TEXT_COLUMN_FAMILY_NAME = "cultivo_by_tenant_and_search_text";
-    public static final String CULTIVO_BY_TENANT_BY_TYPE_AND_SEARCH_TEXT_COLUMN_FAMILY_NAME = "cultivo_by_tenant_by_type_and_search_text";
-    public static final String CULTIVO_BY_CUSTOMER_AND_SEARCH_TEXT_COLUMN_FAMILY_NAME = "cultivo_by_customer_and_search_text";
-    public static final String CULTIVO_BY_CUSTOMER_BY_TYPE_AND_SEARCH_TEXT_COLUMN_FAMILY_NAME = "cultivo_by_customer_by_type_and_search_text";
-    public static final String CULTIVO_BY_TENANT_AND_NAME_VIEW_NAME = "cultivo_by_tenant_and_name";
-    public static final String CULTIVO_TYPES_BY_TENANT_VIEW_NAME = "cultivo_types_by_tenant";
+    public static final String CROP_BY_TENANT_AND_SEARCH_TEXT_COLUMN_FAMILY_NAME = "crop_by_tenant_and_search_text";
+    public static final String CROP_BY_TENANT_BY_TYPE_AND_SEARCH_TEXT_COLUMN_FAMILY_NAME = "crop_by_tenant_by_type_and_search_text";
+    public static final String CROP_BY_CUSTOMER_AND_SEARCH_TEXT_COLUMN_FAMILY_NAME = "crop_by_customer_and_search_text";
+    public static final String CROP_BY_CUSTOMER_BY_TYPE_AND_SEARCH_TEXT_COLUMN_FAMILY_NAME = "crop_by_customer_by_type_and_search_text";
+    public static final String CROP_BY_TENANT_AND_NAME_VIEW_NAME = "crop_by_tenant_and_name";
+    public static final String CROP_TYPES_BY_TENANT_VIEW_NAME = "crop_types_by_tenant";
 
 
     /**

@@ -44,8 +44,8 @@ import thingsboardHomeLinks from '../home';
 import thingsboardAdmin from '../admin';
 import thingsboardProfile from '../profile';
 import thingsboardAsset from '../asset';
-import thingsboardFinca from '../fincas';
-import thingsboardCultivo from '../cultivo';
+import thingsboardFarm from '../farms';
+import thingsboardCrop from '../crop';
 import thingsboardDevice from '../device';
 import thingsboardWidgetLibrary from '../widget';
 import thingsboardDashboard from '../dashboard';
@@ -82,8 +82,8 @@ export default angular.module('thingsboard.home', [
     thingsboardWidgetLibrary,
     thingsboardDashboard,
     thingsboardPlugin,
-    thingsboardFinca,
-    thingsboardCultivo,
+    thingsboardFarm,
+    thingsboardCrop,
     thingsboardRule,
     thingsboardJsonForm,
     thingsboardApiDevice,

@@ -70,10 +70,10 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-import org.thingsboard.server.common.data.cultivo.Cultivo;
-import org.thingsboard.server.common.data.finca.Finca;
-import org.thingsboard.server.dao.cultivo.CultivoService;
-import org.thingsboard.server.dao.finca.FincaService;
+import org.thingsboard.server.common.data.crop.Crop;
+import org.thingsboard.server.common.data.farm.Farm;
+import org.thingsboard.server.dao.crop.CropService;
+import org.thingsboard.server.dao.farm.FarmService;
 
 import static org.thingsboard.server.dao.service.Validator.validateId;
 
@@ -99,10 +99,10 @@ public abstract class BaseController {
     protected AssetService assetService;
     
     @Autowired
-    protected FincaService fincaService;
+    protected FarmService farmService;
     
     @Autowired
-    protected CultivoService cultivoService;
+    protected CropService cropService;
 
     @Autowired
     protected AlarmService alarmService;
@@ -308,11 +308,11 @@ public abstract class BaseController {
                 case ASSET:
                     checkAsset(assetService.findAssetById(new AssetId(entityId.getId())));
                     return;
-                case FINCA:
-                    checkFinca(fincaService.findFincaById(new FincaId(entityId.getId())));
+                case FARM:
+                    checkFarm(farmService.findFarmById(new FarmId(entityId.getId())));
                     return;
-                case CULTIVO:
-                    checkCultivo(cultivoService.findCultivoById(new CultivoId(entityId.getId())));
+                case CROP:
+                    checkCrop(cropService.findCropById(new CropId(entityId.getId())));
                     return;
                 case DASHBOARD:
                     checkDashboardId(new DashboardId(entityId.getId()));
@@ -366,41 +366,41 @@ public abstract class BaseController {
         }
     }
     
-    Finca checkFincaId(FincaId fincaId) throws ThingsboardException {
+    Farm checkFarmId(FarmId farmId) throws ThingsboardException {
         try {
-            validateId(fincaId, "Incorrect fincaId " + fincaId);
-            Finca finca = fincaService.findFincaById(fincaId);
-            checkFinca(finca);
-            return finca;
+            validateId(farmId, "Incorrect farmId " + farmId);
+            Farm farm = farmService.findFarmById(farmId);
+            checkFarm(farm);
+            return farm;
         } catch (Exception e) {
             throw handleException(e, false);
         }
     }
 
-    protected void checkFinca(Finca finca) throws ThingsboardException {
-        checkNotNull(finca);
-        checkTenantId(finca.getTenantId());
-        if (finca.getCustomerId() != null && !finca.getCustomerId().getId().equals(ModelConstants.NULL_UUID)) {
-            checkCustomerId(finca.getCustomerId());
+    protected void checkFarm(Farm farm) throws ThingsboardException {
+        checkNotNull(farm);
+        checkTenantId(farm.getTenantId());
+        if (farm.getCustomerId() != null && !farm.getCustomerId().getId().equals(ModelConstants.NULL_UUID)) {
+            checkCustomerId(farm.getCustomerId());
         }
     }
     
-    Cultivo checkCultivoId(CultivoId cultivoId) throws ThingsboardException {
+    Crop checkCropId(CropId cropId) throws ThingsboardException {
         try {
-            validateId(cultivoId, "Incorrect cultivoId " + cultivoId);
-            Cultivo cultivo = cultivoService.findCultivoById(cultivoId);
-            checkCultivo(cultivo);
-            return cultivo;
+            validateId(cropId, "Incorrect cropId " + cropId);
+            Crop crop = cropService.findCropById(cropId);
+            checkCrop(crop);
+            return crop;
         } catch (Exception e) {
             throw handleException(e, false);
         }
     }
 
-    protected void checkCultivo(Cultivo cultivo) throws ThingsboardException {
-        checkNotNull(cultivo);
-        checkTenantId(cultivo.getTenantId());
-        if (cultivo.getCustomerId() != null && !cultivo.getCustomerId().getId().equals(ModelConstants.NULL_UUID)) {
-            checkCustomerId(cultivo.getCustomerId());
+    protected void checkCrop(Crop crop) throws ThingsboardException {
+        checkNotNull(crop);
+        checkTenantId(crop.getTenantId());
+        if (crop.getCustomerId() != null && !crop.getCustomerId().getId().equals(ModelConstants.NULL_UUID)) {
+            checkCustomerId(crop.getCustomerId());
         }
     }
 

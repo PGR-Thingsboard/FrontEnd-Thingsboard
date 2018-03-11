@@ -1,0 +1,57 @@
+
+
+
+<md-button ng-click="onMakePublic({event: $event})"
+           ng-show="!isEdit && farmScope === 'tenant' && !isAssignedToCustomer && !isPublic"
+           class="md-raised md-primary">{{ 'farm.make-public' | translate }}</md-button>
+<md-button ng-click="onAssignToCustomer({event: $event})"
+           ng-show="!isEdit && farmScope === 'tenant' && !isAssignedToCustomer"
+           class="md-raised md-primary">{{ 'farm.assign-to-customer' | translate }}</md-button>
+<md-button ng-click="onUnassignFromCustomer({event: $event, isPublic: isPublic})"
+           ng-show="!isEdit && (farmScope === 'customer' || farmScope === 'tenant') && isAssignedToCustomer"
+           class="md-raised md-primary">{{ isPublic ? 'farm.make-private' : 'farm.unassign-from-customer' | translate }}</md-button>
+<md-button ng-click="onDeleteFarm({event: $event})"
+           ng-show="!isEdit && farmScope === 'tenant'"
+           class="md-raised md-primary">{{ 'farm.delete' | translate }}</md-button>
+
+<div layout="row">
+    <md-button ngclipboard data-clipboard-action="copy"
+               ngclipboard-success="onFarmIdCopied(e)"
+               data-clipboard-text="{{farm.id.id}}" ng-show="!isEdit"
+               class="md-raised">
+        <md-icon md-svg-icon="mdi:clipboard-arrow-left"></md-icon>
+        <span translate>farm.copyId</span>
+    </md-button>
+</div>
+
+<md-content class="md-padding" layout="column">
+    <md-input-container class="md-block"
+                        ng-show="!isEdit && isAssignedToCustomer && !isPublic && farmScope === 'tenant'">
+        <label translate>farm.assignedToCustomer</label>
+        <input ng-model="assignedCustomer.title" disabled>
+    </md-input-container>
+    <div class="tb-small" style="padding-bottom: 10px; padding-left: 2px;"
+         ng-show="!isEdit && isPublic && (farmScope === 'customer' || farmScope === 'tenant')">
+        {{ 'farm.farm-public' | translate }}
+    </div>
+    <fieldset ng-disabled="$root.loading || !isEdit">
+        <md-input-container class="md-block">
+            <label translate>farm.name</label>
+            <input required name="name" ng-model="farm.name">
+            <div ng-messages="theForm.name.$error">
+                <div translate ng-message="required">farm.name-required</div>
+            </div>
+        </md-input-container>
+        <tb-entity-subtype-autocomplete
+                ng-disabled="$root.loading || !isEdit"
+                tb-required="true"
+                the-form="theForm"
+                ng-model="farm.type"
+                entity-type="types.entityType.farm">
+        </tb-entity-subtype-autocomplete>
+        <md-input-container class="md-block">
+            <label translate>farm.description</label>
+            <textarea ng-model="farm.additionalInfo.description" rows="2"></textarea>
+        </md-input-container>
+    </fieldset>
+</md-content>

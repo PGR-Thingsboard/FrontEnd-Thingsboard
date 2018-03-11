@@ -1,0 +1,8 @@
+
+
+
+<div flex layout="column" style="margin-top: -10px;">
+    <div style="text-transform: uppercase; padding-bottom: 10px;">{{vm.item.type}}</div>
+    <div class="tb-small" ng-show="vm.isAssignedToCustomer()">{{'crop.assignedToCustomer' | translate}} '{{vm.item.assignedCustomer.title}}'</div>
+    <div class="tb-small" ng-show="vm.isPublic()">{{'crop.public' | translate}}</div>
+</div>

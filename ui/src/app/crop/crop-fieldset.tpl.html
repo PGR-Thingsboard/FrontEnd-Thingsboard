@@ -1,0 +1,63 @@
+
+
+<md-button ng-click="onMakePublic({event: $event})"
+           ng-show="!isEdit && cropScope === 'tenant' && !isAssignedToCustomer && !isPublic"
+           class="md-raised md-primary">{{ 'crop.make-public' | translate }}</md-button>
+<md-button ng-click="onAssignToCustomer({event: $event})"
+           ng-show="!isEdit && cropScope === 'tenant' && !isAssignedToCustomer"
+           class="md-raised md-primary">{{ 'crop.assign-to-customer' | translate }}</md-button>
+<md-button ng-click="onUnassignFromCustomer({event: $event, isPublic: isPublic})"
+           ng-show="!isEdit && (cropScope === 'customer' || cropScope === 'tenant') && isAssignedToCustomer"
+           class="md-raised md-primary">{{ isPublic ? 'crop.make-private' : 'crop.unassign-from-customer' | translate }}</md-button>
+<md-button ng-click="onDeleteCrop({event: $event})"
+           ng-show="!isEdit && cropScope === 'tenant'"
+           class="md-raised md-primary">{{ 'crop.delete' | translate }}</md-button>
+
+<div layout="row">
+    <md-button ngclipboard data-clipboard-action="copy"
+               ngclipboard-success="onCropIdCopied(e)"
+               data-clipboard-text="{{crop.id.id}}" ng-show="!isEdit"
+               class="md-raised">
+        <md-icon md-svg-icon="mdi:clipboard-arrow-left"></md-icon>
+        <span translate>crop.copyId</span>
+    </md-button>
+</div>
+
+<md-content class="md-padding" layout="column">
+    <md-input-container class="md-block"
+                        ng-show="!isEdit && isAssignedToCustomer && !isPublic && cropScope === 'tenant'">
+        <label translate>crop.assignedToCustomer</label>
+        <input ng-model="assignedCustomer.title" disabled>
+    </md-input-container>
+    <div class="tb-small" style="padding-bottom: 10px; padding-left: 2px;"
+         ng-show="!isEdit && isPublic && (cropScope === 'customer' || cropScope === 'tenant')">
+        {{ 'crop.crop-public' | translate }}
+    </div>
+    <fieldset ng-disabled="$root.loading || !isEdit">
+        <md-input-container class="md-block">
+            <label translate>crop.name</label>
+            <input required name="name" ng-model="crop.name">
+            <div ng-messages="theForm.name.$error">
+                <div translate ng-message="required">crop.name-required</div>
+            </div>
+        </md-input-container>
+
+        <md-input-container style="margin-right: 10px;">
+            <label>Farm</label>
+            <md-select ng-model="crop.nameFarm">
+                <md-option ng-repeat="farm in farms" value="{{farm.name}}">{{farm.name}}</md-option>
+            </md-select>
+        </md-input-container>
+        <tb-entity-subtype-autocomplete
+                ng-disabled="$root.loading || !isEdit"
+                tb-required="true"
+                the-form="theForm"
+                ng-model="crop.type"
+                entity-type="types.entityType.crop">
+        </tb-entity-subtype-autocomplete>
+        <md-input-container class="md-block">
+            <label translate>crop.description</label>
+            <textarea ng-model="crop.additionalInfo.description" rows="2"></textarea>
+        </md-input-container>
+    </fieldset>
+</md-content>
