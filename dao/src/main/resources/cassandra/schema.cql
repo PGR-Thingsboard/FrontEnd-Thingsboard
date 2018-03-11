@@ -113,6 +113,13 @@ CREATE TABLE IF NOT EXISTS thingsboard.tenant (
 	PRIMARY KEY (id, region)
 );
 
+CREATE MATERIALIZED VIEW IF NOT EXISTS thingsboard.tenant_by_title AS
+        SELECT *
+        from thingsboard.tenant
+        WHERE region IS NOT NULL AND search_text IS NOT NULL AND id IS NOT NULL
+        PRIMARY KEY (id, region);
+        
+
 CREATE MATERIALIZED VIEW IF NOT EXISTS thingsboard.tenant_by_region_and_search_text AS
 	SELECT *
 	from thingsboard.tenant

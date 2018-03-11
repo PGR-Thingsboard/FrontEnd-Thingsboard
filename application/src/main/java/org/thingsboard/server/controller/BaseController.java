@@ -76,6 +76,7 @@ import org.thingsboard.server.dao.crop.CropService;
 import org.thingsboard.server.dao.farm.FarmService;
 
 import static org.thingsboard.server.dao.service.Validator.validateId;
+import org.thingsboard.server.dao.tenant.TenantService;
 
 @Slf4j
 public abstract class BaseController {
@@ -136,6 +137,9 @@ public abstract class BaseController {
 
     @Autowired
     protected AuditLogService auditLogService;
+    
+    @Autowired
+    protected TenantService tenantService;
 
     @ExceptionHandler(ThingsboardException.class)
     public void handleThingsboardException(ThingsboardException ex, HttpServletResponse response) {

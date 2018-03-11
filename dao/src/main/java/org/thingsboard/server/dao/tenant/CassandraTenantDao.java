@@ -15,6 +15,8 @@
  */
 package org.thingsboard.server.dao.tenant;
 
+import com.datastax.driver.core.ResultSet;
+import com.datastax.driver.core.ResultSetFuture;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.thingsboard.server.common.data.Tenant;
@@ -28,6 +30,16 @@ import java.util.Arrays;
 import java.util.List;
 
 import static com.datastax.driver.core.querybuilder.QueryBuilder.eq;
+import static com.datastax.driver.core.querybuilder.QueryBuilder.select;
+import com.datastax.driver.core.querybuilder.Select;
+import com.datastax.driver.mapping.Result;
+import com.google.common.base.Function;
+import com.google.common.util.concurrent.Futures;
+import com.google.common.util.concurrent.ListenableFuture;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Optional;
+import javax.annotation.Nullable;
 import static org.thingsboard.server.dao.model.ModelConstants.*;
 
 @Component
@@ -55,4 +67,26 @@ public class CassandraTenantDao extends CassandraAbstractSearchTextDao<TenantEnt
         return DaoUtil.convertDataList(tenantEntities);
     }
 
+    @Override
+    public ListenableFuture<List<TenantEntity>> findTenantByTitle() {
+        Select select = select().from(TENANT_TITLE);
+        Select.Where query = select.where();
+        ResultSetFuture resultSetFuture = getSession().executeAsync(query);
+        return Futures.transform(resultSetFuture, new Function<ResultSet, List<TenantEntity>>() {
+            @Nullable
+            @Override
+            public List<TenantEntity> apply(@Nullable ResultSet resultSet) {
+                Result<TenantEntity> result = cluster.getMapper(TenantEntity.class).map(resultSet);
+                if (result != null) {
+                     List<TenantEntity> farms = new ArrayList<>();
+                    result.all().forEach((tenant) ->
+                            farms.add(tenant)
+                    );
+                    return farms;
+                } else {
+                    return Collections.emptyList();
+                }
+            }
+        });
+    }
 }

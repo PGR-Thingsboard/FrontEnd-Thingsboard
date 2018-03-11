@@ -190,7 +190,6 @@ public class CassandraFarmDao extends CassandraAbstractSearchTextDao<FarmEntity,
             @Nullable
             @Override
             public List<FarmEntity> apply(@Nullable ResultSet resultSet) {
-                System.out.println("Result set Farm"+resultSet.toString());
                 Result<FarmEntity> result = cluster.getMapper(FarmEntity.class).map(resultSet);
                 if (result != null) {
                     List<FarmEntity> farms = new ArrayList<>();

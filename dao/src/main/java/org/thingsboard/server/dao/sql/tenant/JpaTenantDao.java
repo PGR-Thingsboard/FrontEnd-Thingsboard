@@ -15,6 +15,7 @@
  */
 package org.thingsboard.server.dao.sql.tenant;
 
+import com.google.common.util.concurrent.ListenableFuture;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.repository.CrudRepository;
@@ -62,4 +63,12 @@ public class JpaTenantDao extends JpaAbstractSearchTextDao<TenantEntity, Tenant>
                         pageLink.getIdOffset() == null ? NULL_UUID_STR : UUIDConverter.fromTimeUUID(pageLink.getIdOffset()),
                         new PageRequest(0, pageLink.getLimit())));
     }
+
+    @Override
+    public ListenableFuture<List<org.thingsboard.server.dao.model.nosql.TenantEntity>> findTenantByTitle() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    
+    
 }

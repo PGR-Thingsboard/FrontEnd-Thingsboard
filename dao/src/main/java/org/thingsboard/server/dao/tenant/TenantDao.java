@@ -15,11 +15,14 @@
  */
 package org.thingsboard.server.dao.tenant;
 
+import com.google.common.util.concurrent.ListenableFuture;
 import org.thingsboard.server.common.data.Tenant;
 import org.thingsboard.server.common.data.page.TextPageLink;
 import org.thingsboard.server.dao.Dao;
 
 import java.util.List;
+import java.util.Optional;
+import org.thingsboard.server.dao.model.nosql.TenantEntity;
 
 public interface TenantDao extends Dao<Tenant> {
 
@@ -39,5 +42,12 @@ public interface TenantDao extends Dao<Tenant> {
      * @return the list of tenant objects
      */
     List<Tenant> findTenantsByRegion(String region, TextPageLink pageLink);
+    
+    /**
+     * Find tenant by title
+     * @param title the title
+     * @return the tenant
+     */
+   ListenableFuture<List<TenantEntity>> findTenantByTitle();
     
 }

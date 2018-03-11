@@ -39,6 +39,8 @@ import org.thingsboard.server.dao.user.UserService;
 import org.thingsboard.server.dao.widget.WidgetsBundleService;
 
 import java.util.List;
+import java.util.Optional;
+import org.thingsboard.server.dao.model.nosql.TenantEntity;
 
 import static org.thingsboard.server.dao.service.Validator.validateId;
 
@@ -154,4 +156,11 @@ public class TenantServiceImpl extends AbstractEntityService implements TenantSe
             deleteTenant(new TenantId(entity.getUuidId()));
         }
     };
+
+    @Override
+    public ListenableFuture<List<TenantEntity>> findTenantByTitle() {
+        return tenantDao.findTenantByTitle();
+    }
+    
+    
 }

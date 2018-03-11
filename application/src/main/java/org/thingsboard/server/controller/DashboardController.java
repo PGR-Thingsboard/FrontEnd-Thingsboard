@@ -80,7 +80,6 @@ public class DashboardController extends BaseController {
         try {
             dashboard.setTenantId(getCurrentUser().getTenantId());
             Dashboard savedDashboard = checkNotNull(dashboardService.saveDashboard(dashboard));
-
             logEntityAction(savedDashboard.getId(), savedDashboard,
                     null,
                     dashboard.getId() == null ? ActionType.ADDED : ActionType.UPDATED, null);

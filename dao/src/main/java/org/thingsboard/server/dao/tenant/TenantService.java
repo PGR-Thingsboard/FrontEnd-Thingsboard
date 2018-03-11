@@ -16,10 +16,13 @@
 package org.thingsboard.server.dao.tenant;
 
 import com.google.common.util.concurrent.ListenableFuture;
+import java.util.List;
+import java.util.Optional;
 import org.thingsboard.server.common.data.Tenant;
 import org.thingsboard.server.common.data.id.TenantId;
 import org.thingsboard.server.common.data.page.TextPageData;
 import org.thingsboard.server.common.data.page.TextPageLink;
+import org.thingsboard.server.dao.model.nosql.TenantEntity;
 
 public interface TenantService {
 
@@ -34,4 +37,6 @@ public interface TenantService {
     TextPageData<Tenant> findTenants(TextPageLink pageLink);
     
     void deleteTenants();
+    
+    ListenableFuture<List<TenantEntity>> findTenantByTitle();
 }

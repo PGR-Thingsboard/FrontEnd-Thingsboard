@@ -107,6 +107,7 @@ public class ModelConstants {
      * Cassandra tenant constants.
      */
     public static final String TENANT_COLUMN_FAMILY_NAME = "tenant";
+    public static final String TENANT_TITLE = "tenant_by_title";
     public static final String TENANT_TITLE_PROPERTY = TITLE_PROPERTY;
     public static final String TENANT_REGION_PROPERTY = "region";
     public static final String TENANT_ADDITIONAL_INFO_PROPERTY = ADDITIONAL_INFO_PROPERTY;

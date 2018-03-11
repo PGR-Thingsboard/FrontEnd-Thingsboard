@@ -5,6 +5,8 @@
  */
 package org.thingsboard.server.controller;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.util.concurrent.ListenableFuture;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,8 +22,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.thingsboard.server.common.data.Customer;
+import org.thingsboard.server.common.data.Dashboard;
 import org.thingsboard.server.common.data.EntitySubtype;
 import org.thingsboard.server.common.data.EntityType;
+import org.thingsboard.server.common.data.Tenant;
 import org.thingsboard.server.common.data.audit.ActionType;
 import org.thingsboard.server.common.data.farm.Farm;
 import org.thingsboard.server.common.data.farm.FarmSearchQuery;
@@ -34,6 +38,7 @@ import org.thingsboard.server.common.data.security.Authority;
 import org.thingsboard.server.dao.exception.IncorrectParameterException;
 import org.thingsboard.server.dao.model.ModelConstants;
 import org.thingsboard.server.dao.model.nosql.FarmEntity;
+import org.thingsboard.server.dao.model.nosql.TenantEntity;
 import org.thingsboard.server.exception.ThingsboardErrorCode;
 import org.thingsboard.server.exception.ThingsboardException;
 import org.thingsboard.server.service.security.model.SecurityUser;
@@ -45,6 +50,7 @@ import org.thingsboard.server.service.security.model.SecurityUser;
 @RestController
 @RequestMapping("/api")
 public class FarmController extends BaseController {
+   
 
     public static final String FARM_ID = "farmId";
 
@@ -77,6 +83,20 @@ public class FarmController extends BaseController {
                 }
             }
             Farm savedFarm  = checkNotNull(farmService.saveFarm(farm));
+            //Adding a new dashboard with farm name----------------------------------------
+            List<TenantEntity> lT = tenantService.findTenantByTitle().get();
+            Tenant t = lT.get(0).toData();
+            TenantId tenantId = new TenantId(t.getUuidId());
+            //TenantId tenantId =  new TenantId(toUUID("2bb190c0-24c3-11e8-8c70-a9cac4af3852"));
+            Dashboard dashboard = new Dashboard();
+            dashboard.setTenantId(tenantId);
+            String dashboardJson = "{\"description\":"+'"'+savedFarm.getName()+'"'+",\"widgets\":{},\"states\":{\"default\":{\"name\":"+'"'+savedFarm.getName()+'"'+",\"root\":true,\"layouts\":{\"main\":{\"widgets\":{},\"gridSettings\":{\"backgroundColor\":\"#eeeeee\",\"color\":\"rgba(0,0,0,0.870588)\",\"columns\":24,\"margins\":[10,10],\"backgroundSizeMode\":\"100%\"}}}}},\"entityAliases\":{},\"timewindow\":{\"displayValue\":\"\",\"selectedTab\":0,\"realtime\":{\"interval\":1000,\"timewindowMs\":60000},\"history\":{\"historyType\":0,\"interval\":1000,\"timewindowMs\":60000,\"fixedTimewindow\":{\"startTimeMs\":1520656350529,\"endTimeMs\":1520742750529}},\"aggregation\":{\"type\":\"AVG\",\"limit\":200}},\"settings\":{\"stateControllerId\":\"entity\",\"showTitle\":false,\"showDashboardsSelect\":true,\"showEntitiesSelect\":true,\"showDashboardTimewindow\":true,\"showDashboardExport\":true,\"toolbarAlwaysOpen\":true}}";
+            ObjectMapper mapper = new ObjectMapper();
+            JsonNode configuration = mapper.readTree(dashboardJson);
+            dashboard.setConfiguration(configuration);
+            dashboard.setTitle(savedFarm.getName());
+            dashboardService.saveDashboard(dashboard);
+            //------------------------------------------------------------
 
             logEntityAction(savedFarm.getId(), savedFarm,
                     savedFarm.getCustomerId(),
@@ -334,7 +354,6 @@ public class FarmController extends BaseController {
             List<FarmEntity> farmTypes = farmService.allFarms().get();
             List<Farm> farms = new ArrayList<>();
             for(FarmEntity fe : farmTypes){
-                System.out.println("Farm"+fe.toData().toString());
                 farms.add(fe.toData());
             }
             return farms;
