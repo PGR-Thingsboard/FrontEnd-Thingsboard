@@ -31,6 +31,7 @@ import org.thingsboard.server.common.data.crop.Crop;
 import org.thingsboard.server.common.data.page.TextPageLink;
 import org.thingsboard.server.dao.DaoUtil;
 import org.thingsboard.server.dao.model.EntitySubtypeEntity;
+import static org.thingsboard.server.dao.model.ModelConstants.ALL_CROPS;
 import static org.thingsboard.server.dao.model.ModelConstants.CROP_BY_CUSTOMER_AND_SEARCH_TEXT_COLUMN_FAMILY_NAME;
 import static org.thingsboard.server.dao.model.ModelConstants.CROP_BY_CUSTOMER_BY_TYPE_AND_SEARCH_TEXT_COLUMN_FAMILY_NAME;
 import static org.thingsboard.server.dao.model.ModelConstants.CROP_BY_TENANT_AND_NAME_VIEW_NAME;
@@ -178,6 +179,55 @@ public class CassandraCropDao extends CassandraAbstractSearchTextDao<CropEntity,
             }
         });
     }
+    
+    @Override
+    public ListenableFuture<List<CropEntity>> findCropsByFarmId(String farmId) {
+        Select select = select().from(CROP_COLUMN_FAMILY_NAME);
+        Select.Where query = select.where();
+        query.and(eq(CROP_COLUMN_FAMILY_NAME, farmId));
+        ResultSetFuture resultSetFuture = getSession().executeAsync(query);
+        return Futures.transform(resultSetFuture, new Function<ResultSet, List<CropEntity>>() {
+            @Nullable
+            @Override
+            public List<CropEntity> apply(@Nullable ResultSet resultSet) {
+                Result<CropEntity> result = cluster.getMapper(CropEntity.class).map(resultSet);
+                if (result != null) {
+                    List<CropEntity> crops = new ArrayList<>();
+                    result.all().forEach((crop) ->
+                            crops.add(crop)
+                    );
+                    return crops;
+                } else {
+                    return Collections.emptyList();
+                }
+            }
+        });
+    }
+    
+    @Override
+    public ListenableFuture<List<CropEntity>> allCrops() {
+        Select select = select().from(ALL_CROPS);
+        Select.Where query = select.where();
+        ResultSetFuture resultSetFuture = getSession().executeAsync(query);
+        return Futures.transform(resultSetFuture, new Function<ResultSet, List<CropEntity>>() {
+            @Nullable
+            @Override
+            public List<CropEntity> apply(@Nullable ResultSet resultSet) {
+                Result<CropEntity> result = cluster.getMapper(CropEntity.class).map(resultSet);
+                if (result != null) {
+                    List<CropEntity> crops = new ArrayList<>();
+                    result.all().forEach((crop) ->
+                            crops.add(crop)
+                    );
+                    return crops;
+                } else {
+                    return Collections.emptyList();
+                }
+            }
+        });
+    }
+    
+    
 
 }
 

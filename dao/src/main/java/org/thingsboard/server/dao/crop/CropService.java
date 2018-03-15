@@ -8,14 +8,17 @@ package org.thingsboard.server.dao.crop;
 import com.google.common.util.concurrent.ListenableFuture;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import org.thingsboard.server.common.data.EntitySubtype;
 import org.thingsboard.server.common.data.crop.Crop;
 import org.thingsboard.server.common.data.crop.CropSearchQuery;
 import org.thingsboard.server.common.data.id.CropId;
 import org.thingsboard.server.common.data.id.CustomerId;
+import org.thingsboard.server.common.data.id.FarmId;
 import org.thingsboard.server.common.data.id.TenantId;
 import org.thingsboard.server.common.data.page.TextPageData;
 import org.thingsboard.server.common.data.page.TextPageLink;
+import org.thingsboard.server.dao.model.nosql.CropEntity;
 
 /**
  *
@@ -56,4 +59,8 @@ public interface CropService {
     ListenableFuture<List<Crop>> findCropsByQuery(CropSearchQuery query);
 
     ListenableFuture<List<EntitySubtype>> findCropTypesByTenantId(TenantId tenantId);
+    
+    ListenableFuture<List<CropEntity>> findCropsByFarmId(String farmId);
+    
+    ListenableFuture<List<CropEntity>> allCrops();
 }

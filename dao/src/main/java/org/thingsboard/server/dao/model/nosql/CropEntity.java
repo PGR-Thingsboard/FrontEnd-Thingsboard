@@ -17,11 +17,12 @@ import lombok.ToString;
 import org.thingsboard.server.common.data.crop.Crop;
 import org.thingsboard.server.common.data.id.CropId;
 import org.thingsboard.server.common.data.id.CustomerId;
+import org.thingsboard.server.common.data.id.FarmId;
 import org.thingsboard.server.common.data.id.TenantId;
 import static org.thingsboard.server.dao.model.ModelConstants.CROP_ADDITIONAL_INFO_PROPERTY;
 import static org.thingsboard.server.dao.model.ModelConstants.CROP_COLUMN_FAMILY_NAME;
 import static org.thingsboard.server.dao.model.ModelConstants.CROP_CUSTOMER_ID_PROPERTY;
-import static org.thingsboard.server.dao.model.ModelConstants.CROP_FARM_PROPERTY;
+import static org.thingsboard.server.dao.model.ModelConstants.CROP_FARMID_PROPERTY;
 import static org.thingsboard.server.dao.model.ModelConstants.CROP_NAME_PROPERTY;
 import static org.thingsboard.server.dao.model.ModelConstants.CROP_TENANT_ID_PROPERTY;
 import static org.thingsboard.server.dao.model.ModelConstants.CROP_TYPE_PROPERTY;
@@ -42,15 +43,15 @@ public final class CropEntity implements SearchTextEntity<Crop> {
     /**
      * @return the nameFina
      */
-    public String getNameFarm() {
-        return nameFarm;
+    public String getFarmId() {
+        return farmId;
     }
 
     /**
      * @param nameFina the nameFina to set
      */
-    public void setNameFarm(String nameFarm) {
-        this.nameFarm = nameFarm;
+    public void setFarmId(String farmId) {
+        this.farmId = farmId;
     }
 
     @PartitionKey(value = 0)
@@ -72,8 +73,8 @@ public final class CropEntity implements SearchTextEntity<Crop> {
     @Column(name = CROP_NAME_PROPERTY)
     private String name;
     
-    @Column(name = CROP_FARM_PROPERTY)
-    private String nameFarm;
+    @Column(name = CROP_FARMID_PROPERTY)
+    private String farmId;
 
     @Column(name = SEARCH_TEXT_PROPERTY)
     private String searchText;
@@ -97,7 +98,7 @@ public final class CropEntity implements SearchTextEntity<Crop> {
         }
         this.name = crop.getName();
         this.type = crop.getType();
-        this.nameFarm = crop.getNameFarm();
+        this.farmId = crop.getFarmId();
         this.additionalInfo = crop.getAdditionalInfo();
     }
 
@@ -175,7 +176,7 @@ public final class CropEntity implements SearchTextEntity<Crop> {
         }
         crop.setName(name);
         crop.setType(getType());
-        crop.setNameFarm(nameFarm);
+        crop.setFarmId(farmId);
         crop.setAdditionalInfo(additionalInfo);
         return crop;
     }

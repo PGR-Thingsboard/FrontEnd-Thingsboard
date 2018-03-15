@@ -16,7 +16,7 @@ export default function CropDirective($compile, $templateCache, toast, $translat
         scope.isPublic = false;
         scope.assignedCustomer = null;
         farmService.getAllFarms().then(function(result){
-            $log.log(result[0].name);
+            $log.log(result[0]);
             scope.farms=result
         });
 

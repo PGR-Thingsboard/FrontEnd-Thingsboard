@@ -27,6 +27,8 @@ import org.thingsboard.server.common.data.page.TextPageLink;
 
 import java.util.List;
 import java.util.Optional;
+import org.thingsboard.server.common.data.id.CropId;
+import org.thingsboard.server.dao.model.nosql.DeviceEntity;
 
 public interface DeviceService {
     
@@ -63,5 +65,7 @@ public interface DeviceService {
     ListenableFuture<List<Device>> findDevicesByQuery(DeviceSearchQuery query);
 
     ListenableFuture<List<EntitySubtype>> findDeviceTypesByTenantId(TenantId tenantId);
+    
+    ListenableFuture<List<DeviceEntity>> findDevicesByDeviceId(String cropId);
 
 }

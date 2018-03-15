@@ -10,6 +10,7 @@ function CropService($http, $q, customerService, userService, $log) {
     var service = {
         getCrop: getCrop,
         getCrops: getCrops,
+        getAllcrops: getAllcrops,
         saveCrop: saveCrop,
         deleteCrop: deleteCrop,
         assignCropToCustomer: assignCropToCustomer,
@@ -62,6 +63,20 @@ function CropService($http, $q, customerService, userService, $log) {
         }, function fail() {
             deferred.reject();
         });
+        return deferred.promise;
+    }
+
+    function getAllcrops(config) {
+        var deferred = $q.defer();
+        var crops;
+        var url = '/api/Allcrops';
+        $http.get(url,config).then(function success(response) {
+            crops=response.data;
+            deferred.resolve(crops);
+        }, function fail() {
+            deferred.reject();
+        });
+        $log.log(deferred.promise);
         return deferred.promise;
     }
 

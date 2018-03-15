@@ -64,6 +64,12 @@
 	      		<div translate ng-message="required">device.name-required</div>
 	    	</div>				
 		</md-input-container>
+        <md-input-container style="margin-right: 10px;">
+            <label>Crop</label>
+            <md-select ng-model="device.cropId">
+                <md-option ng-repeat="crop in crops" value="{{crop.id.id}}">{{crop.name}}</md-option>
+            </md-select>
+        </md-input-container>
         <tb-entity-subtype-autocomplete
                 ng-disabled="$root.loading || !isEdit"
                 tb-required="true"

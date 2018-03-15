@@ -133,6 +133,7 @@ public class ModelConstants {
     public static final String DEVICE_CUSTOMER_ID_PROPERTY = CUSTOMER_ID_PROPERTY;
     public static final String DEVICE_NAME_PROPERTY = "name";
     public static final String DEVICE_TYPE_PROPERTY = "type";
+    public static final String DEVICE_CROPID_PROPERTY = "crop_id";
     public static final String DEVICE_ADDITIONAL_INFO_PROPERTY = ADDITIONAL_INFO_PROPERTY;
 
     public static final String DEVICE_BY_TENANT_AND_SEARCH_TEXT_COLUMN_FAMILY_NAME = "device_by_tenant_and_search_text";
@@ -211,7 +212,7 @@ public class ModelConstants {
     public static final String CROP_CUSTOMER_ID_PROPERTY = CUSTOMER_ID_PROPERTY;
     public static final String CROP_NAME_PROPERTY = "name";
     public static final String CROP_TYPE_PROPERTY = "type";
-    public static final String CROP_FARM_PROPERTY = "nameFarm";
+    public static final String CROP_FARMID_PROPERTY = "farm_id";
     public static final String CROP_ADDITIONAL_INFO_PROPERTY = ADDITIONAL_INFO_PROPERTY;
 
     public static final String CROP_BY_TENANT_AND_SEARCH_TEXT_COLUMN_FAMILY_NAME = "crop_by_tenant_and_search_text";
@@ -225,6 +226,7 @@ public class ModelConstants {
     /**
      * Cassandra entity_subtype constants.
      */
+    public static final String ALL_CROPS = "all_crops";
     public static final String ENTITY_SUBTYPE_COLUMN_FAMILY_NAME = "entity_subtype";
     public static final String ENTITY_SUBTYPE_TENANT_ID_PROPERTY = TENANT_ID_PROPERTY;
     public static final String ENTITY_SUBTYPE_ENTITY_TYPE_PROPERTY = ENTITY_TYPE_PROPERTY;

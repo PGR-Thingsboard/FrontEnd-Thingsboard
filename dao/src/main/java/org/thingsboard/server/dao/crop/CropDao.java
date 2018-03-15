@@ -13,6 +13,7 @@ import org.thingsboard.server.common.data.EntitySubtype;
 import org.thingsboard.server.common.data.crop.Crop;
 import org.thingsboard.server.common.data.page.TextPageLink;
 import org.thingsboard.server.dao.Dao;
+import org.thingsboard.server.dao.model.nosql.CropEntity;
 
 /**
  *
@@ -102,5 +103,18 @@ public interface CropDao extends Dao<Crop> {
      * @return the list of tenant crop type objects
      */
     ListenableFuture<List<EntitySubtype>> findTenantCropTypesAsync(UUID tenantId);
+    
+    /**
+     * Find all crops by farm id
+     * @param farmId
+     * @return 
+     */
+    ListenableFuture<List<CropEntity>> findCropsByFarmId(String farmId);
+    
+    /**
+     * Return all crops
+     * @return 
+     */
+    ListenableFuture<List<CropEntity>> allCrops();
 
 }

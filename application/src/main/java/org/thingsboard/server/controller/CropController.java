@@ -33,6 +33,7 @@ import org.thingsboard.server.common.data.page.TextPageLink;
 import org.thingsboard.server.common.data.security.Authority;
 import org.thingsboard.server.dao.exception.IncorrectParameterException;
 import org.thingsboard.server.dao.model.ModelConstants;
+import org.thingsboard.server.dao.model.nosql.CropEntity;
 import org.thingsboard.server.exception.ThingsboardErrorCode;
 import org.thingsboard.server.exception.ThingsboardException;
 import org.thingsboard.server.service.security.model.SecurityUser;
@@ -322,6 +323,22 @@ public class CropController extends BaseController{
             TenantId tenantId = user.getTenantId();
             ListenableFuture<List<EntitySubtype>> cropTypes = cropService.findCropTypesByTenantId(tenantId);
             return checkNotNull(cropTypes.get());
+        } catch (Exception e) {
+            throw handleException(e);
+        }
+    }
+    
+    @PreAuthorize("hasAnyAuthority('TENANT_ADMIN', 'CUSTOMER_USER')")
+    @RequestMapping(value = "/Allcrops", method = RequestMethod.GET)
+    @ResponseBody
+    public List<Crop> getAllCrops() throws ThingsboardException {
+        try {
+            List<CropEntity> cropTypes = cropService.allCrops().get();
+            List<Crop> crops = new ArrayList<>();
+            for(CropEntity fe : cropTypes){
+                crops.add(fe.toData());
+            }
+            return crops;
         } catch (Exception e) {
             throw handleException(e);
         }

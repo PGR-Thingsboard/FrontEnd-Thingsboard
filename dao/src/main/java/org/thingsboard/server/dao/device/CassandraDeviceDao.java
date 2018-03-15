@@ -40,6 +40,7 @@ import java.util.*;
 
 import static com.datastax.driver.core.querybuilder.QueryBuilder.*;
 import static org.thingsboard.server.dao.model.ModelConstants.*;
+import org.thingsboard.server.dao.model.nosql.CropEntity;
 
 @Component
 @Slf4j
@@ -160,6 +161,30 @@ public class CassandraDeviceDao extends CassandraAbstractSearchTextDao<DeviceEnt
                         entitySubtypes.add(entitySubtypeEntity.toEntitySubtype())
                     );
                     return entitySubtypes;
+                } else {
+                    return Collections.emptyList();
+                }
+            }
+        });
+    }
+    
+    @Override
+    public ListenableFuture<List<DeviceEntity>> findDevicesByDeviceId(String cropId) {
+        Select select = select().from(DEVICE_COLUMN_FAMILY_NAME);
+        Select.Where query = select.where();
+        query.and(eq(DEVICE_COLUMN_FAMILY_NAME, cropId));
+        ResultSetFuture resultSetFuture = getSession().executeAsync(query);
+        return Futures.transform(resultSetFuture, new Function<ResultSet, List<DeviceEntity>>() {
+            @Nullable
+            @Override
+            public List<DeviceEntity> apply(@Nullable ResultSet resultSet) {
+                Result<DeviceEntity> result = cluster.getMapper(DeviceEntity.class).map(resultSet);
+                if (result != null) {
+                    List<DeviceEntity> devices = new ArrayList<>();
+                    result.all().forEach((device) ->
+                            devices.add(device)
+                    );
+                    return devices;
                 } else {
                     return Collections.emptyList();
                 }

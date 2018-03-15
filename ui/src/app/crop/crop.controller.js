@@ -32,7 +32,7 @@ export function CropCardController(types) {
 
 /*@ngInject*/
 export function CropController($rootScope, userService, cropService, customerService, $state, $stateParams,
-                                $document, $mdDialog, $q, $translate, types, $log) {
+                                $document, $mdDialog, $q, $translate, types) {
 
     var customerId = $stateParams.customerId;
 
@@ -315,8 +315,6 @@ export function CropController($rootScope, userService, cropService, customerSer
     }
 
     function saveCrop(crop) {
-        $log.log("TTTTTTTTTTTTTTTTTTTTTTTTT");
-        $log.log(crop)
         var deferred = $q.defer();
         cropService.saveCrop(crop).then(
             function success(savedCrop) {

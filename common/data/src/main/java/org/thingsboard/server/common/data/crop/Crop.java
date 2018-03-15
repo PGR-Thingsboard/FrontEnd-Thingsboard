@@ -5,11 +5,13 @@
  */
 package org.thingsboard.server.common.data.crop;
 
+import java.util.UUID;
 import lombok.EqualsAndHashCode;
 import org.thingsboard.server.common.data.HasName;
 import org.thingsboard.server.common.data.SearchTextBasedWithAdditionalInfo;
 import org.thingsboard.server.common.data.id.CropId;
 import org.thingsboard.server.common.data.id.CustomerId;
+import org.thingsboard.server.common.data.id.FarmId;
 import org.thingsboard.server.common.data.id.TenantId;
 
 /**
@@ -25,7 +27,7 @@ public class Crop extends SearchTextBasedWithAdditionalInfo<CropId> implements H
     private CustomerId customerId;
     private String name;
     private String type;
-    private String nameFarm;
+    private String farmId;
 
     public Crop() {
         super();
@@ -41,7 +43,7 @@ public class Crop extends SearchTextBasedWithAdditionalInfo<CropId> implements H
         this.customerId = crop.getCustomerId();
         this.name = crop.getName();
         this.type = crop.getType();
-        this.nameFarm=crop.getNameFarm();
+        this.farmId = crop.getFarmId();
     }
 
     public TenantId getTenantId() {
@@ -99,24 +101,24 @@ public class Crop extends SearchTextBasedWithAdditionalInfo<CropId> implements H
         builder.append(createdTime);
         builder.append(", id=");
         builder.append(id);
-        builder.append(", nameFarm=");
-        builder.append(nameFarm);
+        builder.append(", farmId=");
+        builder.append(farmId);
         builder.append("]");
         return builder.toString();
     }
 
     /**
-     * @return the farm
+     * @return the farmId
      */
-    public String getNameFarm() {
-        return nameFarm;
+    public String getFarmId() {
+        return farmId;
     }
 
     /**
-     * @param farm the farm to set
+     * @param farmId the farmId to set
      */
-    public void setNameFarm(String nameFarm) {
-        this.nameFarm = nameFarm;
+    public void setFarmId(String farmId) {
+        this.farmId = farmId;
     }
 
 }

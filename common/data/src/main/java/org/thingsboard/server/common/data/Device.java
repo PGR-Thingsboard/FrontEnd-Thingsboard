@@ -20,7 +20,6 @@ import org.thingsboard.server.common.data.id.CustomerId;
 import org.thingsboard.server.common.data.id.DeviceId;
 import org.thingsboard.server.common.data.id.TenantId;
 
-import com.fasterxml.jackson.databind.JsonNode;
 
 @EqualsAndHashCode(callSuper = true)
 public class Device extends SearchTextBasedWithAdditionalInfo<DeviceId> implements HasName {
@@ -31,6 +30,7 @@ public class Device extends SearchTextBasedWithAdditionalInfo<DeviceId> implemen
     private CustomerId customerId;
     private String name;
     private String type;
+    private String cropId;
 
     public Device() {
         super();
@@ -103,8 +103,24 @@ public class Device extends SearchTextBasedWithAdditionalInfo<DeviceId> implemen
         builder.append(createdTime);
         builder.append(", id=");
         builder.append(id);
+        builder.append(", cropId=");
+        builder.append(cropId);
         builder.append("]");
         return builder.toString();
+    }
+
+    /**
+     * @return the cropId
+     */
+    public String getCropId() {
+        return cropId;
+    }
+
+    /**
+     * @param cropId the cropId to set
+     */
+    public void setCropId(String cropId) {
+        this.cropId = cropId;
     }
 
 }

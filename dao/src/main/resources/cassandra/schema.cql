@@ -164,6 +164,7 @@ CREATE TABLE IF NOT EXISTS thingsboard.device (
     customer_id timeuuid,
     name text,
     type text,
+    crop_id text,
     search_text text,
     additional_info text,
     PRIMARY KEY (id, tenant_id, customer_id, type)
@@ -335,11 +336,17 @@ CREATE TABLE IF NOT EXISTS thingsboard.crop (
     customer_id timeuuid,
     name text,
     type text,
-    nameFarm text,
+    farm_id text,
     search_text text,
     additional_info text,
     PRIMARY KEY (id, tenant_id, customer_id, type)
 );
+
+CREATE MATERIALIZED VIEW IF NOT EXISTS thingsboard.all_crops AS
+    SELECT *
+    from thingsboard.crop
+    WHERE tenant_id IS NOT NULL AND customer_id IS NOT NULL AND type IS NOT NULL AND name IS NOT NULL AND id IS NOT NULL
+    PRIMARY KEY (id, tenant_id, customer_id, type);
 
 CREATE MATERIALIZED VIEW IF NOT EXISTS thingsboard.crop_by_tenant_and_name AS
     SELECT *

@@ -24,6 +24,7 @@ import org.thingsboard.server.dao.Dao;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import org.thingsboard.server.dao.model.nosql.DeviceEntity;
 
 /**
  * The Interface DeviceDao.
@@ -114,4 +115,11 @@ public interface DeviceDao extends Dao<Device> {
      * @return the list of tenant device type objects
      */
     ListenableFuture<List<EntitySubtype>> findTenantDeviceTypesAsync(UUID tenantId);
+    
+    /**
+     * Find devices by crop id
+     * @param deviceId
+     * @return 
+     */
+    ListenableFuture<List<DeviceEntity>> findDevicesByDeviceId(String cropId);
 }

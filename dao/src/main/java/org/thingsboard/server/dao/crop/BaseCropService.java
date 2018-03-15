@@ -28,6 +28,7 @@ import org.thingsboard.server.common.data.crop.CropSearchQuery;
 import org.thingsboard.server.common.data.id.CropId;
 import org.thingsboard.server.common.data.id.CustomerId;
 import org.thingsboard.server.common.data.id.EntityId;
+import org.thingsboard.server.common.data.id.FarmId;
 import org.thingsboard.server.common.data.id.TenantId;
 import org.thingsboard.server.common.data.page.TextPageData;
 import org.thingsboard.server.common.data.page.TextPageLink;
@@ -38,6 +39,7 @@ import org.thingsboard.server.dao.customer.CustomerDao;
 import org.thingsboard.server.dao.entity.AbstractEntityService;
 import org.thingsboard.server.dao.exception.DataValidationException;
 import static org.thingsboard.server.dao.model.ModelConstants.NULL_UUID;
+import org.thingsboard.server.dao.model.nosql.CropEntity;
 import org.thingsboard.server.dao.service.DataValidator;
 import org.thingsboard.server.dao.service.PaginatedRemover;
 import static org.thingsboard.server.dao.service.Validator.validateId;
@@ -288,6 +290,16 @@ public class BaseCropService extends AbstractEntityService implements CropServic
                     deleteCrop(new CropId(entity.getId().getId()));
                 }
             };
+
+    @Override
+    public ListenableFuture<List<CropEntity>> findCropsByFarmId(String farmId) {
+        return cropDao.findCropsByFarmId(farmId);
+    }
+
+    @Override
+    public ListenableFuture<List<CropEntity>> allCrops() {
+        return cropDao.allCrops();
+    }
 
     class CustomerCropsUnassigner extends PaginatedRemover<CustomerId, Crop> {
 

@@ -44,10 +44,11 @@
 
         <md-input-container style="margin-right: 10px;">
             <label>Farm</label>
-            <md-select ng-model="crop.nameFarm">
-                <md-option ng-repeat="farm in farms" value="{{farm.name}}">{{farm.name}}</md-option>
+            <md-select ng-model="crop.farmId">
+                <md-option ng-repeat="farm in farms" value="{{farm.id.id}}">{{farm.name}}</md-option>
             </md-select>
         </md-input-container>
+
         <tb-entity-subtype-autocomplete
                 ng-disabled="$root.loading || !isEdit"
                 tb-required="true"
