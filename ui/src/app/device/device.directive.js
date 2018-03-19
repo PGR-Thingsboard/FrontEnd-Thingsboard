@@ -20,7 +20,7 @@ import deviceFieldsetTemplate from './device-fieldset.tpl.html';
 /* eslint-enable import/no-unresolved, import/default */
 
 /*@ngInject*/
-export default function DeviceDirective($compile, $templateCache, toast, $translate, types, clipboardService, cropService, deviceService, customerService) {
+export default function DeviceDirective($compile, $templateCache, toast, $translate, types, clipboardService, cropService, deviceService, customerService, $log) {
     var linker = function (scope, element) {
         var template = $templateCache.get(deviceFieldsetTemplate);
         element.html(template);
@@ -72,6 +72,26 @@ export default function DeviceDirective($compile, $templateCache, toast, $transl
         };
 
         $compile(element.contents())(scope);
+
+        scope.labels = ['1'];
+        scope.latitudes = new Array(scope.labels.size);
+        scope.longitudes = new Array(scope.labels.size);
+
+        function Point(){
+            this.coordinates = [];
+            this.types = 'point';
+        }
+
+        var point = new Point();
+
+        scope.saveEverything = function() {
+            for (var i = 0; i < scope.labels.length; i++) {
+                point.coordinates[0] = parseFloat(scope.longitudes[i])
+                point.coordinates[1] = parseFloat(scope.latitudes[i])
+            }
+            $log.log(point);
+            scope.device.location = point;
+        };
     }
     return {
         restrict: "E",

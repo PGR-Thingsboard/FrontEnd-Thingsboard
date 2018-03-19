@@ -60,5 +60,10 @@
             <label translate>crop.description</label>
             <textarea ng-model="crop.additionalInfo.description" rows="2"></textarea>
         </md-input-container>
+        <label ng-repeat-start="label in labels">{{label}}</label>
+        <input ng-model='longitudes[$index]' type='text' value='' />
+        <input ng-model='latitudes[$index]' type='text' value='' />
+        <br ng-repeat-end>
+        <md-button ng-click="saveEverything()">Ubicar</md-button>
     </fieldset>
 </md-content>

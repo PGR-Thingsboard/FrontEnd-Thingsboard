@@ -31,6 +31,7 @@ public class Device extends SearchTextBasedWithAdditionalInfo<DeviceId> implemen
     private String name;
     private String type;
     private String cropId;
+    private Point location;
 
     public Device() {
         super();
@@ -121,6 +122,20 @@ public class Device extends SearchTextBasedWithAdditionalInfo<DeviceId> implemen
      */
     public void setCropId(String cropId) {
         this.cropId = cropId;
+    }
+
+    /**
+     * @return the location
+     */
+    public Point getLocation() {
+        return location;
+    }
+
+    /**
+     * @param location the location to set
+     */
+    public void setLocation(Point location) {
+        this.location = location;
     }
 
 }

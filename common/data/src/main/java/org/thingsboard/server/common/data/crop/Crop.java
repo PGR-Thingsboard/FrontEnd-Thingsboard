@@ -8,6 +8,7 @@ package org.thingsboard.server.common.data.crop;
 import java.util.UUID;
 import lombok.EqualsAndHashCode;
 import org.thingsboard.server.common.data.HasName;
+import org.thingsboard.server.common.data.Polygon;
 import org.thingsboard.server.common.data.SearchTextBasedWithAdditionalInfo;
 import org.thingsboard.server.common.data.id.CropId;
 import org.thingsboard.server.common.data.id.CustomerId;
@@ -28,6 +29,7 @@ public class Crop extends SearchTextBasedWithAdditionalInfo<CropId> implements H
     private String name;
     private String type;
     private String farmId;
+    private Polygon location;
 
     public Crop() {
         super();
@@ -119,6 +121,20 @@ public class Crop extends SearchTextBasedWithAdditionalInfo<CropId> implements H
      */
     public void setFarmId(String farmId) {
         this.farmId = farmId;
+    }
+
+    /**
+     * @return the location
+     */
+    public Polygon getLocation() {
+        return location;
+    }
+
+    /**
+     * @param location the location to set
+     */
+    public void setLocation(Polygon location) {
+        this.location = location;
     }
 
 }

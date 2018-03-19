@@ -82,12 +82,16 @@ public class FarmController extends BaseController {
                     checkCustomerId(farm.getCustomerId());
                 }
             }
+            
             Farm savedFarm  = checkNotNull(farmService.saveFarm(farm));
+            System.out.println("TIENE POLIGONO: "+farm.getLocation());
+            for(int i=0; i<farm.getLocation().getCoordinates().size();i++){
+                System.out.println("UBICACION: "+farm.getLocation().getCoordinates().get(i).get(0));
+            }
             //Adding a new dashboard with farm name----------------------------------------
             List<TenantEntity> lT = tenantService.findTenantByTitle().get();
             Tenant t = lT.get(0).toData();
             TenantId tenantId = new TenantId(t.getUuidId());
-            //TenantId tenantId =  new TenantId(toUUID("2bb190c0-24c3-11e8-8c70-a9cac4af3852"));
             Dashboard dashboard = new Dashboard();
             dashboard.setTenantId(tenantId);
             String dashboardJson = "{\"description\":"+'"'+savedFarm.getName()+'"'+",\"widgets\":{},\"states\":{\"default\":{\"name\":"+'"'+savedFarm.getName()+'"'+",\"root\":true,\"layouts\":{\"main\":{\"widgets\":{},\"gridSettings\":{\"backgroundColor\":\"#eeeeee\",\"color\":\"rgba(0,0,0,0.870588)\",\"columns\":24,\"margins\":[10,10],\"backgroundSizeMode\":\"100%\"}}}}},\"entityAliases\":{},\"timewindow\":{\"displayValue\":\"\",\"selectedTab\":0,\"realtime\":{\"interval\":1000,\"timewindowMs\":60000},\"history\":{\"historyType\":0,\"interval\":1000,\"timewindowMs\":60000,\"fixedTimewindow\":{\"startTimeMs\":1520656350529,\"endTimeMs\":1520742750529}},\"aggregation\":{\"type\":\"AVG\",\"limit\":200}},\"settings\":{\"stateControllerId\":\"entity\",\"showTitle\":false,\"showDashboardsSelect\":true,\"showEntitiesSelect\":true,\"showDashboardTimewindow\":true,\"showDashboardExport\":true,\"toolbarAlwaysOpen\":true}}";

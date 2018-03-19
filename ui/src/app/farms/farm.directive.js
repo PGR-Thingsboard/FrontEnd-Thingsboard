@@ -5,7 +5,7 @@ import farmFieldsetTemplate from './farm-fieldset.tpl.html';
 /* eslint-enable import/no-unresolved, import/default */
 
 /*@ngInject*/
-export default function FarmDirective($compile, $templateCache, toast, $translate, types, farmService, customerService) {
+export default function FarmDirective($compile, $templateCache, toast, $translate, types, farmService, customerService, $log) {
     var linker = function (scope, element) {
         var template = $templateCache.get(farmFieldsetTemplate);
         element.html(template);
@@ -39,6 +39,26 @@ export default function FarmDirective($compile, $templateCache, toast, $translat
 
 
         $compile(element.contents())(scope);
+
+        scope.labels = ['1','2','3','4'];
+        scope.latitudes = new Array(scope.labels.size);
+        scope.longitudes = new Array(scope.labels.size);
+
+
+        function Polygon() {
+            this.coordinates = [];
+            this.type = 'polygon';
+        }
+
+        var polygon = new Polygon();
+
+        scope.saveEverything = function() {
+            for (var i = 0; i < scope.labels.length; i++) {
+                polygon.coordinates[i]=[parseFloat(scope.longitudes[i]),parseFloat(scope.latitudes[i])]
+            }
+            $log.log(polygon);
+            scope.farm.location = polygon;
+        };
     }
     return {
         restrict: "E",

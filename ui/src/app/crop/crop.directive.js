@@ -44,6 +44,25 @@ export default function CropDirective($compile, $templateCache, toast, $translat
 
 
         $compile(element.contents())(scope);
+
+        scope.labels = ['1','2','3','4'];
+        scope.latitudes = new Array(scope.labels.size);
+        scope.longitudes = new Array(scope.labels.size);
+
+        function Polygon() {
+            this.coordinates = [];
+            this.type = 'polygon';
+        }
+
+        var polygon = new Polygon();
+
+        scope.saveEverything = function() {
+            for (var i = 0; i < scope.labels.length; i++) {
+                polygon.coordinates[i]=[parseFloat(scope.longitudes[i]),parseFloat(scope.latitudes[i])]
+            }
+            $log.log(polygon);
+            scope.crop.location = polygon;
+        };
     }
     return {
         restrict: "E",

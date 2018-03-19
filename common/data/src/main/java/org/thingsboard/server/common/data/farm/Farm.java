@@ -7,6 +7,7 @@ package org.thingsboard.server.common.data.farm;
 
 import lombok.EqualsAndHashCode;
 import org.thingsboard.server.common.data.HasName;
+import org.thingsboard.server.common.data.Polygon;
 import org.thingsboard.server.common.data.SearchTextBasedWithAdditionalInfo;
 import org.thingsboard.server.common.data.id.CustomerId;
 import org.thingsboard.server.common.data.id.FarmId;
@@ -25,6 +26,7 @@ public class Farm extends SearchTextBasedWithAdditionalInfo<FarmId> implements H
     private CustomerId customerId;
     private String name;
     private String type;
+    private Polygon location;
 
     public Farm() {
         super();
@@ -40,6 +42,7 @@ public class Farm extends SearchTextBasedWithAdditionalInfo<FarmId> implements H
         this.customerId = farm.getCustomerId();
         this.name = farm.getName();
         this.type = farm.getType();
+        this.location = farm.getLocation();
     }
 
     public TenantId getTenantId() {
@@ -99,6 +102,20 @@ public class Farm extends SearchTextBasedWithAdditionalInfo<FarmId> implements H
         builder.append(id);
         builder.append("]");
         return builder.toString();
+    }
+
+    /**
+     * @return the location
+     */
+    public Polygon getLocation() {
+        return location;
+    }
+
+    /**
+     * @param location the location to set
+     */
+    public void setLocation(Polygon location) {
+        this.location = location;
     }
 
 }
