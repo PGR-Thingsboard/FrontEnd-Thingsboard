@@ -39,7 +39,7 @@ public abstract class MongoConnection {
     public MongoClient getSession() {
         if (mongoClient == null) {
             //mongoClient = new MongoClient(new MongoClientURI(serverProperties.getMongoURI()));
-            mongoClient = new MongoClient(new MongoClientURI("mongodb://192.168.0.10:27017"));
+            mongoClient = new MongoClient(new MongoClientURI("mongodb://10.8.0.23:27017"));
         }
         return mongoClient;
     }

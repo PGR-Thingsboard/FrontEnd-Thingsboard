@@ -83,10 +83,11 @@ public class FarmController extends BaseController {
                     checkCustomerId(farm.getCustomerId());
                 }
             }
-            
+
+
             Farm savedFarm  = checkNotNull(farmService.saveFarm(farm));
-            
-            SpatialFarm spatialFarm = new SpatialFarm(farm.getId().getId().toString(),farm.getName(),farm.getLocation());
+            System.out.println("Farm: "+farm.getLocation()+" id: "+savedFarm.getId().getId().toString()+" FarmName: "+savedFarm.getName());
+            SpatialFarm spatialFarm = new SpatialFarm(savedFarm.getId().getId().toString(),savedFarm.getName(),farm.getLocation());
             mongoService.getMongodbFarm().save(spatialFarm);
             //Adding a new dashboard with farm name----------------------------------------
             List<TenantEntity> lT = tenantService.findTenantByTitle().get();
