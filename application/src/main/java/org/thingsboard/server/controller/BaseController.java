@@ -74,6 +74,7 @@ import org.thingsboard.server.common.data.crop.Crop;
 import org.thingsboard.server.common.data.farm.Farm;
 import org.thingsboard.server.dao.crop.CropService;
 import org.thingsboard.server.dao.farm.FarmService;
+import org.thingsboard.server.dao.mongo.MongoDBSpatial;
 
 import static org.thingsboard.server.dao.service.Validator.validateId;
 import org.thingsboard.server.dao.tenant.TenantService;
@@ -140,6 +141,8 @@ public abstract class BaseController {
     
     @Autowired
     protected TenantService tenantService;
+    
+    protected MongoDBSpatial mongoService = new MongoDBSpatial();
 
     @ExceptionHandler(ThingsboardException.class)
     public void handleThingsboardException(ThingsboardException ex, HttpServletResponse response) {

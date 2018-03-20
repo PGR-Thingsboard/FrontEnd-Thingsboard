@@ -25,6 +25,7 @@ import org.thingsboard.server.common.data.Customer;
 import org.thingsboard.server.common.data.Dashboard;
 import org.thingsboard.server.common.data.EntitySubtype;
 import org.thingsboard.server.common.data.EntityType;
+import org.thingsboard.server.common.data.SpatialFarm;
 import org.thingsboard.server.common.data.Tenant;
 import org.thingsboard.server.common.data.audit.ActionType;
 import org.thingsboard.server.common.data.farm.Farm;
@@ -84,10 +85,9 @@ public class FarmController extends BaseController {
             }
             
             Farm savedFarm  = checkNotNull(farmService.saveFarm(farm));
-            System.out.println("TIENE POLIGONO: "+farm.getLocation());
-            for(int i=0; i<farm.getLocation().getCoordinates().size();i++){
-                System.out.println("UBICACION: "+farm.getLocation().getCoordinates().get(i).get(0));
-            }
+            
+            SpatialFarm spatialFarm = new SpatialFarm(farm.getId().getId().toString(),farm.getName(),farm.getLocation());
+            mongoService.getMongodbFarm().save(spatialFarm);
             //Adding a new dashboard with farm name----------------------------------------
             List<TenantEntity> lT = tenantService.findTenantByTitle().get();
             Tenant t = lT.get(0).toData();
