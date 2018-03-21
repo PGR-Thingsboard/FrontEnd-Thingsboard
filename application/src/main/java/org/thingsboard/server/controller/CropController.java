@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.thingsboard.server.common.data.Customer;
 import org.thingsboard.server.common.data.EntitySubtype;
 import org.thingsboard.server.common.data.EntityType;
+import org.thingsboard.server.common.data.SpatialCrop;
 import org.thingsboard.server.common.data.audit.ActionType;
 import org.thingsboard.server.common.data.crop.Crop;
 import org.thingsboard.server.common.data.crop.CropSearchQuery;
@@ -78,7 +79,8 @@ public class CropController extends BaseController{
                 }
             }
             Crop savedCrop  = checkNotNull(cropService.saveCrop(crop));
-
+            SpatialCrop spatialCrop = new SpatialCrop(savedCrop.getId().getId().toString(),savedCrop.getFarmId(),crop.getLocation());
+            mongoService.getMongodbcrop().save(spatialCrop);
             logEntityAction(savedCrop.getId(), savedCrop,
                     savedCrop.getCustomerId(),
                     crop.getId() == null ? ActionType.ADDED : ActionType.UPDATED, null);

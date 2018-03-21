@@ -47,7 +47,7 @@ export default function FarmDirective($compile, $templateCache, toast, $translat
 
         function Polygon() {
             this.coordinates = [];
-            this.type = 'polygon';
+            this.type = 'Polygon';
         }
 
         var polygon = new Polygon();

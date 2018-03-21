@@ -19,10 +19,7 @@ import com.google.common.util.concurrent.ListenableFuture;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-import org.thingsboard.server.common.data.Customer;
-import org.thingsboard.server.common.data.Device;
-import org.thingsboard.server.common.data.EntitySubtype;
-import org.thingsboard.server.common.data.EntityType;
+import org.thingsboard.server.common.data.*;
 import org.thingsboard.server.common.data.audit.ActionStatus;
 import org.thingsboard.server.common.data.audit.ActionType;
 import org.thingsboard.server.common.data.device.DeviceSearchQuery;
@@ -78,7 +75,8 @@ public class DeviceController extends BaseController {
                 }
             }
             Device savedDevice = checkNotNull(deviceService.saveDevice(device));
-
+            SpatialDevice spatialDevice = new SpatialDevice(savedDevice.getId().getId().toString(),savedDevice.getCropId(),device.getLocation());
+            mongoService.getMongodbDevice().save(spatialDevice);
             actorService
                     .onDeviceNameOrTypeUpdate(
                             savedDevice.getTenantId(),

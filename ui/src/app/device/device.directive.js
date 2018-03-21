@@ -79,7 +79,7 @@ export default function DeviceDirective($compile, $templateCache, toast, $transl
 
         function Point(){
             this.coordinates = [];
-            this.types = 'point';
+            this.types = 'Point';
         }
 
         var point = new Point();
