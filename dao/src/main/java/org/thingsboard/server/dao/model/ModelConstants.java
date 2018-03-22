@@ -193,6 +193,7 @@ public class ModelConstants {
     public static final String FARM_CUSTOMER_ID_PROPERTY = CUSTOMER_ID_PROPERTY;
     public static final String FARM_NAME_PROPERTY = "name";
     public static final String FARM_TYPE_PROPERTY = "type";
+    public static final String FARM_DASHBOARDID_PROPERTY = "dashboard_id";
     public static final String FARM_ADDITIONAL_INFO_PROPERTY = ADDITIONAL_INFO_PROPERTY;
 
     public static final String ALL_FARMS = "all_farms";

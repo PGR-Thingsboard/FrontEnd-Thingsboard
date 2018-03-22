@@ -15,29 +15,40 @@
  */
 package org.thingsboard.server.controller;
 
+import com.fasterxml.jackson.databind.node.*;
 import com.google.common.util.concurrent.ListenableFuture;
+import com.fasterxml.jackson.databind.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.thingsboard.server.common.data.*;
 import org.thingsboard.server.common.data.audit.ActionStatus;
 import org.thingsboard.server.common.data.audit.ActionType;
+import org.thingsboard.server.common.data.crop.Crop;
 import org.thingsboard.server.common.data.device.DeviceSearchQuery;
-import org.thingsboard.server.common.data.id.CustomerId;
-import org.thingsboard.server.common.data.id.DeviceId;
-import org.thingsboard.server.common.data.id.TenantId;
+import org.thingsboard.server.common.data.farm.Farm;
+import org.thingsboard.server.common.data.id.*;
+import org.thingsboard.server.common.data.kv.BasicKvEntry;
+import org.thingsboard.server.common.data.kv.BasicTsKvEntry;
+import org.thingsboard.server.common.data.kv.StringDataEntry;
 import org.thingsboard.server.common.data.page.TextPageData;
 import org.thingsboard.server.common.data.page.TextPageLink;
 import org.thingsboard.server.common.data.security.Authority;
 import org.thingsboard.server.common.data.security.DeviceCredentials;
+import org.thingsboard.server.common.data.widget.WidgetType;
+import org.thingsboard.server.common.data.widget.WidgetsBundle;
 import org.thingsboard.server.dao.exception.IncorrectParameterException;
 import org.thingsboard.server.dao.model.ModelConstants;
+import org.thingsboard.server.dao.timeseries.TimeseriesService;
 import org.thingsboard.server.exception.ThingsboardErrorCode;
 import org.thingsboard.server.exception.ThingsboardException;
 import org.thingsboard.server.service.security.model.SecurityUser;
+import springfox.documentation.spring.web.json.Json;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @RestController
@@ -45,6 +56,9 @@ import java.util.stream.Collectors;
 public class DeviceController extends BaseController {
 
     public static final String DEVICE_ID = "deviceId";
+
+    @Autowired
+    private TimeseriesService tsService;
 
     @PreAuthorize("hasAnyAuthority('TENANT_ADMIN', 'CUSTOMER_USER')")
     @RequestMapping(value = "/device/{deviceId}", method = RequestMethod.GET)
@@ -77,6 +91,53 @@ public class DeviceController extends BaseController {
             Device savedDevice = checkNotNull(deviceService.saveDevice(device));
             SpatialDevice spatialDevice = new SpatialDevice(savedDevice.getId().getId().toString(),savedDevice.getCropId(),device.getLocation());
             mongoService.getMongodbDevice().save(spatialDevice);
+            //-----------------------Agregando valor a la fuerza en base de datos
+            StringDataEntry value = new StringDataEntry("prueba","3");
+            long millis = System.currentTimeMillis();
+            BasicTsKvEntry tsKvEntry = new BasicTsKvEntry(millis, value);
+            tsService.save(savedDevice.getId(),tsKvEntry);
+            //----------------------------------------------------------------
+            /*ObjectMapper mapper = new ObjectMapper();
+            CropId cropId = new CropId(UUID.fromString(savedDevice.getCropId()));
+            Crop crop = cropService.findCropById(cropId);
+            FarmId farmId = new FarmId(UUID.fromString(crop.getFarmId()));
+            Farm farm = farmService.findFarmById(farmId);
+            DashboardId dashboardId = new DashboardId(UUID.fromString(farm.getDashboardId()));
+            Dashboard dashboard = dashboardService.findDashboardById(dashboardId);
+            System.out.println("Obtuvo el dashboard desde el dispositivo");
+            JsonNode widgets = null;
+            if(dashboard.getConfiguration().has("widgets")){
+                System.out.println("Sacó el arreglo de widgets del dashboard");
+                widgets = dashboard.getConfiguration().get("widgets");
+            }
+
+
+            WidgetType w = new WidgetType();
+            w.setName(savedDevice.getName());
+            w.setTenantId(dashboard.getTenantId());
+            w.setBundleAlias("digital_gauges");
+            w.setDescriptor(mapper.readTree("{\"k1\":\"v1\"}"));
+            WidgetsBundle wb = new WidgetsBundle();
+            wb.setTenantId(dashboard.getTenantId());
+            wb.setAlias("digital_gauges");
+            System.out.println(savedDevice.getName());
+            //WidgetType ws = widgetTypeService.saveWidgetType(w);
+            //WidgetsBundle wbs = widgetsBundleService.saveWidgetsBundle(wb);
+            String widgetJson = "{ "+'"'+savedDevice.getId().getId().toString()+'"'+": { \"isSystemType\": true, \"bundleAlias\": \"digital_gauges\", \"typeAlias\": \"digital_thermometer\", \"type\": \"latest\", \"title\": \"New widget\", \"sizeX\": 3, \"sizeY\": 3, \"config\": { \"datasources\": [ { \"type\": \"entity\", \"dataKeys\": [ { \"name\": \"prueba\", \"type\": \"timeseries\", \"label\": \"prueba\", \"color\": \"#2196f3\", \"settings\": {}, \"_hash\": 0.6329654774211 } ], \"entityAliasId\": "+'"'+savedDevice.getId().getId().toString()+'"'+" } ], \"timewindow\": { \"realtime\": { \"timewindowMs\": 60000 } }, \"showTitle\": false, \"backgroundColor\": \"#000000\", \"color\": \"rgba(255, 254, 254, 0.87)\", \"padding\": \"0px\", \"settings\": { \"maxValue\": 60, \"donutStartAngle\": 90, \"showValue\": true, \"showMinMax\": true, \"gaugeWidthScale\": 1, \"levelColors\": [ \"#304ffe\", \"#7e57c2\", \"#ff4081\", \"#d32f2f\" ], \"titleFont\": { \"family\": \"Roboto\", \"size\": 12, \"style\": \"normal\", \"weight\": \"500\" }, \"labelFont\": { \"family\": \"Roboto\", \"size\": 8, \"style\": \"normal\", \"weight\": \"500\" }, \"valueFont\": { \"family\": \"Segment7Standard\", \"style\": \"normal\", \"weight\": \"500\", \"size\": 18 }, \"minMaxFont\": { \"family\": \"Segment7Standard\", \"size\": 12, \"style\": \"normal\", \"weight\": \"500\" }, \"dashThickness\": 1.5, \"minValue\": -60, \"gaugeColor\": \"#333333\", \"neonGlowBrightness\": 35, \"gaugeType\": \"donut\", \"animation\": true, \"animationDuration\": 500, \"animationRule\": \"linear\", \"timestampFormat\": \"yyyy-MM-dd HH:mm:ss\" }, \"title\": \"New Digital thermometer\", \"dropShadow\": true, \"enableFullscreen\": true, \"titleStyle\": { \"fontSize\": \"16px\", \"fontWeight\": 400 }, \"widgetStyle\": {}, \"useDashboardTimewindow\": true, \"showLegend\": false, \"actions\": {} }, \"id\": \"cdb3310f-b429-3419-9a1b-c0b6fdf43643\" }, \"aliasesInfo\": { \"datasourceAliases\": { \"0\": { \"alias\": "+'"'+savedDevice.getName()+'"'+", \"filter\": { \"type\": \"singleEntity\", \"resolveMultiple\": false, \"singleEntity\": { \"entityType\": \"DEVICE\", \"id\": "+'"'+savedDevice.getId().getId().toString()+'"'+" } } } }, \"targetDeviceAliases\": {} }, \"originalSize\": { \"sizeX\": 3, \"sizeY\": 3 }, \"originalColumns\": 24 }";
+            JsonNode newWidget = mapper.readTree(widgetJson);
+            System.out.println("Convirtió en JsonNode el widget que se creo de un string");
+            ((ObjectNode) widgets).put("widgets",newWidget);
+            System.out.println("Agrego el widget al arreglo de widgets");
+            ObjectNode dashboardTotal = (ObjectNode) mapper.readTree(dashboard.getConfiguration().toString());
+            System.out.println("Paso el dashboard JsonNode a ObjectNode");
+            dashboardTotal.put("widgets",widgets);
+            System.out.println("Reemplazó el arreglo de widgets");
+            JsonNode dashboardFin =  dashboardTotal;
+            dashboard.setConfiguration(dashboardFin);
+            System.out.println("Se reemplaza la configuración del dashboard");
+            dashboardService.saveDashboard(dashboard);
+            System.out.println("Se actualizó el dashboard");
+            */
             actorService
                     .onDeviceNameOrTypeUpdate(
                             savedDevice.getTenantId(),

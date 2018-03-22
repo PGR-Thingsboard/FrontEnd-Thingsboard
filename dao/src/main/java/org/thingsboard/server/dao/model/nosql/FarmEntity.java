@@ -17,16 +17,10 @@ import org.thingsboard.server.common.data.farm.Farm;
 import org.thingsboard.server.common.data.id.CustomerId;
 import org.thingsboard.server.common.data.id.FarmId;
 import org.thingsboard.server.common.data.id.TenantId;
-import static org.thingsboard.server.dao.model.ModelConstants.FARM_ADDITIONAL_INFO_PROPERTY;
-import static org.thingsboard.server.dao.model.ModelConstants.FARM_COLUMN_FAMILY_NAME;
-import static org.thingsboard.server.dao.model.ModelConstants.FARM_CUSTOMER_ID_PROPERTY;
-import static org.thingsboard.server.dao.model.ModelConstants.FARM_NAME_PROPERTY;
-import static org.thingsboard.server.dao.model.ModelConstants.FARM_TENANT_ID_PROPERTY;
-import static org.thingsboard.server.dao.model.ModelConstants.FARM_TYPE_PROPERTY;
-import static org.thingsboard.server.dao.model.ModelConstants.ID_PROPERTY;
-import static org.thingsboard.server.dao.model.ModelConstants.SEARCH_TEXT_PROPERTY;
 import org.thingsboard.server.dao.model.SearchTextEntity;
 import org.thingsboard.server.dao.model.type.JsonCodec;
+
+import static org.thingsboard.server.dao.model.ModelConstants.*;
 
 /**
  *
@@ -56,6 +50,9 @@ public final class FarmEntity implements SearchTextEntity<Farm> {
     @Column(name = FARM_NAME_PROPERTY)
     private String name;
 
+    @Column(name = FARM_DASHBOARDID_PROPERTY)
+    private String dashboardId;
+
     @Column(name = SEARCH_TEXT_PROPERTY)
     private String searchText;
 
@@ -78,6 +75,7 @@ public final class FarmEntity implements SearchTextEntity<Farm> {
         }
         this.name = farm.getName();
         this.type = farm.getType();
+        this.dashboardId = farm.getDashboardId();
         this.additionalInfo = farm.getAdditionalInfo();
     }
 
@@ -156,9 +154,16 @@ public final class FarmEntity implements SearchTextEntity<Farm> {
         farm.setName(name);
         farm.setType(type);
         farm.setAdditionalInfo(additionalInfo);
+        farm.setDashboardId(dashboardId);
         return farm;
     }
 
-    
 
+    public String getDashboardId() {
+        return dashboardId;
+    }
+
+    public void setDashboardId(String dashboardId) {
+        this.dashboardId = dashboardId;
+    }
 }

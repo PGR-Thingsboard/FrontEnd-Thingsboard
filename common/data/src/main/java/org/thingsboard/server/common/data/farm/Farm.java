@@ -26,6 +26,7 @@ public class Farm extends SearchTextBasedWithAdditionalInfo<FarmId> implements H
     private CustomerId customerId;
     private String name;
     private String type;
+    private String dashboardId;
     private Polygon location;
 
     public Farm() {
@@ -43,6 +44,7 @@ public class Farm extends SearchTextBasedWithAdditionalInfo<FarmId> implements H
         this.name = farm.getName();
         this.type = farm.getType();
         this.location = farm.getLocation();
+        this.dashboardId = farm.getDashboardId();
     }
 
     public TenantId getTenantId() {
@@ -118,4 +120,11 @@ public class Farm extends SearchTextBasedWithAdditionalInfo<FarmId> implements H
         this.location = location;
     }
 
+    public String getDashboardId() {
+        return dashboardId;
+    }
+
+    public void setDashboardId(String dashboardId) {
+        this.dashboardId = dashboardId;
+    }
 }

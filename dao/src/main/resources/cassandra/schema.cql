@@ -282,6 +282,7 @@ CREATE TABLE IF NOT EXISTS thingsboard.farm (
     id timeuuid,
     tenant_id timeuuid,
     customer_id timeuuid,
+    dashboard_id text,
     name text,
     type text,
     search_text text,

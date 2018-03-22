@@ -83,25 +83,23 @@ public class FarmController extends BaseController {
                     checkCustomerId(farm.getCustomerId());
                 }
             }
-
-
-            Farm savedFarm  = checkNotNull(farmService.saveFarm(farm));
-            System.out.println("Farm: "+farm.getLocation()+" id: "+savedFarm.getId().getId().toString()+" FarmName: "+savedFarm.getName());
-            SpatialFarm spatialFarm = new SpatialFarm(savedFarm.getId().getId().toString(),savedFarm.getName(),farm.getLocation());
-            mongoService.getMongodbFarm().save(spatialFarm);
             //Adding a new dashboard with farm name----------------------------------------
             List<TenantEntity> lT = tenantService.findTenantByTitle().get();
             Tenant t = lT.get(0).toData();
             TenantId tenantId = new TenantId(t.getUuidId());
             Dashboard dashboard = new Dashboard();
             dashboard.setTenantId(tenantId);
-            String dashboardJson = "{\"description\":"+'"'+savedFarm.getName()+'"'+",\"widgets\":{},\"states\":{\"default\":{\"name\":"+'"'+savedFarm.getName()+'"'+",\"root\":true,\"layouts\":{\"main\":{\"widgets\":{},\"gridSettings\":{\"backgroundColor\":\"#eeeeee\",\"color\":\"rgba(0,0,0,0.870588)\",\"columns\":24,\"margins\":[10,10],\"backgroundSizeMode\":\"100%\"}}}}},\"entityAliases\":{},\"timewindow\":{\"displayValue\":\"\",\"selectedTab\":0,\"realtime\":{\"interval\":1000,\"timewindowMs\":60000},\"history\":{\"historyType\":0,\"interval\":1000,\"timewindowMs\":60000,\"fixedTimewindow\":{\"startTimeMs\":1520656350529,\"endTimeMs\":1520742750529}},\"aggregation\":{\"type\":\"AVG\",\"limit\":200}},\"settings\":{\"stateControllerId\":\"entity\",\"showTitle\":false,\"showDashboardsSelect\":true,\"showEntitiesSelect\":true,\"showDashboardTimewindow\":true,\"showDashboardExport\":true,\"toolbarAlwaysOpen\":true}}";
+            String dashboardJson = "{\"description\":"+'"'+farm.getName()+'"'+",\"widgets\":{},\"states\":{\"default\":{\"name\":"+'"'+farm.getName()+'"'+",\"root\":true,\"layouts\":{\"main\":{\"widgets\":{},\"gridSettings\":{\"backgroundColor\":\"#eeeeee\",\"color\":\"rgba(0,0,0,0.870588)\",\"columns\":24,\"margins\":[10,10],\"backgroundSizeMode\":\"100%\"}}}}},\"entityAliases\":{},\"timewindow\":{\"displayValue\":\"\",\"selectedTab\":0,\"realtime\":{\"interval\":1000,\"timewindowMs\":60000},\"history\":{\"historyType\":0,\"interval\":1000,\"timewindowMs\":60000,\"fixedTimewindow\":{\"startTimeMs\":1520656350529,\"endTimeMs\":1520742750529}},\"aggregation\":{\"type\":\"AVG\",\"limit\":200}},\"settings\":{\"stateControllerId\":\"entity\",\"showTitle\":false,\"showDashboardsSelect\":true,\"showEntitiesSelect\":true,\"showDashboardTimewindow\":true,\"showDashboardExport\":true,\"toolbarAlwaysOpen\":true}}";
             ObjectMapper mapper = new ObjectMapper();
             JsonNode configuration = mapper.readTree(dashboardJson);
             dashboard.setConfiguration(configuration);
-            dashboard.setTitle(savedFarm.getName());
-            dashboardService.saveDashboard(dashboard);
+            dashboard.setTitle(farm.getName());
+            Dashboard savedDashboard = dashboardService.saveDashboard(dashboard);
             //------------------------------------------------------------
+            farm.setDashboardId(savedDashboard.getId().getId().toString());
+            Farm savedFarm  = checkNotNull(farmService.saveFarm(farm));
+            SpatialFarm spatialFarm = new SpatialFarm(savedFarm.getId().getId().toString(),savedFarm.getName(),farm.getLocation());
+            mongoService.getMongodbFarm().save(spatialFarm);
 
             logEntityAction(savedFarm.getId(), savedFarm,
                     savedFarm.getCustomerId(),
