@@ -50,6 +50,11 @@
                                entity-type="{{vm.types.entityType.crop}}">
             </tb-relation-table>
         </md-tab>
+        <md-tab ng-if="!vm.grid.detailsConfig.isDetailsEditMode" md-on-select="vm.grid.triggerResize()" label="{{ 'crop.crops' | translate }}">
+            <tb-crops-table flex
+                               entity-id="vm.grid.operatingItem().id.id">
+            </tb-crops-table>
+        </md-tab>
         <md-tab ng-if="!vm.grid.detailsConfig.isDetailsEditMode && vm.grid.isTenantAdmin()" md-on-select="vm.grid.triggerResize()" label="{{ 'audit-log.audit-logs' | translate }}">
             <tb-audit-log-table flex entity-type="vm.types.entityType.crop"
                                 entity-id="vm.grid.operatingItem().id.id"

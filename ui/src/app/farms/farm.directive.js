@@ -2,10 +2,10 @@
 
 import farmFieldsetTemplate from './farm-fieldset.tpl.html';
 
-/* eslint-enable import/no-unresolved, import/default */
 
+/* eslint-enable import/no-unresolved, import/default */
 /*@ngInject*/
-export default function FarmDirective($compile, $templateCache, toast, $translate, types, farmService, customerService, $log) {
+export default function FarmDirective($compile, $templateCache, toast, $translate, types, farmService, customerService) {
     var linker = function (scope, element) {
         var template = $templateCache.get(farmFieldsetTemplate);
         element.html(template);
@@ -56,10 +56,11 @@ export default function FarmDirective($compile, $templateCache, toast, $translat
             for (var i = 0; i < scope.labels.length; i++) {
                 polygon.coordinates[i]=[parseFloat(scope.longitudes[i]),parseFloat(scope.latitudes[i])]
             }
-            $log.log(polygon);
             scope.farm.location = polygon;
         };
-    }
+
+
+    };
     return {
         restrict: "E",
         link: linker,
