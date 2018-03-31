@@ -1,11 +1,11 @@
 
 
 import farmFieldsetTemplate from './farm-fieldset.tpl.html';
-
+import mapboxgl from 'mapbox-gl';
 
 /* eslint-enable import/no-unresolved, import/default */
 /*@ngInject*/
-export default function FarmDirective($compile, $templateCache, toast, $translate, types, farmService, customerService) {
+export default function FarmDirective($compile, $templateCache, toast, $translate, types, farmService, customerService, $log) {
     var linker = function (scope, element) {
         var template = $templateCache.get(farmFieldsetTemplate);
         element.html(template);
@@ -57,6 +57,23 @@ export default function FarmDirective($compile, $templateCache, toast, $translat
                 polygon.coordinates[i]=[parseFloat(scope.longitudes[i]),parseFloat(scope.latitudes[i])]
             }
             scope.farm.location = polygon;
+        };
+
+        scope.ubicar = function () {
+            mapboxgl.accessToken = 'pk.eyJ1IjoiZ2VhcnMyOSIsImEiOiJjamRqbGNnenAxb3p6MnFuOXM4eXc5YWh3In0.5iQInCtAntYLhJVC5OUU_w';
+
+
+            var map = new mapboxgl.Map({
+                container: 'map',
+                style: 'mapbox://styles/mapbox/streets-v8',
+                center: [40, -74.50],
+                zoom: 9
+            });
+
+            map.on('load', function() {
+                map.resize();
+               $log.log(map);
+            });
         };
 
 

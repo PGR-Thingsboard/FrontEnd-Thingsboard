@@ -59,6 +59,9 @@ public final class FarmEntity implements SearchTextEntity<Farm> {
     @com.datastax.driver.mapping.annotations.Column(name = FARM_ADDITIONAL_INFO_PROPERTY, codec = JsonCodec.class)
     private JsonNode additionalInfo;
 
+    @Column(name= FARM_LOCATION_DESCRIPTION)
+    private String locationDescription;
+
     public FarmEntity() {
         super();
     }
@@ -77,6 +80,7 @@ public final class FarmEntity implements SearchTextEntity<Farm> {
         this.type = farm.getType();
         this.dashboardId = farm.getDashboardId();
         this.additionalInfo = farm.getAdditionalInfo();
+        this.locationDescription = farm.getLocationDescription();
     }
 
     public UUID getId() {
@@ -155,6 +159,7 @@ public final class FarmEntity implements SearchTextEntity<Farm> {
         farm.setType(type);
         farm.setAdditionalInfo(additionalInfo);
         farm.setDashboardId(dashboardId);
+        farm.setLocationDescription(locationDescription);
         return farm;
     }
 
@@ -165,5 +170,13 @@ public final class FarmEntity implements SearchTextEntity<Farm> {
 
     public void setDashboardId(String dashboardId) {
         this.dashboardId = dashboardId;
+    }
+
+    public String getLocationDescription() {
+        return locationDescription;
+    }
+
+    public void setLocationDescription(String locationDescription) {
+        this.locationDescription = locationDescription;
     }
 }
