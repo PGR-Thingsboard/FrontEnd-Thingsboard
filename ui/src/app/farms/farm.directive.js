@@ -1,12 +1,10 @@
 
 
 import farmFieldsetTemplate from './farm-fieldset.tpl.html';
-import mapboxgl from 'mapbox-gl';
-import FarmDetails from "./FarmDetails";
 
 /* eslint-enable import/no-unresolved, import/default */
 /*@ngInject*/
-export default function FarmDirective($compile, $templateCache, toast, $translate, types, farmService, customerService, $log) {
+export default function FarmDirective($compile, $templateCache, toast, $translate, types, farmService, customerService) {
     var linker = function (scope, element) {
         var template = $templateCache.get(farmFieldsetTemplate);
         element.html(template);
@@ -45,11 +43,26 @@ export default function FarmDirective($compile, $templateCache, toast, $translat
         scope.latitudes = new Array(scope.labels.size);
         scope.longitudes = new Array(scope.labels.size);
 
-
+//------------------------------------------------Class--------------------------------------
         function Polygon() {
             this.coordinates = [];
             this.type = 'Polygon';
         }
+
+        function FarmDetails(){
+            this.destination='';
+            this.useDetails='';
+            this.publicServices=[];
+            this.productionTransport='';
+            this.waterPoints=[];
+        }
+
+        /*function WaterPoints() {
+            this.numberPoint = 0;
+            this.resolution = '';
+            this.validity = null;
+        }*/
+//---------------------------------------------------------------------------------------------
 
         var polygon = new Polygon();
 
@@ -66,22 +79,6 @@ export default function FarmDirective($compile, $templateCache, toast, $translat
             scope.farm.location = polygon;
         };
 
-        scope.ubicar = function () {
-            mapboxgl.accessToken = 'pk.eyJ1IjoiZ2VhcnMyOSIsImEiOiJjamRqbGNnenAxb3p6MnFuOXM4eXc5YWh3In0.5iQInCtAntYLhJVC5OUU_w';
-
-
-            var map = new mapboxgl.Map({
-                container: 'map',
-                style: 'mapbox://styles/mapbox/streets-v8',
-                center: [40, -74.50],
-                zoom: 9
-            });
-
-            map.on('load', function() {
-                map.resize();
-               $log.log(map);
-            });
-        };
 
 
     };

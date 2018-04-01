@@ -15,7 +15,6 @@
   },
   "dependencies": {
     "@flowjs/ng-flow": "^2.7.1",
-    "@mapbox/mapbox-gl-draw": "^1.0.6",
     "ace-builds": "1.3.1",
     "angular": "1.5.8",
     "angular-animate": "1.5.8",
@@ -28,11 +27,10 @@
     "angular-gridster": "^0.13.14",
     "angular-hotkeys": "^1.7.0",
     "angular-jwt": "^0.1.6",
-    "angular-mapboxgl-directive": "^0.44.0",
     "angular-material": "1.1.1",
     "angular-material-data-table": "^0.10.9",
-    "angular-material-expansion-panel": "^0.7.2",
     "angular-material-icons": "^0.7.1",
+    "angular-material-expansion-panel": "^0.7.2",
     "angular-messages": "1.5.8",
     "angular-route": "1.5.8",
     "angular-sanitize": "1.5.8",
@@ -58,25 +56,21 @@
     "flot-curvedlines": "git://github.com/MichaelZinsmaier/CurvedLines.git#master",
     "font-awesome": "^4.6.3",
     "javascript-detect-element-resize": "^0.5.3",
-    "jquery": "^3.3.1",
+    "jquery": "^3.1.0",
     "jquery.terminal": "^1.5.0",
     "js-beautify": "^1.6.4",
     "json-schema-defaults": "^0.2.0",
     "leaflet": "^1.0.3",
     "leaflet-providers": "^1.1.17",
-    "mapbox-gl": "^0.44.1",
     "material-ui": "^0.16.1",
     "material-ui-number-input": "^5.0.16",
     "md-color-picker": "^0.2.6",
     "mdPickers": "git://github.com/alenaksu/mdPickers.git#0.7.5",
     "moment": "^2.15.0",
     "ngclipboard": "^1.1.1",
-    "ngmap": "^1.18.4",
     "ngreact": "^0.3.0",
-    "npm": "^5.8.0",
     "objectpath": "^1.2.1",
     "oclazyload": "^1.0.9",
-    "query-selector": "^1.0.9",
     "raphael": "^2.2.7",
     "rc-select": "^6.6.1",
     "react": "^15.4.1",
@@ -87,7 +81,6 @@
     "react-tap-event-plugin": "^2.0.1",
     "reactcss": "^1.0.9",
     "sass-material-colors": "0.0.5",
-    "save": "^2.3.2",
     "schema-inspector": "^1.6.6",
     "split.js": "^1.0.7",
     "tinycolor2": "^1.4.1",
@@ -120,7 +113,6 @@
     "img-loader": "^1.3.1",
     "less": "^2.7.1",
     "less-loader": "^2.2.3",
-    "@mapbox/mapbox-gl-draw-static-mode": "^1.0.1",
     "ng-annotate-loader": "^0.1.1",
     "ngtemplate-loader": "^1.3.1",
     "node-sass": "^4.5.3",
@@ -136,7 +128,7 @@
     "webpack-hot-middleware": "^2.12.2",
     "webpack-material-design-icons": "^0.1.0"
   },
-  "engine": "node >= 6.0.0",
+  "engine": "node >= 5.9.0",
   "nyc": {
     "exclude": [
       "test",
@@ -144,8 +136,5 @@
       "node_modules",
       "target"
     ]
-  },
-  "optionalDependencies": {
-    "bufferutil": "^3.0.3"
   }
 }
