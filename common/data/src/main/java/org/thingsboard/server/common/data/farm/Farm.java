@@ -29,6 +29,11 @@ public class Farm extends SearchTextBasedWithAdditionalInfo<FarmId> implements H
     private String dashboardId;
     private Polygon location;
     private String locationDescription;
+    private FarmDetails farmDetails;
+    private FarmPhotographs farmPhotographs;
+    private HomeDetails homeDetails;
+    private Technology technology;
+    private Enviroment enviroment;
 
     public Farm() {
         super();
@@ -47,6 +52,11 @@ public class Farm extends SearchTextBasedWithAdditionalInfo<FarmId> implements H
         this.location = farm.getLocation();
         this.dashboardId = farm.getDashboardId();
         this.locationDescription = farm.getLocationDescription();
+        this.farmDetails = farm.getFarmDetails();
+        this.farmPhotographs = farm.getFarmPhotographs();
+        this.homeDetails = farm.getHomeDetails();
+        this.technology = farm.getTechnology();
+        this.enviroment = farm.getEnviroment();
     }
 
     public TenantId getTenantId() {
@@ -136,5 +146,45 @@ public class Farm extends SearchTextBasedWithAdditionalInfo<FarmId> implements H
 
     public void setLocationDescription(String locationDescription) {
         this.locationDescription = locationDescription;
+    }
+
+    public FarmDetails getFarmDetails() {
+        return farmDetails;
+    }
+
+    public void setFarmDetails(FarmDetails farmDetails) {
+        this.farmDetails = farmDetails;
+    }
+
+    public FarmPhotographs getFarmPhotographs() {
+        return farmPhotographs;
+    }
+
+    public void setFarmPhotographs(FarmPhotographs farmPhotographs) {
+        this.farmPhotographs = farmPhotographs;
+    }
+
+    public HomeDetails getHomeDetails() {
+        return homeDetails;
+    }
+
+    public void setHomeDetails(HomeDetails homeDetails) {
+        this.homeDetails = homeDetails;
+    }
+
+    public Technology getTechnology() {
+        return technology;
+    }
+
+    public void setTechnology(Technology technology) {
+        this.technology = technology;
+    }
+
+    public Enviroment getEnviroment() {
+        return enviroment;
+    }
+
+    public void setEnviroment(Enviroment enviroment) {
+        this.enviroment = enviroment;
     }
 }

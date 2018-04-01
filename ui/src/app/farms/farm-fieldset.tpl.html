@@ -78,8 +78,12 @@
         </md-tab>
             <md-tab label="{{ 'Details' | translate }}">
                 <md-content class="md-padding">
-                    <h1 class="md-display-2">Tab One</h1>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla venenatis ante augue. Phasellus volutpat neque ac dui mattis vulputate. Etiam consequat aliquam cursus. In sodales pretium ultrices. Maecenas lectus est, sollicitudin consectetur felis nec, feugiat ultricies mi.</p>
+                    <md-input-container style="margin-right: 10px;">
+                        <label>Destination</label>
+                        <md-select ng-model="farm.farmDetails.destination">
+                            <md-option ng-repeat="dest in destination" value="{{dest}}">{{dest}}</md-option>
+                        </md-select>
+                    </md-input-container>
                 </md-content>
             </md-tab>
             <md-tab label="{{ 'Home Details' | translate }}">

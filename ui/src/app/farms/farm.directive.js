@@ -2,6 +2,7 @@
 
 import farmFieldsetTemplate from './farm-fieldset.tpl.html';
 import mapboxgl from 'mapbox-gl';
+import FarmDetails from "./FarmDetails";
 
 /* eslint-enable import/no-unresolved, import/default */
 /*@ngInject*/
@@ -51,6 +52,12 @@ export default function FarmDirective($compile, $templateCache, toast, $translat
         }
 
         var polygon = new Polygon();
+
+        scope.destination = ['Familiar','Production'];
+
+        if(scope.farm.farmDetails === null){
+            scope.farm.farmDetails = new FarmDetails();
+        }
 
         scope.saveEverything = function() {
             for (var i = 0; i < scope.labels.length; i++) {

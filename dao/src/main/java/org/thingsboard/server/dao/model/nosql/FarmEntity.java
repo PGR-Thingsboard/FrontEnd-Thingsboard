@@ -7,13 +7,18 @@ package org.thingsboard.server.dao.model.nosql;
 
 import com.datastax.driver.core.utils.UUIDs;
 import com.datastax.driver.mapping.annotations.PartitionKey;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
+
+import java.io.IOException;
 import java.util.UUID;
 import com.datastax.driver.mapping.annotations.Column;
 import com.datastax.driver.mapping.annotations.Table;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import org.thingsboard.server.common.data.farm.Farm;
+import org.thingsboard.server.common.data.farm.FarmDetails;
 import org.thingsboard.server.common.data.id.CustomerId;
 import org.thingsboard.server.common.data.id.FarmId;
 import org.thingsboard.server.common.data.id.TenantId;
@@ -62,6 +67,9 @@ public final class FarmEntity implements SearchTextEntity<Farm> {
     @Column(name= FARM_LOCATION_DESCRIPTION)
     private String locationDescription;
 
+    @Column(name = FARM_DETAILS)
+    private String farmDetails;
+
     public FarmEntity() {
         super();
     }
@@ -81,7 +89,15 @@ public final class FarmEntity implements SearchTextEntity<Farm> {
         this.dashboardId = farm.getDashboardId();
         this.additionalInfo = farm.getAdditionalInfo();
         this.locationDescription = farm.getLocationDescription();
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            this.farmDetails = mapper.writeValueAsString(farm.getFarmDetails());
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
     }
+
+
 
     public UUID getId() {
         return id;
@@ -160,6 +176,12 @@ public final class FarmEntity implements SearchTextEntity<Farm> {
         farm.setAdditionalInfo(additionalInfo);
         farm.setDashboardId(dashboardId);
         farm.setLocationDescription(locationDescription);
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            farm.setFarmDetails(mapper.readValue(farmDetails, FarmDetails.class));
+        } catch (IOException e) {
+            e.printStackTrace();
+        };
         return farm;
     }
 
@@ -179,4 +201,13 @@ public final class FarmEntity implements SearchTextEntity<Farm> {
     public void setLocationDescription(String locationDescription) {
         this.locationDescription = locationDescription;
     }
+
+    public String getFarmDetails() {
+        return farmDetails;
+    }
+
+    public void setFarmDetails(String farmDetails) {
+        this.farmDetails = farmDetails;
+    }
+
 }
