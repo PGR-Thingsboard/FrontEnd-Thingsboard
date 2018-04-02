@@ -1,0 +1,69 @@
+
+
+<md-button ng-click="onMakePublic({event: $event})"
+           ng-show="!isEdit && parcelScope === 'tenant' && !isAssignedToCustomer && !isPublic"
+           class="md-raised md-primary">{{ 'parcel.make-public' | translate }}</md-button>
+<md-button ng-click="onAssignToCustomer({event: $event})"
+           ng-show="!isEdit && parcelScope === 'tenant' && !isAssignedToCustomer"
+           class="md-raised md-primary">{{ 'parcel.assign-to-customer' | translate }}</md-button>
+<md-button ng-click="onUnassignFromCustomer({event: $event, isPublic: isPublic})"
+           ng-show="!isEdit && (parcelScope === 'customer' || parcelScope === 'tenant') && isAssignedToCustomer"
+           class="md-raised md-primary">{{ isPublic ? 'parcel.make-private' : 'parcel.unassign-from-customer' | translate }}</md-button>
+<md-button ng-click="onDeleteParcel({event: $event})"
+           ng-show="!isEdit && parcelScope === 'tenant'"
+           class="md-raised md-primary">{{ 'parcel.delete' | translate }}</md-button>
+
+<div layout="row">
+    <md-button ngclipboard data-clipboard-action="copy"
+               ngclipboard-success="onParcelIdCopied(e)"
+               data-clipboard-text="{{parcel.id.id}}" ng-show="!isEdit"
+               class="md-raised">
+        <md-icon md-svg-icon="mdi:clipboard-arrow-left"></md-icon>
+        <span translate>parcel.copyId</span>
+    </md-button>
+</div>
+
+<md-content class="md-padding" layout="column">
+    <md-input-container class="md-block"
+                        ng-show="!isEdit && isAssignedToCustomer && !isPublic && parcelScope === 'tenant'">
+        <label translate>parcel.assignedToCustomer</label>
+        <input ng-model="assignedCustomer.title" disabled>
+    </md-input-container>
+    <div class="tb-small" style="padding-bottom: 10px; padding-left: 2px;"
+         ng-show="!isEdit && isPublic && (parcelScope === 'customer' || parcelScope === 'tenant')">
+        {{ 'parcel.parcel-public' | translate }}
+    </div>
+    <fieldset ng-disabled="$root.loading || !isEdit">
+        <md-input-container class="md-block">
+            <label translate>parcel.name</label>
+            <input required name="name" ng-model="parcel.name">
+            <div ng-messages="theForm.name.$error">
+                <div translate ng-message="required">parcel.name-required</div>
+            </div>
+        </md-input-container>
+
+        <md-input-container style="margin-right: 10px;">
+            <label>Farm</label>
+            <md-select ng-model="parcel.farmId">
+                <md-option ng-repeat="farm in farms" value="{{farm.id.id}}">{{farm.name}}</md-option>
+            </md-select>
+        </md-input-container>
+
+        <tb-entity-subtype-autocomplete
+                ng-disabled="$root.loading || !isEdit"
+                tb-required="true"
+                the-form="theForm"
+                ng-model="parcel.type"
+                entity-type="types.entityType.parcel">
+        </tb-entity-subtype-autocomplete>
+        <md-input-container class="md-block">
+            <label translate>parcel.description</label>
+            <textarea ng-model="parcel.additionalInfo.description" rows="2"></textarea>
+        </md-input-container>
+        <label ng-repeat-start="label in labels">{{label}}</label>
+        <input ng-model='longitudes[$index]' type='text' value='' />
+        <input ng-model='latitudes[$index]' type='text' value='' />
+        <br ng-repeat-end>
+        <md-button ng-click="saveEverything()">Ubicar</md-button>
+    </fieldset>
+</md-content>

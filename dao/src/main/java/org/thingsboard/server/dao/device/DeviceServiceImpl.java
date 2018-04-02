@@ -52,7 +52,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 import static org.thingsboard.server.common.data.CacheConstants.DEVICE_CACHE;
-import org.thingsboard.server.common.data.id.CropId;
+import org.thingsboard.server.common.data.id.ParcelId;
 import static org.thingsboard.server.dao.DaoUtil.toUUIDs;
 import static org.thingsboard.server.dao.model.ModelConstants.NULL_UUID;
 import org.thingsboard.server.dao.model.nosql.DeviceEntity;
@@ -332,8 +332,8 @@ public class DeviceServiceImpl extends AbstractEntityService implements DeviceSe
             };
 
     @Override
-    public ListenableFuture<List<DeviceEntity>> findDevicesByDeviceId(String cropId) {
-        return deviceDao.findDevicesByDeviceId(cropId);
+    public ListenableFuture<List<DeviceEntity>> findDevicesByDeviceId(String parcelId) {
+        return deviceDao.findDevicesByDeviceId(parcelId);
     }
 
     private class CustomerDevicesUnassigner extends PaginatedRemover<CustomerId, Device> {

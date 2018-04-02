@@ -5,7 +5,7 @@
  */
 package org.thingsboard.server.dao.mongo;
 
-import org.thingsboard.server.common.data.SpatialCrop;
+import org.thingsboard.server.common.data.SpatialParcel;
 import org.thingsboard.server.common.data.SpatialDevice;
 import org.thingsboard.server.common.data.SpatialFarm;
 
@@ -15,18 +15,18 @@ import org.thingsboard.server.common.data.SpatialFarm;
  */
 public class MongoDBSpatial extends MongoConnection implements SpatialIndexes {
 
-    private final MongoDBSpatialCrop mongodbcrop;
+    private final MongoDBSpatialParcel mongodbparcel;
     private final MongoDBSpatialFarm mongodbFarm;
     private final MongoDBSpatialDevice mongodbDevice;
 
     public MongoDBSpatial() {
-        mongodbcrop = new MongoDBSpatialCrop();
+        mongodbparcel = new MongoDBSpatialParcel();
         mongodbFarm = new MongoDBSpatialFarm();
         mongodbDevice = new MongoDBSpatialDevice();
     }
 
-    public MongoDBSpatialCrop getMongodbcrop() {
-        return mongodbcrop;
+    public MongoDBSpatialParcel getMongodbparcel() {
+        return mongodbparcel;
     }
 
     public MongoDBSpatialFarm getMongodbFarm() {
@@ -41,20 +41,20 @@ public class MongoDBSpatial extends MongoConnection implements SpatialIndexes {
     public SpatialFarm findFarmsByDeviceId(String device_id) throws MongoDBException {
         try {
             SpatialDevice sdt = mongodbDevice.findById(device_id);
-            SpatialCrop sct = mongodbcrop.findById(sdt.getDevice_Crop_FK());
-            return mongodbFarm.findById(sct.getCrop_Farm_FK());
+            SpatialParcel sct = mongodbparcel.findById(sdt.getDevice_Parcel_FK());
+            return mongodbFarm.findById(sct.getParcel_Farm_FK());
         } catch (NullPointerException ex) {
             throw new MongoDBException("It wasn´t posible to load the farm associated with device!!");
         }
     }
 
     @Override
-    public SpatialCrop findCropsByDeviceId(String device_id) throws MongoDBException {
+    public SpatialParcel findParcelsByDeviceId(String device_id) throws MongoDBException {
         try {
             SpatialDevice sdt = mongodbDevice.findById(device_id);
-            return mongodbcrop.findById(sdt.getDevice_Crop_FK());
+            return mongodbparcel.findById(sdt.getDevice_Parcel_FK());
         } catch (NullPointerException ex) {
-            throw new MongoDBException("It wasn´t posible to load the crop associated with device!!");
+            throw new MongoDBException("It wasn´t posible to load the parcel associated with device!!");
         }
     }
 

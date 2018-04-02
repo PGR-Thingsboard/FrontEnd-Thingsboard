@@ -20,7 +20,7 @@ import deviceFieldsetTemplate from './device-fieldset.tpl.html';
 /* eslint-enable import/no-unresolved, import/default */
 
 /*@ngInject*/
-export default function DeviceDirective($compile, $templateCache, toast, $translate, types, clipboardService, cropService, deviceService, customerService, $log) {
+export default function DeviceDirective($compile, $templateCache, toast, $translate, types, clipboardService, parcelService, deviceService, customerService, $log) {
     var linker = function (scope, element) {
         var template = $templateCache.get(deviceFieldsetTemplate);
         element.html(template);
@@ -29,8 +29,8 @@ export default function DeviceDirective($compile, $templateCache, toast, $transl
         scope.isAssignedToCustomer = false;
         scope.isPublic = false;
         scope.assignedCustomer = null;
-        cropService.getAllcrops().then(function(result){
-            scope.crops=result
+        parcelService.getAllparcels().then(function(result){
+            scope.parcels=result
         });
 
         scope.$watch('device', function(newVal) {

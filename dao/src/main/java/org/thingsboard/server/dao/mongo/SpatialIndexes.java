@@ -5,7 +5,7 @@
  */
 package org.thingsboard.server.dao.mongo;
 
-import org.thingsboard.server.common.data.SpatialCrop;
+import org.thingsboard.server.common.data.SpatialParcel;
 import org.thingsboard.server.common.data.SpatialDevice;
 import org.thingsboard.server.common.data.SpatialFarm;
 
@@ -17,7 +17,7 @@ public interface SpatialIndexes {
     
     public SpatialFarm findFarmsByDeviceId(String device_id) throws MongoDBException;
     
-    public SpatialCrop findCropsByDeviceId(String device_id) throws MongoDBException;
+    public SpatialParcel findParcelsByDeviceId(String device_id) throws MongoDBException;
     
     public SpatialDevice getCoordenatesByDeviceId(String device_id) throws MongoDBException;
 }

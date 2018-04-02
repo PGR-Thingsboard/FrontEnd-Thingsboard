@@ -1,14 +1,14 @@
 
 
 
-import cropFieldsetTemplate from './crop-fieldset.tpl.html';
+import parcelFieldsetTemplate from './parcel-fieldset.tpl.html';
 
 /* eslint-enable import/no-unresolved, import/default */
 
 /*@ngInject*/
-export default function CropDirective($compile, $templateCache, toast, $translate, types, cropService, farmService, customerService, $log) {
+export default function ParcelDirective($compile, $templateCache, toast, $translate, types, parcelService, farmService, customerService, $log) {
     var linker = function (scope, element) {
-        var template = $templateCache.get(cropFieldsetTemplate);
+        var template = $templateCache.get(parcelFieldsetTemplate);
         element.html(template);
 
         scope.types = types;
@@ -20,11 +20,11 @@ export default function CropDirective($compile, $templateCache, toast, $translat
             scope.farms=result
         });
 
-        scope.$watch('crop', function(newVal) {
+        scope.$watch('parcel', function(newVal) {
             if (newVal) {
-                if (scope.crop.customerId && scope.crop.customerId.id !== types.id.nullUid) {
+                if (scope.parcel.customerId && scope.parcel.customerId.id !== types.id.nullUid) {
                     scope.isAssignedToCustomer = true;
-                    customerService.getShortCustomerInfo(scope.crop.customerId.id).then(
+                    customerService.getShortCustomerInfo(scope.parcel.customerId.id).then(
                         function success(customer) {
                             scope.assignedCustomer = customer;
                             scope.isPublic = customer.isPublic;
@@ -38,8 +38,8 @@ export default function CropDirective($compile, $templateCache, toast, $translat
             }
         });
 
-        scope.onCropIdCopied = function() {
-            toast.showSuccess($translate.instant('crop.idCopiedMessage'), 750, angular.element(element).parent().parent(), 'bottom left');
+        scope.onParcelIdCopied = function() {
+            toast.showSuccess($translate.instant('parcel.idCopiedMessage'), 750, angular.element(element).parent().parent(), 'bottom left');
         };
 
 
@@ -61,21 +61,21 @@ export default function CropDirective($compile, $templateCache, toast, $translat
                 polygon.coordinates[i]=[parseFloat(scope.longitudes[i]),parseFloat(scope.latitudes[i])]
             }
             $log.log(polygon);
-            scope.crop.location = polygon;
+            scope.parcel.location = polygon;
         };
     }
     return {
         restrict: "E",
         link: linker,
         scope: {
-            crop: '=',
+            parcel: '=',
             isEdit: '=',
-            cropScope: '=',
+            parcelScope: '=',
             theForm: '=',
             onAssignToCustomer: '&',
             onMakePublic: '&',
             onUnassignFromCustomer: '&',
-            onDeleteCrop: '&'
+            onDeleteParcel: '&'
         }
     };
 }

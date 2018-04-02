@@ -46,7 +46,7 @@ import scala.concurrent.duration.Duration;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 import java.util.function.BiConsumer;
-import org.thingsboard.server.dao.crop.CropService;
+import org.thingsboard.server.dao.parcel.ParcelService;
 import org.thingsboard.server.dao.farm.FarmService;
 
 @Slf4j
@@ -57,7 +57,7 @@ public final class SharedPluginProcessingContext {
     final PluginWebSocketMsgEndpoint msgEndpoint;
     final AssetService assetService;
     final FarmService farmService;
-    final CropService cropService;
+    final ParcelService parcelService;
     final DeviceService deviceService;
     final RuleService ruleService;
     final PluginService pluginService;
@@ -85,7 +85,7 @@ public final class SharedPluginProcessingContext {
         this.attributesService = sysContext.getAttributesService();
         this.assetService = sysContext.getAssetService();
         this.farmService = sysContext.getFarmService();
-        this.cropService = sysContext.getCropService();
+        this.parcelService = sysContext.getParcelService();
         this.deviceService = sysContext.getDeviceService();
         this.rpcService = sysContext.getRpcService();
         this.routingService = sysContext.getRoutingService();

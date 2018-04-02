@@ -57,7 +57,7 @@ import org.thingsboard.server.service.component.ComponentDiscoveryService;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.Optional;
-import org.thingsboard.server.dao.crop.CropService;
+import org.thingsboard.server.dao.parcel.ParcelService;
 import org.thingsboard.server.dao.farm.FarmService;
 
 @Component
@@ -93,7 +93,7 @@ public class ActorSystemContext {
     @Getter private FarmService farmService;
     
     @Autowired
-    @Getter private CropService cropService;
+    @Getter private ParcelService parcelService;
 
     @Autowired
     @Getter private TenantService tenantService;

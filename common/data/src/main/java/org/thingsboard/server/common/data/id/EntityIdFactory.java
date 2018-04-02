@@ -53,8 +53,8 @@ public class EntityIdFactory {
                 return new AssetId(uuid);
             case FARM:
                 return new FarmId(uuid);
-            case CROP:
-                return new CropId(uuid);
+            case PARCEL:
+                return new ParcelId(uuid);
             case ALARM:
                 return new AlarmId(uuid);
         }

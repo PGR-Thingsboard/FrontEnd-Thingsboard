@@ -1,33 +1,33 @@
 
 
-export default angular.module('thingsboard.api.crop', [])
-    .factory('cropService', CropService)
+export default angular.module('thingsboard.api.parcel', [])
+    .factory('parcelService', ParcelService)
     .name;
 
 /*@ngInject*/
-function CropService($http, $q, customerService, userService, $log) {
+function ParcelService($http, $q, customerService, userService, $log) {
 
     var service = {
-        getCrop: getCrop,
-        getCrops: getCrops,
-        getAllcrops: getAllcrops,
-        saveCrop: saveCrop,
-        deleteCrop: deleteCrop,
-        assignCropToCustomer: assignCropToCustomer,
-        unassignCropFromCustomer: unassignCropFromCustomer,
-        makeCropPublic: makeCropPublic,
-        getTenantCrops: getTenantCrops,
-        getCustomerCrops: getCustomerCrops,
+        getParcel: getParcel,
+        getParcels: getParcels,
+        getAllparcels: getAllparcels,
+        saveParcel: saveParcel,
+        deleteParcel: deleteParcel,
+        assignParcelToCustomer: assignParcelToCustomer,
+        unassignParcelFromCustomer: unassignParcelFromCustomer,
+        makeParcelPublic: makeParcelPublic,
+        getTenantParcels: getTenantParcels,
+        getCustomerParcels: getCustomerParcels,
         findByQuery: findByQuery,
-        fetchCropsByNameFilter: fetchCropsByNameFilter,
-        getCropTypes: getCropTypes
+        fetchParcelsByNameFilter: fetchParcelsByNameFilter,
+        getParcelTypes: getParcelTypes
     }
 
     return service;
 
-    function getCrop(cropId, ignoreErrors, config) {
+    function getParcel(parcelId, ignoreErrors, config) {
         var deferred = $q.defer();
-        var url = '/api/crop/' + cropId;
+        var url = '/api/parcel/' + parcelId;
         if (!config) {
             config = {};
         }
@@ -40,39 +40,39 @@ function CropService($http, $q, customerService, userService, $log) {
         return deferred.promise;
     }
 
-    function getCrops(cropIds, config) {
+    function getParcels(parcelIds, config) {
         var deferred = $q.defer();
         var ids = '';
-        for (var i=0;i<cropIds.length;i++) {
+        for (var i=0;i<parcelIds.length;i++) {
             if (i>0) {
                 ids += ',';
             }
-            ids += cropIds[i];
+            ids += parcelIds[i];
         }
-        var url = '/api/crops?cropIds=' + ids;
+        var url = '/api/parcels?parcelIds=' + ids;
         $http.get(url, config).then(function success(response) {
-            var crops = response.data;
-            crops.sort(function (crop1, crop2) {
-                var id1 =  crop1.id.id;
-                var id2 =  crop2.id.id;
-                var index1 = cropIds.indexOf(id1);
-                var index2 = cropIds.indexOf(id2);
+            var parcels = response.data;
+            parcels.sort(function (parcel1, parcel2) {
+                var id1 =  parcel1.id.id;
+                var id2 =  parcel2.id.id;
+                var index1 = parcelIds.indexOf(id1);
+                var index2 = parcelIds.indexOf(id2);
                 return index1 - index2;
             });
-            deferred.resolve(crops);
+            deferred.resolve(parcels);
         }, function fail() {
             deferred.reject();
         });
         return deferred.promise;
     }
 
-    function getAllcrops(config) {
+    function getAllparcels(config) {
         var deferred = $q.defer();
-        var crops;
-        var url = '/api/Allcrops';
+        var parcels;
+        var url = '/api/Allparcels';
         $http.get(url,config).then(function success(response) {
-            crops=response.data;
-            deferred.resolve(crops);
+            parcels=response.data;
+            deferred.resolve(parcels);
         }, function fail() {
             deferred.reject();
         });
@@ -80,15 +80,15 @@ function CropService($http, $q, customerService, userService, $log) {
         return deferred.promise;
     }
 
-    function saveCrop(crop, ignoreErrors, config) {
-        $log.log(crop);
+    function saveParcel(parcel, ignoreErrors, config) {
+        $log.log(parcel);
         var deferred = $q.defer();
-        var url = '/api/crop';
+        var url = '/api/parcel';
         if (!config) {
             config = {};
         }
         config = Object.assign(config, { ignoreErrors: ignoreErrors });
-        $http.post(url, crop, config).then(function success(response) {
+        $http.post(url, parcel, config).then(function success(response) {
             deferred.resolve(response.data);
         }, function fail() {
             deferred.reject();
@@ -96,9 +96,9 @@ function CropService($http, $q, customerService, userService, $log) {
         return deferred.promise;
     }
 
-    function deleteCrop(cropId, ignoreErrors, config) {
+    function deleteParcel(parcelId, ignoreErrors, config) {
         var deferred = $q.defer();
-        var url = '/api/crop/' + cropId;
+        var url = '/api/parcel/' + parcelId;
         if (!config) {
             config = {};
         }
@@ -111,9 +111,9 @@ function CropService($http, $q, customerService, userService, $log) {
         return deferred.promise;
     }
 
-    function assignCropToCustomer(customerId, cropId, ignoreErrors, config) {
+    function assignParcelToCustomer(customerId, parcelId, ignoreErrors, config) {
         var deferred = $q.defer();
-        var url = '/api/customer/' + customerId + '/crop/' + cropId;
+        var url = '/api/customer/' + customerId + '/parcel/' + parcelId;
         if (!config) {
             config = {};
         }
@@ -126,9 +126,9 @@ function CropService($http, $q, customerService, userService, $log) {
         return deferred.promise;
     }
 
-    function unassignCropFromCustomer(cropId, ignoreErrors, config) {
+    function unassignParcelFromCustomer(parcelId, ignoreErrors, config) {
         var deferred = $q.defer();
-        var url = '/api/customer/crop/' + cropId;
+        var url = '/api/customer/parcel/' + parcelId;
         if (!config) {
             config = {};
         }
@@ -141,9 +141,9 @@ function CropService($http, $q, customerService, userService, $log) {
         return deferred.promise;
     }
 
-    function makeCropPublic(cropId, ignoreErrors, config) {
+    function makeParcelPublic(parcelId, ignoreErrors, config) {
         var deferred = $q.defer();
-        var url = '/api/customer/public/crop/' + cropId;
+        var url = '/api/customer/public/parcel/' + parcelId;
         if (!config) {
             config = {};
         }
@@ -156,9 +156,9 @@ function CropService($http, $q, customerService, userService, $log) {
         return deferred.promise;
     }
 
-    function getTenantCrops(pageLink, applyCustomersInfo, config, type) {
+    function getTenantParcels(pageLink, applyCustomersInfo, config, type) {
         var deferred = $q.defer();
-        var url = '/api/tenant/crops?limit=' + pageLink.limit;
+        var url = '/api/tenant/parcels?limit=' + pageLink.limit;
         if (angular.isDefined(pageLink.textSearch)) {
             url += '&textSearch=' + pageLink.textSearch;
         }
@@ -191,9 +191,9 @@ function CropService($http, $q, customerService, userService, $log) {
         return deferred.promise;
     }
 
-    function getCustomerCrops(customerId, pageLink, applyCustomersInfo, config, type) {
+    function getCustomerParcels(customerId, pageLink, applyCustomersInfo, config, type) {
         var deferred = $q.defer();
-        var url = '/api/customer/' + customerId + '/crops?limit=' + pageLink.limit;
+        var url = '/api/customer/' + customerId + '/parcels?limit=' + pageLink.limit;
         if (angular.isDefined(pageLink.textSearch)) {
             url += '&textSearch=' + pageLink.textSearch;
         }
@@ -229,7 +229,7 @@ function CropService($http, $q, customerService, userService, $log) {
 
     function findByQuery(query, ignoreErrors, config) {
         var deferred = $q.defer();
-        var url = '/api/crops';
+        var url = '/api/parcels';
         if (!config) {
             config = {};
         }
@@ -242,16 +242,16 @@ function CropService($http, $q, customerService, userService, $log) {
         return deferred.promise;
     }
 
-    function fetchCropsByNameFilter(cropNameFilter, limit, applyCustomersInfo, config) {
+    function fetchParcelsByNameFilter(parcelNameFilter, limit, applyCustomersInfo, config) {
         var deferred = $q.defer();
         var user = userService.getCurrentUser();
         var promise;
-        var pageLink = {limit: limit, textSearch: cropNameFilter};
+        var pageLink = {limit: limit, textSearch: parcelNameFilter};
         if (user.authority === 'CUSTOMER_USER') {
             var customerId = user.customerId;
-            promise = getCustomerCrops(customerId, pageLink, applyCustomersInfo, config);
+            promise = getCustomerParcels(customerId, pageLink, applyCustomersInfo, config);
         } else {
-            promise = getTenantCrops(pageLink, applyCustomersInfo, config);
+            promise = getTenantParcels(pageLink, applyCustomersInfo, config);
         }
         promise.then(
             function success(result) {
@@ -268,9 +268,9 @@ function CropService($http, $q, customerService, userService, $log) {
         return deferred.promise;
     }
 
-    function getCropTypes(config) {
+    function getParcelTypes(config) {
         var deferred = $q.defer();
-        var url = '/api/crop/types';
+        var url = '/api/parcel/types';
         $http.get(url, config).then(function success(response) {
             deferred.resolve(response.data);
         }, function fail() {

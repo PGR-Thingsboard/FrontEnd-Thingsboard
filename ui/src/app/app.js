@@ -70,7 +70,7 @@ import thingsboardApiUser from './api/user.service';
 import thingsboardApiEntityRelation from './api/entity-relation.service';
 import thingsboardApiAsset from './api/asset.service';
 import thingsboardApiFarm from './api/farm.service';
-import thingsboardApiCrop from './api/crop.service';
+import thingsboardApiParcel from './api/parcel.service';
 import thingsboardApiAttribute from './api/attribute.service';
 import thingsboardApiEntity from './api/entity.service';
 import thingsboardApiAlarm from './api/alarm.service';
@@ -134,7 +134,7 @@ angular.module('thingsboard', [
     thingsboardApiEntityRelation,
     thingsboardApiAsset,
     thingsboardApiFarm,
-    thingsboardApiCrop,
+    thingsboardApiParcel,
     thingsboardApiAttribute,
     thingsboardApiEntity,
     thingsboardApiAlarm,

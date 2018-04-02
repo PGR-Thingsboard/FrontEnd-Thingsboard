@@ -3,7 +3,7 @@
 
 
 /*@ngInject*/
-export default function AssignCropToCustomerController(customerService, cropService, $mdDialog, $q, cropIds, customers) {
+export default function AssignParcelToCustomerController(customerService, parcelService, $mdDialog, $q, parcelIds, customers) {
 
     var vm = this;
 
@@ -66,8 +66,8 @@ export default function AssignCropToCustomerController(customerService, cropServ
 
     function assign() {
         var tasks = [];
-        for (var i=0;i<cropIds.length;i++) {
-            tasks.push(cropService.assignCropToCustomer(vm.customers.selection.id.id, cropIds[i]));
+        for (var i=0;i<parcelIds.length;i++) {
+            tasks.push(parcelService.assignParcelToCustomer(vm.customers.selection.id.id, parcelIds[i]));
         }
         $q.all(tasks).then(function () {
             $mdDialog.hide();

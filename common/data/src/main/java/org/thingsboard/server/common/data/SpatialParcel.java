@@ -9,17 +9,17 @@ package org.thingsboard.server.common.data;
  *
  * @author Carlos Ramirez
  */
-public class SpatialCrop {
+public class SpatialParcel {
 
-    private String id, crop_Farm_FK;
+    private String id, parcel_Farm_FK;
     private Polygon polygons;
 
-    public SpatialCrop() {
+    public SpatialParcel() {
     }
 
-    public SpatialCrop(String id, String crop_Farm_FK, Polygon polygons) {
+    public SpatialParcel(String id, String parcel_Farm_FK, Polygon polygons) {
         this.id = id;
-        this.crop_Farm_FK = crop_Farm_FK;
+        this.parcel_Farm_FK = parcel_Farm_FK;
         this.polygons = polygons;
     }
 
@@ -31,12 +31,12 @@ public class SpatialCrop {
         this.id = id;
     }
 
-    public String getCrop_Farm_FK() {
-        return crop_Farm_FK;
+    public String getParcel_Farm_FK() {
+        return parcel_Farm_FK;
     }
 
-    public void setCrop_Farm_FK(String crop_Farm_FK) {
-        this.crop_Farm_FK = crop_Farm_FK;
+    public void setParcel_Farm_FK(String parcel_Farm_FK) {
+        this.parcel_Farm_FK = parcel_Farm_FK;
     }
 
     public Polygon getPolygons() {
@@ -49,7 +49,7 @@ public class SpatialCrop {
     
     @Override
     public String toString(){
-        return ("CropId: "+id+" ,crop_Farm_FK: "+crop_Farm_FK+" ,polygon: "+polygons.getCoordinates());
+        return ("ParcelId: "+id+" ,parcel_Farm_FK: "+parcel_Farm_FK+" ,polygon: "+polygons.getCoordinates());
     }
 
 }

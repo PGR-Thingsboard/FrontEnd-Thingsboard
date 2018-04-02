@@ -15,22 +15,22 @@ import org.thingsboard.server.common.data.EntityType;
  *
  * @author German Lopez
  */
-public class CropId extends UUIDBased implements EntityId {
+public class ParcelId extends UUIDBased implements EntityId {
 
     private static final long serialVersionUID = 1L;
 
     @JsonCreator
-    public CropId(@JsonProperty("id") UUID id) {
+    public ParcelId(@JsonProperty("id") UUID id) {
         super(id);
     }
 
-    public static CropId fromString(String cropId) {
-        return new CropId(UUID.fromString(cropId));
+    public static ParcelId fromString(String parcelId) {
+        return new ParcelId(UUID.fromString(parcelId));
     }
 
     @JsonIgnore
     @Override
     public EntityType getEntityType() {
-        return EntityType.CROP;
+        return EntityType.PARCEL;
     }
 }

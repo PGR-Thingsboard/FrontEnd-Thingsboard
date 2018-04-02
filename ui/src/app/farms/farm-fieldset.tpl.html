@@ -82,6 +82,10 @@
                             <md-option ng-repeat="dest in destination" value="{{dest}}">{{dest}}</md-option>
                         </md-select>
                     </md-input-container>
+                    <md-input-container class="md-block">
+                        <label translate>farm.use_details</label>
+                        <textarea ng-model="farm.farmDetails.useDetails" rows="2"></textarea>
+                    </md-input-container>
                 </md-content>
             </md-tab>
             <md-tab label="{{ 'Home Details' | translate }}">

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.thingsboard.server.dao.crop;
+package org.thingsboard.server.dao.parcel;
 
 import java.util.List;
 import javax.annotation.Nullable;
@@ -14,10 +14,10 @@ import lombok.Data;
  * @author German Lopez
  */
 @Data
-public class CropTypeFilter {
+public class ParcelTypeFilter {
     @Nullable
     private String relationType;
     @Nullable
-    private List<String> cropTypes;
+    private List<String> parcelTypes;
 }
 

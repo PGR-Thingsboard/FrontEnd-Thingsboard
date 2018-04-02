@@ -1,10 +1,10 @@
 
 
-<md-dialog aria-label="{{ 'crop.add' | translate }}" tb-help="'crops'" help-container-id="help-container">
+<md-dialog aria-label="{{ 'parcel.add' | translate }}" tb-help="'parcels'" help-container-id="help-container">
     <form name="theForm" ng-submit="vm.add()">
         <md-toolbar>
             <div class="md-toolbar-tools">
-                <h2 translate>crop.add</h2>
+                <h2 translate>parcel.add</h2>
                 <span flex></span>
                 <div id="help-container"></div>
                 <md-button class="md-icon-button" ng-click="vm.cancel()">
@@ -16,7 +16,7 @@
         <span style="min-height: 5px;" flex="" ng-show="!$root.loading"></span>
         <md-dialog-content>
             <div class="md-dialog-content">
-                <tb-crop crop="vm.item" is-edit="true" the-form="theForm"></tb-crop>
+                <tb-parcel parcel="vm.item" is-edit="true" the-form="theForm"></tb-parcel>
             </div>
         </md-dialog-content>
         <md-dialog-actions layout="row">

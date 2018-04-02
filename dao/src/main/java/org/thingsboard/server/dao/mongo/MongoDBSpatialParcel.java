@@ -13,41 +13,41 @@ import com.mongodb.client.result.DeleteResult;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 import org.bson.conversions.Bson;
-import org.thingsboard.server.common.data.SpatialCrop;
+import org.thingsboard.server.common.data.SpatialParcel;
 
 /**
  *
  * @author Carlos Ramirez
  */
-public class MongoDBSpatialCrop extends MongoConnectionPOJO<SpatialCrop> implements DaoMongo<SpatialCrop> {
+public class MongoDBSpatialParcel extends MongoConnectionPOJO<SpatialParcel> implements DaoMongo<SpatialParcel> {
 
     @Override
-    public MongoCollection<SpatialCrop> getCollectionDependClass() {
-        return this.getMongoDatabase().getCollection("Crops", SpatialCrop.class);
+    public MongoCollection<SpatialParcel> getCollectionDependClass() {
+        return this.getMongoDatabase().getCollection("Parcels", SpatialParcel.class);
     }
 
     @Override
-    public List<SpatialCrop> find() {
-        MongoCollection<SpatialCrop> farmCollection = getCollectionDependClass();
-        List<SpatialCrop> resultSet = new CopyOnWriteArrayList<>();
-        farmCollection.find().forEach((Block<SpatialCrop>) crop -> {
-            resultSet.add(crop);
+    public List<SpatialParcel> find() {
+        MongoCollection<SpatialParcel> farmCollection = getCollectionDependClass();
+        List<SpatialParcel> resultSet = new CopyOnWriteArrayList<>();
+        farmCollection.find().forEach((Block<SpatialParcel>) parcel -> {
+            resultSet.add(parcel);
         });
         return resultSet;
     }
 
     @Override
-    public SpatialCrop findById(String id) {
+    public SpatialParcel findById(String id) {
         return getCollectionDependClass().find(eq("_id", id)).first();
     }
 
     @Override
-    public SpatialCrop save(SpatialCrop t){
+    public SpatialParcel save(SpatialParcel t){
         try{
             getCollectionDependClass().insertOne(t);
             return t;
         }catch(MongoWriteException ex){
-            System.out.println("No fue posible agregar el crop");
+            System.out.println("No fue posible agregar el parcel");
             
         }
         return null;

@@ -117,9 +117,9 @@ public interface DeviceDao extends Dao<Device> {
     ListenableFuture<List<EntitySubtype>> findTenantDeviceTypesAsync(UUID tenantId);
     
     /**
-     * Find devices by crop id
+     * Find devices by parcel id
      * @param deviceId
      * @return 
      */
-    ListenableFuture<List<DeviceEntity>> findDevicesByDeviceId(String cropId);
+    ListenableFuture<List<DeviceEntity>> findDevicesByDeviceId(String parcelId);
 }

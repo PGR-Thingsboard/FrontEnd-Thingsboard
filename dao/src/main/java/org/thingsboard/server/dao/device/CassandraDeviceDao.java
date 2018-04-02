@@ -40,7 +40,7 @@ import java.util.*;
 
 import static com.datastax.driver.core.querybuilder.QueryBuilder.*;
 import static org.thingsboard.server.dao.model.ModelConstants.*;
-import org.thingsboard.server.dao.model.nosql.CropEntity;
+import org.thingsboard.server.dao.model.nosql.ParcelEntity;
 
 @Component
 @Slf4j
@@ -169,10 +169,10 @@ public class CassandraDeviceDao extends CassandraAbstractSearchTextDao<DeviceEnt
     }
     
     @Override
-    public ListenableFuture<List<DeviceEntity>> findDevicesByDeviceId(String cropId) {
+    public ListenableFuture<List<DeviceEntity>> findDevicesByDeviceId(String parcelId) {
         Select select = select().from(DEVICE_COLUMN_FAMILY_NAME);
         Select.Where query = select.where();
-        query.and(eq(DEVICE_COLUMN_FAMILY_NAME, cropId));
+        query.and(eq(DEVICE_COLUMN_FAMILY_NAME, parcelId));
         ResultSetFuture resultSetFuture = getSession().executeAsync(query);
         return Futures.transform(resultSetFuture, new Function<ResultSet, List<DeviceEntity>>() {
             @Nullable

@@ -30,7 +30,7 @@ import org.thingsboard.server.dao.model.SearchTextEntity;
 import org.thingsboard.server.dao.model.type.JsonCodec;
 
 import java.util.UUID;
-import org.thingsboard.server.common.data.id.CropId;
+import org.thingsboard.server.common.data.id.ParcelId;
 
 import static org.thingsboard.server.dao.model.ModelConstants.*;
 
@@ -58,8 +58,8 @@ public final class DeviceEntity implements SearchTextEntity<Device> {
     @Column(name = DEVICE_NAME_PROPERTY)
     private String name;
     
-    @Column(name = DEVICE_CROPID_PROPERTY) 
-    private String cropId;
+    @Column(name = DEVICE_PARCELID_PROPERTY)
+    private String parcelId;
 
     @Column(name = SEARCH_TEXT_PROPERTY)
     private String searchText;
@@ -83,7 +83,7 @@ public final class DeviceEntity implements SearchTextEntity<Device> {
         }
         this.name = device.getName();
         this.type = device.getType();
-        this.cropId = device.getCropId();
+        this.parcelId = device.getParcelId();
         this.additionalInfo = device.getAdditionalInfo();
     }
     
@@ -135,12 +135,12 @@ public final class DeviceEntity implements SearchTextEntity<Device> {
         this.additionalInfo = additionalInfo;
     }
     
-    public String getCropId(){
-        return cropId;
+    public String getParcelId(){
+        return parcelId;
     }
     
-    public void setCropId(String cropId){
-        this.cropId = cropId;
+    public void setParcelId(String parcelId){
+        this.parcelId = parcelId;
     }
     
     @Override
@@ -169,7 +169,7 @@ public final class DeviceEntity implements SearchTextEntity<Device> {
         }
         device.setName(name);
         device.setType(type);
-        device.setCropId(cropId);
+        device.setParcelId(parcelId);
         device.setAdditionalInfo(additionalInfo);
         return device;
     }

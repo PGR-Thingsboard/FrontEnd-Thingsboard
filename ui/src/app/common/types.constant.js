@@ -289,7 +289,7 @@ export default angular.module('thingsboard.types', [])
                 device: "DEVICE",
                 asset: "ASSET",
                 farm: "FARM",
-                crop: "CROP",
+                parcel: "PARCEL",
                 rule: "RULE",
                 plugin: "PLUGIN",
                 tenant: "TENANT",

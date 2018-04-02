@@ -14,18 +14,18 @@ import com.datastax.driver.mapping.annotations.PartitionKey;
 import com.datastax.driver.mapping.annotations.Table;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
-import org.thingsboard.server.common.data.crop.Crop;
-import org.thingsboard.server.common.data.id.CropId;
+import org.thingsboard.server.common.data.parcel.Parcel;
+import org.thingsboard.server.common.data.id.ParcelId;
 import org.thingsboard.server.common.data.id.CustomerId;
 import org.thingsboard.server.common.data.id.FarmId;
 import org.thingsboard.server.common.data.id.TenantId;
-import static org.thingsboard.server.dao.model.ModelConstants.CROP_ADDITIONAL_INFO_PROPERTY;
-import static org.thingsboard.server.dao.model.ModelConstants.CROP_COLUMN_FAMILY_NAME;
-import static org.thingsboard.server.dao.model.ModelConstants.CROP_CUSTOMER_ID_PROPERTY;
-import static org.thingsboard.server.dao.model.ModelConstants.CROP_FARMID_PROPERTY;
-import static org.thingsboard.server.dao.model.ModelConstants.CROP_NAME_PROPERTY;
-import static org.thingsboard.server.dao.model.ModelConstants.CROP_TENANT_ID_PROPERTY;
-import static org.thingsboard.server.dao.model.ModelConstants.CROP_TYPE_PROPERTY;
+import static org.thingsboard.server.dao.model.ModelConstants.PARCEL_ADDITIONAL_INFO_PROPERTY;
+import static org.thingsboard.server.dao.model.ModelConstants.PARCEL_COLUMN_FAMILY_NAME;
+import static org.thingsboard.server.dao.model.ModelConstants.PARCEL_CUSTOMER_ID_PROPERTY;
+import static org.thingsboard.server.dao.model.ModelConstants.PARCEL_FARMID_PROPERTY;
+import static org.thingsboard.server.dao.model.ModelConstants.PARCEL_NAME_PROPERTY;
+import static org.thingsboard.server.dao.model.ModelConstants.PARCEL_TENANT_ID_PROPERTY;
+import static org.thingsboard.server.dao.model.ModelConstants.PARCEL_TYPE_PROPERTY;
 import static org.thingsboard.server.dao.model.ModelConstants.ID_PROPERTY;
 import static org.thingsboard.server.dao.model.ModelConstants.SEARCH_TEXT_PROPERTY;
 import org.thingsboard.server.dao.model.SearchTextEntity;
@@ -35,10 +35,10 @@ import org.thingsboard.server.dao.model.type.JsonCodec;
  *
  * @author German Lopez
  */
-@Table(name = CROP_COLUMN_FAMILY_NAME)
+@Table(name = PARCEL_COLUMN_FAMILY_NAME)
 @EqualsAndHashCode
 @ToString
-public final class CropEntity implements SearchTextEntity<Crop> {
+public final class ParcelEntity implements SearchTextEntity<Parcel> {
 
     /**
      * @return the nameFina
@@ -59,47 +59,47 @@ public final class CropEntity implements SearchTextEntity<Crop> {
     private UUID id;
 
     @PartitionKey(value = 1)
-    @Column(name = CROP_TENANT_ID_PROPERTY)
+    @Column(name = PARCEL_TENANT_ID_PROPERTY)
     private UUID tenantId;
 
     @PartitionKey(value = 2)
-    @Column(name = CROP_CUSTOMER_ID_PROPERTY)
+    @Column(name = PARCEL_CUSTOMER_ID_PROPERTY)
     private UUID customerId;
 
     @PartitionKey(value = 3)
-    @Column(name = CROP_TYPE_PROPERTY)
+    @Column(name = PARCEL_TYPE_PROPERTY)
     private String type;
 
-    @Column(name = CROP_NAME_PROPERTY)
+    @Column(name = PARCEL_NAME_PROPERTY)
     private String name;
     
-    @Column(name = CROP_FARMID_PROPERTY)
+    @Column(name = PARCEL_FARMID_PROPERTY)
     private String farmId;
 
     @Column(name = SEARCH_TEXT_PROPERTY)
     private String searchText;
 
-    @com.datastax.driver.mapping.annotations.Column(name = CROP_ADDITIONAL_INFO_PROPERTY, codec = JsonCodec.class)
+    @com.datastax.driver.mapping.annotations.Column(name = PARCEL_ADDITIONAL_INFO_PROPERTY, codec = JsonCodec.class)
     private JsonNode additionalInfo;
 
-    public CropEntity() {
+    public ParcelEntity() {
         super();
     }
 
-    public CropEntity(Crop crop) {
-        if (crop.getId() != null) {
-            this.id = crop.getId().getId();
+    public ParcelEntity(Parcel parcel) {
+        if (parcel.getId() != null) {
+            this.id = parcel.getId().getId();
         }
-        if (crop.getTenantId() != null) {
-            this.tenantId = crop.getTenantId().getId();
+        if (parcel.getTenantId() != null) {
+            this.tenantId = parcel.getTenantId().getId();
         }
-        if (crop.getCustomerId() != null) {
-            this.customerId = crop.getCustomerId().getId();
+        if (parcel.getCustomerId() != null) {
+            this.customerId = parcel.getCustomerId().getId();
         }
-        this.name = crop.getName();
-        this.type = crop.getType();
-        this.farmId = crop.getFarmId();
-        this.additionalInfo = crop.getAdditionalInfo();
+        this.name = parcel.getName();
+        this.type = parcel.getType();
+        this.farmId = parcel.getFarmId();
+        this.additionalInfo = parcel.getAdditionalInfo();
     }
 
     public UUID getId() {
@@ -165,20 +165,20 @@ public final class CropEntity implements SearchTextEntity<Crop> {
     }
 
     @Override
-    public Crop toData() {
-        Crop crop = new Crop(new CropId(id));
-        crop.setCreatedTime(UUIDs.unixTimestamp(id));
+    public Parcel toData() {
+        Parcel parcel = new Parcel(new ParcelId(id));
+        parcel.setCreatedTime(UUIDs.unixTimestamp(id));
         if (tenantId != null) {
-            crop.setTenantId(new TenantId(tenantId));
+            parcel.setTenantId(new TenantId(tenantId));
         }
         if (customerId != null) {
-            crop.setCustomerId(new CustomerId(customerId));
+            parcel.setCustomerId(new CustomerId(customerId));
         }
-        crop.setName(name);
-        crop.setType(getType());
-        crop.setFarmId(farmId);
-        crop.setAdditionalInfo(additionalInfo);
-        return crop;
+        parcel.setName(name);
+        parcel.setType(getType());
+        parcel.setFarmId(farmId);
+        parcel.setAdditionalInfo(additionalInfo);
+        return parcel;
     }
 
     

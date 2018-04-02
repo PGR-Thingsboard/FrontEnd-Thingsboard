@@ -70,9 +70,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-import org.thingsboard.server.common.data.crop.Crop;
+import org.thingsboard.server.common.data.parcel.Parcel;
 import org.thingsboard.server.common.data.farm.Farm;
-import org.thingsboard.server.dao.crop.CropService;
+import org.thingsboard.server.dao.parcel.ParcelService;
 import org.thingsboard.server.dao.farm.FarmService;
 import org.thingsboard.server.dao.mongo.MongoDBSpatial;
 
@@ -104,7 +104,7 @@ public abstract class BaseController {
     protected FarmService farmService;
     
     @Autowired
-    protected CropService cropService;
+    protected ParcelService parcelService;
 
     @Autowired
     protected AlarmService alarmService;
@@ -318,8 +318,8 @@ public abstract class BaseController {
                 case FARM:
                     checkFarm(farmService.findFarmById(new FarmId(entityId.getId())));
                     return;
-                case CROP:
-                    checkCrop(cropService.findCropById(new CropId(entityId.getId())));
+                case PARCEL:
+                    checkParcel(parcelService.findParcelById(new ParcelId(entityId.getId())));
                     return;
                 case DASHBOARD:
                     checkDashboardId(new DashboardId(entityId.getId()));
@@ -392,22 +392,22 @@ public abstract class BaseController {
         }
     }
     
-    Crop checkCropId(CropId cropId) throws ThingsboardException {
+    Parcel checkParcelId(ParcelId parcelId) throws ThingsboardException {
         try {
-            validateId(cropId, "Incorrect cropId " + cropId);
-            Crop crop = cropService.findCropById(cropId);
-            checkCrop(crop);
-            return crop;
+            validateId(parcelId, "Incorrect parcelId " + parcelId);
+            Parcel parcel = parcelService.findParcelById(parcelId);
+            checkParcel(parcel);
+            return parcel;
         } catch (Exception e) {
             throw handleException(e, false);
         }
     }
 
-    protected void checkCrop(Crop crop) throws ThingsboardException {
-        checkNotNull(crop);
-        checkTenantId(crop.getTenantId());
-        if (crop.getCustomerId() != null && !crop.getCustomerId().getId().equals(ModelConstants.NULL_UUID)) {
-            checkCustomerId(crop.getCustomerId());
+    protected void checkParcel(Parcel parcel) throws ThingsboardException {
+        checkNotNull(parcel);
+        checkTenantId(parcel.getTenantId());
+        if (parcel.getCustomerId() != null && !parcel.getCustomerId().getId().equals(ModelConstants.NULL_UUID)) {
+            checkCustomerId(parcel.getCustomerId());
         }
     }
 

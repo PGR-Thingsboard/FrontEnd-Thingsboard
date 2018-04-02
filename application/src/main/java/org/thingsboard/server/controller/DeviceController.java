@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.*;
 import org.thingsboard.server.common.data.*;
 import org.thingsboard.server.common.data.audit.ActionStatus;
 import org.thingsboard.server.common.data.audit.ActionType;
-import org.thingsboard.server.common.data.crop.Crop;
+import org.thingsboard.server.common.data.parcel.Parcel;
 import org.thingsboard.server.common.data.device.DeviceSearchQuery;
 import org.thingsboard.server.common.data.farm.Farm;
 import org.thingsboard.server.common.data.id.*;
@@ -89,7 +89,7 @@ public class DeviceController extends BaseController {
                 }
             }
             Device savedDevice = checkNotNull(deviceService.saveDevice(device));
-            SpatialDevice spatialDevice = new SpatialDevice(savedDevice.getId().getId().toString(),savedDevice.getCropId(),device.getLocation());
+            SpatialDevice spatialDevice = new SpatialDevice(savedDevice.getId().getId().toString(),savedDevice.getParcelId(),device.getLocation());
             mongoService.getMongodbDevice().save(spatialDevice);
             //-----------------------Agregando valor a la fuerza en base de datos
             StringDataEntry value = new StringDataEntry("prueba","3");
@@ -98,9 +98,9 @@ public class DeviceController extends BaseController {
             tsService.save(savedDevice.getId(),tsKvEntry);
             //----------------------------------------------------------------
             /*ObjectMapper mapper = new ObjectMapper();
-            CropId cropId = new CropId(UUID.fromString(savedDevice.getCropId()));
-            Crop crop = cropService.findCropById(cropId);
-            FarmId farmId = new FarmId(UUID.fromString(crop.getFarmId()));
+            ParcelId parcelId = new ParcelId(UUID.fromString(savedDevice.getParcelId()));
+            Parcel parcel = parcelService.findParcelById(parcelId);
+            FarmId farmId = new FarmId(UUID.fromString(parcel.getFarmId()));
             Farm farm = farmService.findFarmById(farmId);
             DashboardId dashboardId = new DashboardId(UUID.fromString(farm.getDashboardId()));
             Dashboard dashboard = dashboardService.findDashboardById(dashboardId);
