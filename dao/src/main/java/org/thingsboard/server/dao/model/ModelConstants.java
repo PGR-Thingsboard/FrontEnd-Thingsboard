@@ -196,6 +196,7 @@ public class ModelConstants {
     public static final String FARM_DASHBOARDID_PROPERTY = "dashboard_id";
     public static final String FARM_LOCATION_DESCRIPTION ="location_description";
     public static final String FARM_DETAILS = "farm_details";
+    public static final String FARM_TOTAL_AREA = "total_area";
     public static final String FARM_ADDITIONAL_INFO_PROPERTY = ADDITIONAL_INFO_PROPERTY;
 
     public static final String ALL_FARMS = "all_farms";

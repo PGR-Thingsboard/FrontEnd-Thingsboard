@@ -49,6 +49,13 @@ export default function FarmDirective($compile, $templateCache, toast, $translat
             this.type = 'Polygon';
         }
 
+
+        function Area(){
+            this.extension=0.0;
+            this.symbol='';
+
+        }
+
         function FarmDetails(){
             this.destination='';
             this.useDetails='';
@@ -65,11 +72,15 @@ export default function FarmDirective($compile, $templateCache, toast, $translat
 //---------------------------------------------------------------------------------------------
 
         var polygon = new Polygon();
-
         scope.destination = ['Familiar','Production'];
+        scope.symbol = ['ha','fg'];
 
         if(scope.farm.farmDetails === null){
             scope.farm.farmDetails = new FarmDetails();
+        }
+
+        if(scope.farm.totalArea === null){
+            scope.farm.totalArea = new Area();
         }
 
         scope.saveEverything = function() {
@@ -78,6 +89,7 @@ export default function FarmDirective($compile, $templateCache, toast, $translat
             }
             scope.farm.location = polygon;
         };
+
 
 
 
