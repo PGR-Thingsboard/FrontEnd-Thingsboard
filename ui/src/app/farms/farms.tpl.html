@@ -30,7 +30,7 @@
                        on-assign-to-customer="vm.assignToCustomer(event, [ vm.grid.detailsConfig.currentItem.id.id ])"
                        on-make-public="vm.makePublic(event, vm.grid.detailsConfig.currentItem)"
                        on-unassign-from-customer="vm.unassignFromCustomer(event, vm.grid.detailsConfig.currentItem, isPublic)"
-                       on-delete-farm="vm.grid.deleteItem(event, vm.grid.detailsConfig.currentItem)"></tb-farm>
+                       on-delete-farm="v|m.grid.deleteItem(event, vm.grid.detailsConfig.currentItem)"></tb-farm>
         </md-tab>
         <md-tab ng-if="!vm.grid.detailsConfig.isDetailsEditMode" md-on-select="vm.grid.triggerResize()" label="{{ 'attribute.attributes' | translate }}">
             <tb-attribute-table flex

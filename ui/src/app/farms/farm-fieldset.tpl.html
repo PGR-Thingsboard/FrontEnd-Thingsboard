@@ -83,7 +83,6 @@
                         </md-select>
                     </md-input-container>
                     </div>
-
                 </md-content>
 
 
@@ -123,8 +122,33 @@
             </md-tab>
             <md-tab label="{{ 'Enviroment' | translate }}">
                 <md-content class="md-padding">
-                    <h1 class="md-display-2">Tab One</h1>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla venenatis ante augue. Phasellus volutpat neque ac dui mattis vulputate. Etiam consequat aliquam cursus. In sodales pretium ultrices. Maecenas lectus est, sollicitudin consectetur felis nec, feugiat ultricies mi.</p>
+                    <md-input-container style="margin-right: 10px;">
+                        <label translate>farm.orography</label>
+                        <md-select ng-model="farm.enviroment.orography" >
+                            <md-option ng-repeat="oro in orography" value="{{oro}}">{{oro}}</md-option>
+                        </md-select>
+                    </md-input-container>
+
+
+                    <md-input-container style="margin-right: 10px;"  >
+
+                        <div flex="50" ng-repeat="way in ways">
+                            <md-checkbox ng-model="farm.enviroment.access[way]">
+                                {{way}}
+                            </md-checkbox>
+                        </div>
+
+                    </md-input-container>
+
+                    <md-input-container style="margin-right: 10px;">
+                        <h1 class="md-display-2">Tab One</h1>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla venenatis ante augue. Phasellus volutpat neque ac dui mattis vulputate. Etiam consequat aliquam cursus. In sodales pretium ultrices. Maecenas lectus est, sollicitudin consectetur felis nec, feugiat ultricies mi.</p>
+
+                    </md-input-container>
+
+
+
+
                 </md-content>
             </md-tab>
         </md-tabs>

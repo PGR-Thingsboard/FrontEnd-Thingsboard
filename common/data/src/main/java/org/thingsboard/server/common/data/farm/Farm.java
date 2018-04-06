@@ -192,7 +192,7 @@ public class Farm extends SearchTextBasedWithAdditionalInfo<FarmId> implements H
     }
 
     public Enviroment getEnviroment() {
-        return enviroment;
+        return this.enviroment;
     }
 
     public void setEnviroment(Enviroment enviroment) {

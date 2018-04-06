@@ -18,6 +18,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import org.thingsboard.server.common.data.farm.Area;
+import org.thingsboard.server.common.data.farm.Enviroment;
 import org.thingsboard.server.common.data.farm.Farm;
 import org.thingsboard.server.common.data.farm.FarmDetails;
 import org.thingsboard.server.common.data.id.CustomerId;
@@ -74,6 +75,9 @@ public final class FarmEntity implements SearchTextEntity<Farm> {
     @Column(name = FARM_DETAILS)
     private String farmDetails;
 
+    @Column(name = FARM_ENVIROMENT)
+    private String farmEnviroment;
+
     public FarmEntity() {
         super();
     }
@@ -97,12 +101,11 @@ public final class FarmEntity implements SearchTextEntity<Farm> {
             ObjectMapper mapper = new ObjectMapper();
             this.farmDetails = mapper.writeValueAsString(farm.getFarmDetails());
             this.totalArea = mapper.writeValueAsString(farm.getTotalArea());
+            this.farmEnviroment= mapper.writeValueAsString(farm.getEnviroment());
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
     }
-
-
 
     public UUID getId() {
         return id;
@@ -152,7 +155,16 @@ public final class FarmEntity implements SearchTextEntity<Farm> {
         this.additionalInfo = additionalInfo;
     }
 
+    public String getFarmEnviroment() {
+        return farmEnviroment;
+    }
+
+    public void setFarmEnviroment(String farmEnviroment) {
+        this.farmEnviroment = farmEnviroment;
+    }
+
     @Override
+
     public String getSearchTextSource() {
         return getName();
     }
@@ -185,6 +197,7 @@ public final class FarmEntity implements SearchTextEntity<Farm> {
             ObjectMapper mapper = new ObjectMapper();
             farm.setFarmDetails(mapper.readValue(farmDetails, FarmDetails.class));
             farm.setTotalArea(mapper.readValue(totalArea,Area.class));
+            farm.setEnviroment(mapper.readValue(farmEnviroment,Enviroment.class));
         } catch (IOException e) {
             e.printStackTrace();
         };

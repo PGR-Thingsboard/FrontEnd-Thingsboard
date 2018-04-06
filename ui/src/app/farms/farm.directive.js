@@ -64,6 +64,29 @@ export default function FarmDirective($compile, $templateCache, toast, $translat
             this.waterPoints=[];
         }
 
+        function Climatology() {
+            this.temperature='';
+            this.humidity='';
+            this.rainFall='';
+            this.solarIrradiance='';
+        }
+
+        function Access(){
+            this.air=false;
+            this.land=false;
+            this.fluvial=false;
+        }
+
+
+        function Enviroment(){
+            this.climatology= new Climatology();
+            this.orography='';
+            this.municipalDistance=0.0;
+            this.access=new Access();
+            this.highwayState='';
+        }
+
+
         /*function WaterPoints() {
             this.numberPoint = 0;
             this.resolution = '';
@@ -74,13 +97,21 @@ export default function FarmDirective($compile, $templateCache, toast, $translat
         var polygon = new Polygon();
         scope.destination = ['Familiar','Production'];
         scope.symbol = ['ha','fg'];
+        scope.orography = ['Valley','Mountain',"Plain","Volcano"];
+        scope.ways=["air","land","fluvial"];
+
 
         if(scope.farm.farmDetails === null){
             scope.farm.farmDetails = new FarmDetails();
         }
 
+
         if(scope.farm.totalArea === null){
             scope.farm.totalArea = new Area();
+        }
+
+        if (scope.farm.enviroment===null){
+            scope.farm.enviroment= new Enviroment();
         }
 
         scope.saveEverything = function() {
