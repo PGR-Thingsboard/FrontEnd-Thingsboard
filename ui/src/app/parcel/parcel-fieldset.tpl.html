@@ -34,36 +34,100 @@
         {{ 'parcel.parcel-public' | translate }}
     </div>
     <fieldset ng-disabled="$root.loading || !isEdit">
-        <md-input-container class="md-block">
-            <label translate>parcel.name</label>
-            <input required name="name" ng-model="parcel.name">
-            <div ng-messages="theForm.name.$error">
-                <div translate ng-message="required">parcel.name-required</div>
-            </div>
-        </md-input-container>
-
-        <md-input-container style="margin-right: 10px;">
-            <label>Farm</label>
-            <md-select ng-model="parcel.farmId">
-                <md-option ng-repeat="farm in farms" value="{{farm.id.id}}">{{farm.name}}</md-option>
-            </md-select>
-        </md-input-container>
-
-        <tb-entity-subtype-autocomplete
-                ng-disabled="$root.loading || !isEdit"
-                tb-required="true"
-                the-form="theForm"
-                ng-model="parcel.type"
-                entity-type="types.entityType.parcel">
-        </tb-entity-subtype-autocomplete>
-        <md-input-container class="md-block">
-            <label translate>parcel.description</label>
-            <textarea ng-model="parcel.additionalInfo.description" rows="2"></textarea>
-        </md-input-container>
-        <label ng-repeat-start="label in labels">{{label}}</label>
-        <input ng-model='longitudes[$index]' type='text' value='' />
-        <input ng-model='latitudes[$index]' type='text' value='' />
-        <br ng-repeat-end>
-        <md-button ng-click="saveEverything()">Ubicar</md-button>
+        <md-tabs  md-dynamic-height md-border-bottom>
+            <md-tab label="{{ 'Parcel Details' | translate }}">
+                <md-content class="md-padding">
+                    <md-input-container class="md-block">
+                        <label translate>parcel.name</label>
+                        <input required name="name" ng-model="parcel.name">
+                        <div ng-messages="theForm.name.$error">
+                            <div translate ng-message="required">parcel.name-required</div>
+                        </div>
+                    </md-input-container>
+                    <md-input-container style="margin-right: 10px;">
+                        <label>Farm</label>
+                        <md-select ng-model="parcel.farmId">
+                            <md-option ng-repeat="farm in farms" value="{{farm.id.id}}">{{farm.name}}</md-option>
+                        </md-select>
+                    </md-input-container>
+                    <tb-entity-subtype-autocomplete
+                            ng-disabled="$root.loading || !isEdit"
+                            tb-required="true"
+                            the-form="theForm"
+                            ng-model="parcel.type"
+                            entity-type="types.entityType.parcel">
+                    </tb-entity-subtype-autocomplete>
+                    <md-input-container class="md-block">
+                        <label translate>parcel.description</label>
+                        <textarea ng-model="parcel.additionalInfo.description" rows="2"></textarea>
+                    </md-input-container>
+                    <label ng-repeat-start="label in labels">{{label}}</label>
+                    <input ng-model='longitudes[$index]' type='text' value='' />
+                    <input ng-model='latitudes[$index]' type='text' value='' />
+                    <br ng-repeat-end>
+                    <md-button ng-click="saveEverything()">Ubicar</md-button>
+                </md-content>
+            </md-tab>
+            <md-tab label="{{ 'Crops' | translate }}" ng-show="someCrop()">
+                <md-tabs md-dynamic-height md-border-bottom>
+                    <md-tab label="{{ 'Current Crop' | translate }}">
+                        <md-content class="md-padding">
+                                <button ng-click="finishCrop()">Finish Crop</button>
+                                <div style="min-height: 1000px;" ng-disable="!parcel.crop.finish">
+                                    <md-input-container class="md-block">
+                                        <label translate>Name</label>
+                                        <textarea ng-model="parcel.crop.name" rows="2"></textarea>
+                                    </md-input-container>
+                                    <md-input-container class="md-block">
+                                        <label translate>¿Why this crop?</label>
+                                        <textarea ng-model="parcel.crop.why" rows="2"></textarea>
+                                    </md-input-container>
+                                    <md-input-container class="md-block">
+                                        <label translate>Cause</label>
+                                        <textarea ng-model="parcel.crop.cause" rows="2"></textarea>
+                                    </md-input-container>
+                                    <md-input-container class="md-block">
+                                        <label translate>Initial conditions</label>
+                                        <textarea ng-model="parcel.crop.initialConditions" rows="2"></textarea>
+                                    </md-input-container>
+                                    <md-input-container class="md-block">
+                                        <label translate>State</label>
+                                        <textarea ng-model="parcel.crop.state" rows="2"></textarea>
+                                    </md-input-container>
+                                </div>
+                        </md-content>
+                    </md-tab>
+                    <md-tab label="{{ 'Crop History' | translate }}">
+                        <md-content class="md-padding">
+                            <div style="min-height: 1000px;">
+                                <ul>
+                                    <li ng-repeat="crop in parcel.cropsHistory">{{crop.name}}  {{crop.startCrop |date :  "dd/MM/y"}}</li>
+                                </ul>
+                            </div>
+                        </md-content>
+                    </md-tab>
+                    <md-tab label="{{ 'Good Practices' | translate }}">
+                        <md-content class="md-padding">
+                            <h1 class="md-display-2">Tab One</h1>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla venenatis ante augue. Phasellus volutpat neque ac dui mattis vulputate. Etiam consequat aliquam cursus. In sodales pretium ultrices. Maecenas lectus est, sollicitudin consectetur felis nec, feugiat ultricies mi.</p>
+                        </md-content>
+                    </md-tab>
+                    <md-tab label="{{ 'Actions' | translate }}">
+                        <md-content class="md-padding">
+                            <div style="min-height: 1000px;">
+                                <md-input-container class="md-block">
+                                    <label translate>Action</label>
+                                    <textarea ng-model="action"></textarea>
+                                </md-input-container>
+                                <button ng-click="addActionCrop()">Add Action</button>
+                                <ul>
+                                    <li ng-repeat="actionCrop in parcel.crop.actions">{{actionCrop.action}} -- {{actionCrop.actionDate |date :  "dd/MM/y"}}</li>
+                                </ul>
+                            </div>
+                        </md-content>
+                    </md-tab>
+                </md-tabs>
+            </md-tab>
+        </md-tabs>
     </fieldset>
 </md-content>

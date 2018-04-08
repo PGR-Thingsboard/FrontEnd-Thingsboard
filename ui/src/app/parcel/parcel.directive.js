@@ -1,15 +1,15 @@
 
-
-
 import parcelFieldsetTemplate from './parcel-fieldset.tpl.html';
+import Action from './action';
+
 
 /* eslint-enable import/no-unresolved, import/default */
-
 /*@ngInject*/
 export default function ParcelDirective($compile, $templateCache, toast, $translate, types, parcelService, farmService, customerService, $log) {
     var linker = function (scope, element) {
         var template = $templateCache.get(parcelFieldsetTemplate);
         element.html(template);
+
 
         scope.types = types;
         scope.isAssignedToCustomer = false;
@@ -45,6 +45,50 @@ export default function ParcelDirective($compile, $templateCache, toast, $transl
 
         $compile(element.contents())(scope);
 
+
+
+        function Crop(){
+            this.name = '';
+            this.why = '';
+            this.cause = '';
+            this.startCrop = new Date();
+            this.weekens = 0;
+            this.initialConditions = '';
+            this.actions = [];
+            this.finish = false;
+            this.state = '';
+        }
+
+
+        scope.finishCrop = function(){
+            scope.parcel.crop.finish = true;
+            scope.parcel.cropsHistory.push(scope.parcel.crop);
+            scope.parcel.crop = new Crop();
+        };
+
+        scope.action = '';
+        scope.addActionCrop = function(){
+          var newAction = new Action();
+          newAction.action = scope.action;
+          scope.parcel.crop.actions.push(newAction);
+          scope.action = '';
+        };
+
+
+        scope.someCrop = function(){
+           var crop = false;
+            if(scope.parcel.crop === null) {
+                scope.parcel.crop = new Crop();
+                scope.parcel.cropsHistory = [];
+            }else{
+                crop = true;
+            }
+
+            return crop;
+        };
+
+
+        //------------------------------------------------------------------------
         scope.labels = ['1','2','3','4'];
         scope.latitudes = new Array(scope.labels.size);
         scope.longitudes = new Array(scope.labels.size);
@@ -63,6 +107,8 @@ export default function ParcelDirective($compile, $templateCache, toast, $transl
             $log.log(polygon);
             scope.parcel.location = polygon;
         };
+
+        //----------------------------------------------------------------------------
     }
     return {
         restrict: "E",

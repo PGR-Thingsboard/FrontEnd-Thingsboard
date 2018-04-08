@@ -205,7 +205,7 @@ public final class FarmEntity implements SearchTextEntity<Farm> {
             farm.setHomeDetails(mapper.readValue(homeDetails,HomeDetails.class));
         } catch (IOException e) {
             e.printStackTrace();
-        };
+        }
         return farm;
     }
 

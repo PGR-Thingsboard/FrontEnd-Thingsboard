@@ -5,15 +5,16 @@
  */
 package org.thingsboard.server.common.data.parcel;
 
-import java.util.UUID;
 import lombok.EqualsAndHashCode;
 import org.thingsboard.server.common.data.HasName;
 import org.thingsboard.server.common.data.Polygon;
 import org.thingsboard.server.common.data.SearchTextBasedWithAdditionalInfo;
+import org.thingsboard.server.common.data.crop.Crop;
 import org.thingsboard.server.common.data.id.ParcelId;
 import org.thingsboard.server.common.data.id.CustomerId;
-import org.thingsboard.server.common.data.id.FarmId;
 import org.thingsboard.server.common.data.id.TenantId;
+
+import java.util.List;
 
 /**
  *
@@ -30,6 +31,8 @@ public class Parcel extends SearchTextBasedWithAdditionalInfo<ParcelId> implemen
     private String type;
     private String farmId;
     private Polygon location;
+    private Crop crop;
+    private List<Crop> cropsHistory;
 
     public Parcel() {
         super();
@@ -46,6 +49,8 @@ public class Parcel extends SearchTextBasedWithAdditionalInfo<ParcelId> implemen
         this.name = parcel.getName();
         this.type = parcel.getType();
         this.farmId = parcel.getFarmId();
+        this.setCrop(parcel.getCrop());
+        this.cropsHistory = parcel.getCropsHistory();
     }
 
     public TenantId getTenantId() {
@@ -137,4 +142,19 @@ public class Parcel extends SearchTextBasedWithAdditionalInfo<ParcelId> implemen
         this.location = location;
     }
 
+    public Crop getCrop() {
+        return crop;
+    }
+
+    public void setCrop(Crop crop) {
+        this.crop = crop;
+    }
+
+    public List<Crop> getCropsHistory() {
+        return cropsHistory;
+    }
+
+    public void setCropsHistory(List<Crop> cropsHistory) {
+        this.cropsHistory = cropsHistory;
+    }
 }

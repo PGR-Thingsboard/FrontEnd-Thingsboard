@@ -61,6 +61,7 @@ public class Farm extends SearchTextBasedWithAdditionalInfo<FarmId> implements H
         this.totalArea = farm.getTotalArea();
     }
 
+
     public TenantId getTenantId() {
         return tenantId;
     }
