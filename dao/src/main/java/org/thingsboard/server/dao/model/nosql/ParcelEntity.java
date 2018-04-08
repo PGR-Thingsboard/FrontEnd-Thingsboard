@@ -7,29 +7,26 @@ package org.thingsboard.server.dao.model.nosql;
 
 import com.datastax.driver.core.utils.UUIDs;
 import com.datastax.driver.mapping.annotations.PartitionKey;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
+
+import java.io.IOException;
+import java.util.List;
 import java.util.UUID;
 import com.datastax.driver.mapping.annotations.Column;
-import com.datastax.driver.mapping.annotations.PartitionKey;
 import com.datastax.driver.mapping.annotations.Table;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
+import org.thingsboard.server.common.data.crop.Crop;
 import org.thingsboard.server.common.data.parcel.Parcel;
 import org.thingsboard.server.common.data.id.ParcelId;
 import org.thingsboard.server.common.data.id.CustomerId;
-import org.thingsboard.server.common.data.id.FarmId;
 import org.thingsboard.server.common.data.id.TenantId;
-import static org.thingsboard.server.dao.model.ModelConstants.PARCEL_ADDITIONAL_INFO_PROPERTY;
-import static org.thingsboard.server.dao.model.ModelConstants.PARCEL_COLUMN_FAMILY_NAME;
-import static org.thingsboard.server.dao.model.ModelConstants.PARCEL_CUSTOMER_ID_PROPERTY;
-import static org.thingsboard.server.dao.model.ModelConstants.PARCEL_FARMID_PROPERTY;
-import static org.thingsboard.server.dao.model.ModelConstants.PARCEL_NAME_PROPERTY;
-import static org.thingsboard.server.dao.model.ModelConstants.PARCEL_TENANT_ID_PROPERTY;
-import static org.thingsboard.server.dao.model.ModelConstants.PARCEL_TYPE_PROPERTY;
-import static org.thingsboard.server.dao.model.ModelConstants.ID_PROPERTY;
-import static org.thingsboard.server.dao.model.ModelConstants.SEARCH_TEXT_PROPERTY;
 import org.thingsboard.server.dao.model.SearchTextEntity;
 import org.thingsboard.server.dao.model.type.JsonCodec;
+
+import static org.thingsboard.server.dao.model.ModelConstants.*;
 
 /**
  *
@@ -40,16 +37,11 @@ import org.thingsboard.server.dao.model.type.JsonCodec;
 @ToString
 public final class ParcelEntity implements SearchTextEntity<Parcel> {
 
-    /**
-     * @return the nameFina
-     */
+
     public String getFarmId() {
         return farmId;
     }
 
-    /**
-     * @param nameFina the nameFina to set
-     */
     public void setFarmId(String farmId) {
         this.farmId = farmId;
     }
@@ -82,6 +74,12 @@ public final class ParcelEntity implements SearchTextEntity<Parcel> {
     @com.datastax.driver.mapping.annotations.Column(name = PARCEL_ADDITIONAL_INFO_PROPERTY, codec = JsonCodec.class)
     private JsonNode additionalInfo;
 
+    @Column(name = PARCEL_CROP)
+    private String crop;
+
+    @Column(name = PARCEL_CROPS_HISTORY)
+    private String cropsHistory;
+
     public ParcelEntity() {
         super();
     }
@@ -100,6 +98,19 @@ public final class ParcelEntity implements SearchTextEntity<Parcel> {
         this.type = parcel.getType();
         this.farmId = parcel.getFarmId();
         this.additionalInfo = parcel.getAdditionalInfo();
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            this.crop = mapper.writeValueAsString(parcel.getCrop());
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            this.cropsHistory = mapper.writeValueAsString(parcel.getCropsHistory());
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
     }
 
     public UUID getId() {
@@ -178,9 +189,37 @@ public final class ParcelEntity implements SearchTextEntity<Parcel> {
         parcel.setType(getType());
         parcel.setFarmId(farmId);
         parcel.setAdditionalInfo(additionalInfo);
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            parcel.setCrop(mapper.readValue(crop, Crop.class));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            parcel.setCropsHistory(mapper.readValue(cropsHistory, mapper.getTypeFactory().constructParametricType(List.class, Crop.class)));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         return parcel;
     }
 
-    
 
+    public String getCrop() {
+        return crop;
+    }
+
+    public void setCrop(String crop) {
+        this.crop = crop;
+    }
+
+    public String getCropsHistory() {
+        return cropsHistory;
+    }
+
+    public void setCropsHistory(String cropsHistory) {
+        this.cropsHistory = cropsHistory;
+    }
 }

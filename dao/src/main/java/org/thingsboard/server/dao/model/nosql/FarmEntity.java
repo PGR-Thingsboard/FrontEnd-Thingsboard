@@ -181,7 +181,7 @@ public final class FarmEntity implements SearchTextEntity<Farm> {
             farm.setFarmDetails(mapper.readValue(farmDetails, FarmDetails.class));
         } catch (IOException e) {
             e.printStackTrace();
-        };
+        }
         return farm;
     }
 

@@ -59,6 +59,7 @@ public class Farm extends SearchTextBasedWithAdditionalInfo<FarmId> implements H
         this.enviroment = farm.getEnviroment();
     }
 
+
     public TenantId getTenantId() {
         return tenantId;
     }
