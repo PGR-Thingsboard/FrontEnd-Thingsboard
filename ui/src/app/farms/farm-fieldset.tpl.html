@@ -119,12 +119,66 @@
 
                 </md-content>
             </md-tab>
+
+
             <md-tab label="{{ 'Home Details' | translate }}">
-                <md-content class="md-padding">
-                    <h1 class="md-display-2">Tab One</h1>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla venenatis ante augue. Phasellus volutpat neque ac dui mattis vulputate. Etiam consequat aliquam cursus. In sodales pretium ultrices. Maecenas lectus est, sollicitudin consectetur felis nec, feugiat ultricies mi.</p>
-                </md-content>
+
+                <md-tabs md-dynamic-height md-border-bottom>
+                    <md-tab label="{{ 'Home Information' | translate }}">
+                        <md-content class="md-padding">
+                            <label translate>farm.homeDetails.homeMaterial</label>
+                            <md-select ng-model="farm.homeDetails.homeMaterial" >
+                                <md-option ng-repeat="hmate in hmaterial" value="{{hmate}}">{{hmate}}</md-option>
+                            </md-select>
+                        </md-content>
+                        <md-content class="md-padding">
+                            <label translate>farm.homeDetails.floorMaterial</label>
+                            <md-select ng-model="farm.homeDetails.floorMaterial" >
+                                <md-option ng-repeat="fmate in fmaterial" value="{{fmate}}">{{fmate}}</md-option>
+                            </md-select>
+                        </md-content>
+                        <md-content class="md-padding">
+                            <md-input-container class="md-block">
+                                <label translate>farm.homeDetails.rooms</label>
+                                <input name="Rooms" ng-model="farm.homeDetails.rooms" required="true" ng-pattern="/^[0-9]*$/">
+                            </md-input-container>
+                        </md-content>
+                        <md-content class="md-padding">
+                            <md-input-container class="md-block">
+                                <label translate>farm.homeDetails.dependingPeople</label>
+                                <input name="DependingPeople" ng-model="farm.homeDetails.dependingPeople" required="true" ng-pattern="/^[0-9]*$/">
+                            </md-input-container>
+                        </md-content>
+
+                        <md-content class="md-padding">
+                            <md-input-container class="md-block">
+                                <label translate>farm.homeDetails.workers</label>
+                                <input name="Workers" ng-model="farm.homeDetails.workers" required="true" ng-pattern="/^[0-9]*$/">
+                            </md-input-container>
+                        </md-content>
+
+                        <md-content class="md-padding">
+                            <label translate>farm.homeDetails.bathroom</label>
+                            <md-select ng-model="farm.homeDetails.bathroom" >
+                                <md-option ng-repeat="bath in bathroom" value="{{bath}}">{{bath}}</md-option>
+                            </md-select>
+                        </md-content>
+
+                        <md-content class="md-padding">
+                            <label translate>farm.homeDetails.kitchen</label>
+                            <md-select ng-model="farm.homeDetails.kitchen" >
+                                <md-option ng-repeat="kit in kitchen" value="{{kit}}">{{kit}}</md-option>
+                            </md-select>
+                        </md-content>
+                    </md-tab>
+                    <md-tab label="{{ 'People Information' | translate }}">
+                        <h1 class="md-display-2">PEOPLE One</h1>
+                    </md-tab>
+                </md-tabs>
             </md-tab>
+
+
+
             <md-tab label="{{ 'Technologies' | translate }}">
                 <md-content class="md-padding">
                     <h1 class="md-display-2">Tab One</h1>

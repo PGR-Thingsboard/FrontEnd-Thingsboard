@@ -98,6 +98,26 @@ export default function FarmDirective($compile, $templateCache, toast, $translat
             this.highwayState='';
         }
 
+       /* function Person() {
+            this.name ="";
+            this.birthday = birthday;
+            this.birthplace="";
+            this.maritalStatus="";
+            this.ethnicGroup="";
+            this.relation = "";
+        }
+*/
+        function HomeDetails(){
+            this.homeMaterial="";
+            this.floorMaterial="";
+            this.rooms=0;
+            this.bathroom="";
+            this.kitchen="";
+            this.dependingPeople=0;
+            this.workers=0;
+            this.people=[];
+        }
+
 
         /*function WaterPoints() {
             this.numberPoint = 0;
@@ -112,6 +132,10 @@ export default function FarmDirective($compile, $templateCache, toast, $translat
         scope.orography = ['Valley','Mountain',"Plain","Volcano"];
         scope.ways=["air","land","fluvial"];
         scope.publicServices=["electricity","water","sewerage","gas","garbage_collection","internet","telephony","television"];
+        scope.hmaterial=["Block, Brick, Stone, Polished wood","Concrete drained","Prefabricated material","Tapia tread, Bahareque, Adobe", "Crude wood, Board, Plank","Reed (Plant), Mat, Other vegetables"]
+        scope.fmaterial=["Marble, Parquetry, Polished or lacquered wood","Tile, Vinyl, Tablet, Brick, Laminate","Carpet","Cement, Gravel","Crude wood, Board, Plank, Other vegetable","Soil, Sand, mud"]
+        scope.kitchen=["In a room used only for cooking","In a room also used for sleeping","In a living room with dishwasher","In a living room without dishwasher","In a patio, corridor, trellis or outdoors","They do not prepare food in the house"]
+        scope.bathroom=["Toilet connected to the sewer","Toilet connected to septic tank","Toilet without connection","Latrine","Toilet with direct discharge to water sources (low tide)","Does not have sanitary service"]
 
 
         if(scope.farm.farmDetails === null){
@@ -127,6 +151,9 @@ export default function FarmDirective($compile, $templateCache, toast, $translat
             scope.farm.enviroment= new Enviroment();
         }
 
+        if (scope.farm.homeDetails===null){
+            scope.farm.homeDetails= new HomeDetails();
+        }
         scope.saveEverything = function() {
             for (var i = 0; i < scope.labels.length; i++) {
                 polygon.coordinates[i]=[parseFloat(scope.longitudes[i]),parseFloat(scope.latitudes[i])]

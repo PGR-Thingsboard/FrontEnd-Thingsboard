@@ -17,10 +17,7 @@ import com.datastax.driver.mapping.annotations.Table;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
-import org.thingsboard.server.common.data.farm.Area;
-import org.thingsboard.server.common.data.farm.Enviroment;
-import org.thingsboard.server.common.data.farm.Farm;
-import org.thingsboard.server.common.data.farm.FarmDetails;
+import org.thingsboard.server.common.data.farm.*;
 import org.thingsboard.server.common.data.id.CustomerId;
 import org.thingsboard.server.common.data.id.FarmId;
 import org.thingsboard.server.common.data.id.TenantId;
@@ -78,6 +75,9 @@ public final class FarmEntity implements SearchTextEntity<Farm> {
     @Column(name = FARM_ENVIROMENT)
     private String farmEnviroment;
 
+    @Column(name = FARM_HOME_DETAILS)
+    private String homeDetails;
+
     public FarmEntity() {
         super();
     }
@@ -101,6 +101,7 @@ public final class FarmEntity implements SearchTextEntity<Farm> {
             ObjectMapper mapper = new ObjectMapper();
             this.farmDetails = mapper.writeValueAsString(farm.getFarmDetails());
             this.totalArea = mapper.writeValueAsString(farm.getTotalArea());
+            this.homeDetails= mapper.writeValueAsString(farm.getHomeDetails());
             this.farmEnviroment= mapper.writeValueAsString(farm.getEnviroment());
         } catch (JsonProcessingException e) {
             e.printStackTrace();
@@ -169,7 +170,10 @@ public final class FarmEntity implements SearchTextEntity<Farm> {
         return getName();
     }
 
+
+
     @Override
+
     public void setSearchText(String searchText) {
         this.searchText = searchText;
     }
@@ -198,6 +202,7 @@ public final class FarmEntity implements SearchTextEntity<Farm> {
             farm.setFarmDetails(mapper.readValue(farmDetails, FarmDetails.class));
             farm.setTotalArea(mapper.readValue(totalArea,Area.class));
             farm.setEnviroment(mapper.readValue(farmEnviroment,Enviroment.class));
+            farm.setHomeDetails(mapper.readValue(homeDetails,HomeDetails.class));
         } catch (IOException e) {
             e.printStackTrace();
         };
@@ -236,4 +241,11 @@ public final class FarmEntity implements SearchTextEntity<Farm> {
         this.farmDetails = farmDetails;
     }
 
+    public String getHomeDetails() {
+        return homeDetails;
+    }
+
+    public void setHomeDetails(String homeDetails) {
+        this.homeDetails = homeDetails;
+    }
 }
