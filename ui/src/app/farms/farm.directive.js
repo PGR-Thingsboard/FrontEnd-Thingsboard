@@ -56,10 +56,22 @@ export default function FarmDirective($compile, $templateCache, toast, $translat
 
         }
 
+        function PublicServices(){
+            this.electricity=false;
+            this.water=false;
+            this.sewerage=false;
+            this.gas=false;
+            this.garbage_collection=false;
+            this.collection=false;
+            this.internet=false;
+            this.telephony=false;
+            this.television=false;
+        }
+
         function FarmDetails(){
             this.destination='';
             this.useDetails='';
-            this.publicServices=[];
+            this.publicServices=new PublicServices();
             this.productionTransport='';
             this.waterPoints=[];
         }
@@ -99,6 +111,7 @@ export default function FarmDirective($compile, $templateCache, toast, $translat
         scope.symbol = ['ha','fg'];
         scope.orography = ['Valley','Mountain',"Plain","Volcano"];
         scope.ways=["air","land","fluvial"];
+        scope.publicServices=["electricity","water","sewerage","gas","garbage_collection","internet","telephony","television"];
 
 
         if(scope.farm.farmDetails === null){

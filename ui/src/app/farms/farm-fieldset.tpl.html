@@ -106,6 +106,17 @@
                         <label translate>farm.use_details</label>
                         <textarea ng-model="farm.farmDetails.useDetails" rows="2"></textarea>
                     </md-input-container>
+
+                    <label translate>farm.public_services</label>
+                    <md-input-container style="margin-right: 10px;"  >
+                        <div flex="50" ng-repeat="serv in publicServices">
+                            <md-checkbox ng-model="farm.farmDetails.publicServices[serv]">
+                                {{serv}}
+                            </md-checkbox>
+                        </div>
+                    </md-input-container>
+
+
                 </md-content>
             </md-tab>
             <md-tab label="{{ 'Home Details' | translate }}">
@@ -130,8 +141,14 @@
                     </md-input-container>
 
 
-                    <md-input-container style="margin-right: 10px;"  >
+                    <md-input-container class="md-block">
+                        <label translate>Municipal distance in km</label>
+                        <input name="Area" ng-model="farm.enviroment.municipalDistance" required="true" ng-pattern="/^[0-9]+\.?[0-9]*$/" >
+                    </md-input-container>
 
+
+                    <label translate>farm.accessWay</label>
+                    <md-input-container style="margin-right: 10px;"  >
                         <div flex="50" ng-repeat="way in ways">
                             <md-checkbox ng-model="farm.enviroment.access[way]">
                                 {{way}}
