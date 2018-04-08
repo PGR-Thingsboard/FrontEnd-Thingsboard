@@ -288,6 +288,7 @@ CREATE TABLE IF NOT EXISTS thingsboard.farm (
     search_text text,
     additional_info text,
     location_description text,
+    total_area text,
     farm_details text,
     PRIMARY KEY (id, tenant_id, customer_id, type)
 );

@@ -17,6 +17,7 @@ import com.datastax.driver.mapping.annotations.Table;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
+import org.thingsboard.server.common.data.farm.Area;
 import org.thingsboard.server.common.data.farm.Farm;
 import org.thingsboard.server.common.data.farm.FarmDetails;
 import org.thingsboard.server.common.data.id.CustomerId;
@@ -55,6 +56,9 @@ public final class FarmEntity implements SearchTextEntity<Farm> {
     @Column(name = FARM_NAME_PROPERTY)
     private String name;
 
+    @Column(name = FARM_TOTAL_AREA)
+    private String totalArea;
+
     @Column(name = FARM_DASHBOARDID_PROPERTY)
     private String dashboardId;
 
@@ -92,6 +96,7 @@ public final class FarmEntity implements SearchTextEntity<Farm> {
         try {
             ObjectMapper mapper = new ObjectMapper();
             this.farmDetails = mapper.writeValueAsString(farm.getFarmDetails());
+            this.totalArea = mapper.writeValueAsString(farm.getTotalArea());
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
@@ -179,12 +184,20 @@ public final class FarmEntity implements SearchTextEntity<Farm> {
         try {
             ObjectMapper mapper = new ObjectMapper();
             farm.setFarmDetails(mapper.readValue(farmDetails, FarmDetails.class));
+            farm.setTotalArea(mapper.readValue(totalArea,Area.class));
         } catch (IOException e) {
             e.printStackTrace();
         }
         return farm;
     }
 
+    public String getTotalArea() {
+        return totalArea;
+    }
+
+    public void setTotalArea(String totalArea) {
+        this.totalArea = totalArea;
+    }
 
     public String getDashboardId() {
         return dashboardId;

@@ -34,6 +34,7 @@ public class Farm extends SearchTextBasedWithAdditionalInfo<FarmId> implements H
     private HomeDetails homeDetails;
     private Technology technology;
     private Enviroment enviroment;
+    private Area totalArea;
 
     public Farm() {
         super();
@@ -57,6 +58,7 @@ public class Farm extends SearchTextBasedWithAdditionalInfo<FarmId> implements H
         this.homeDetails = farm.getHomeDetails();
         this.technology = farm.getTechnology();
         this.enviroment = farm.getEnviroment();
+        this.totalArea = farm.getTotalArea();
     }
 
 
@@ -76,7 +78,16 @@ public class Farm extends SearchTextBasedWithAdditionalInfo<FarmId> implements H
         this.customerId = customerId;
     }
 
+    public Area getTotalArea() {
+        return totalArea;
+    }
+
+    public void setTotalArea(Area totalArea) {
+        this.totalArea = totalArea;
+    }
+
     @Override
+
     public String getName() {
         return name;
     }
