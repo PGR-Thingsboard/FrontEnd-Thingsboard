@@ -48,7 +48,7 @@ export function AssetCardController(types) {
 
 /*@ngInject*/
 export function AssetController($rootScope, userService, assetService, customerService, $state, $stateParams,
-                                $document, $mdDialog, $q, $translate, types) {
+                                $document, $mdDialog, $q, $translate, types, $log) {
 
     var customerId = $stateParams.customerId;
 
@@ -332,13 +332,31 @@ export function AssetController($rootScope, userService, assetService, customerS
 
     function saveAsset(asset) {
         var deferred = $q.defer();
+        var imageFachada = asset.fachada;
+        delete asset.fachada;
+        $log.log(imageFachada);
         assetService.saveAsset(asset).then(
             function success(savedAsset) {
                 $rootScope.$broadcast('assetSaved');
                 var assets = [ savedAsset ];
                 customerService.applyAssignedCustomersInfo(assets).then(
                     function success(items) {
+                        $log.log("de vuelta");
+                        $log.log(items[0]);
                         if (items && items.length == 1) {
+                            $log.log("este es el id del asset");
+                            $log.log(items[0].id.id);
+                            var fd = new FormData();
+                            fd.append('fachada',imageFachada);
+
+                            assetService.saveFachadaAsset(fd,items[0].id.id).then(
+                                function success(saveFachada) {
+                                    $log.log(saveFachada);
+                                    $log.log("estuvo bien");
+                                },function fail() {
+                                    $log.log("estuvo mal");
+                                }
+                            );
                             deferred.resolve(items[0]);
                         } else {
                             deferred.reject();

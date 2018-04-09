@@ -19,6 +19,7 @@ import com.google.common.util.concurrent.ListenableFuture;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.*;
 import org.thingsboard.server.common.data.Customer;
 import org.thingsboard.server.common.data.EntitySubtype;
 import org.thingsboard.server.common.data.EntityType;
@@ -38,8 +39,11 @@ import org.thingsboard.server.exception.ThingsboardException;
 import org.thingsboard.server.service.security.model.SecurityUser;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import javax.xml.ws.Response;
 
 @RestController
 @RequestMapping("/api")
@@ -58,6 +62,26 @@ public class AssetController extends BaseController {
         } catch (Exception e) {
             throw handleException(e);
         }
+    }
+
+    @PreAuthorize("hasAnyAuthority('TENANT_ADMIN', 'CUSTOMER_USER')")
+    @RequestMapping(value = "/assetFachada", method = RequestMethod.POST)
+    public MultipartFile uploadPictureFachada(MultipartHttpServletRequest request, @RequestParam(name = "tenantId")String strAssetId) throws ThingsboardException{
+        try{
+            Iterator<String> itr = request.getFileNames();
+            System.out.println("este es el id llegado: "+strAssetId);
+            while(itr.hasNext()){
+                String uploadesFile = itr.next();
+                System.out.println(uploadesFile);
+                MultipartFile file = request.getFile(uploadesFile);
+                System.out.println("este es el archivo: ");
+                System.out.println(file);
+                return file;
+            }
+        }catch(Exception e){
+            throw handleException(e);
+        }
+        return null;
     }
 
     @PreAuthorize("hasAnyAuthority('TENANT_ADMIN', 'CUSTOMER_USER')")

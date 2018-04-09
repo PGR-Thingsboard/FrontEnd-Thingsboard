@@ -67,5 +67,16 @@
             <label translate>asset.description</label>
             <textarea ng-model="asset.additionalInfo.description" rows="2"></textarea>
         </md-input-container>
+        
+        <fieldset>
+            <form>
+                <legend>Cargar foto fachada</legend>
+                <label>Adjunte la foto de la fachada</label>
+                <input type="file" accept="image/*" ng-model="images" onchange="angular.element(this).scope().uploadimage(this.files)"/>        
+            </form>
+            <div ng-repeat="step in stepsModel">
+                <img ng-src="{{step}}" height="42" width="42"/>
+            </div>
+        </fieldset>
     </fieldset>
 </md-content>

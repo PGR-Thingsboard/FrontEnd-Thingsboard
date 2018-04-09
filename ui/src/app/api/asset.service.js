@@ -18,12 +18,13 @@ export default angular.module('thingsboard.api.asset', [])
     .name;
 
 /*@ngInject*/
-function AssetService($http, $q, customerService, userService) {
+function AssetService($http, $q, customerService, userService,$log) {
 
     var service = {
         getAsset: getAsset,
         getAssets: getAssets,
         saveAsset: saveAsset,
+        saveFachadaAsset: saveFachadaAsset,
         deleteAsset: deleteAsset,
         assignAssetToCustomer: assignAssetToCustomer,
         unassignAssetFromCustomer: unassignAssetFromCustomer,
@@ -86,6 +87,21 @@ function AssetService($http, $q, customerService, userService) {
         }
         config = Object.assign(config, { ignoreErrors: ignoreErrors });
         $http.post(url, asset, config).then(function success(response) {
+            deferred.resolve(response.data);
+        }, function fail() {
+            deferred.reject();
+        });
+        return deferred.promise;
+    }
+
+    function saveFachadaAsset(fd,assetId){
+        var deferred = $q.defer();
+        var url = '/api/assetFachada?tenantId='+assetId;
+        $log.log(url);
+        $http.post(url, fd, {
+            transformRequest: angular.identity,
+            headers:{'Content-Type':undefined}
+        }).then(function success(response) {
             deferred.resolve(response.data);
         }, function fail() {
             deferred.reject();

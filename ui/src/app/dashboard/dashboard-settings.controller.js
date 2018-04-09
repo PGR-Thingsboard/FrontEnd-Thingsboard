@@ -65,19 +65,6 @@ export default function DashboardSettingsController($scope, $mdDialog, statesCon
         }
     }
 
-    if (vm.gridSettings) {
-        vm.gridSettings.backgroundColor = vm.gridSettings.backgroundColor || 'rgba(0,0,0,0)';
-        vm.gridSettings.color = vm.gridSettings.color || 'rgba(0,0,0,0.870588)';
-        vm.gridSettings.columns = vm.gridSettings.columns || 24;
-        vm.gridSettings.margins = vm.gridSettings.margins || [10, 10];
-        vm.gridSettings.autoFillHeight = angular.isDefined(vm.gridSettings.autoFillHeight) ? vm.gridSettings.autoFillHeight : false;
-        vm.gridSettings.mobileAutoFillHeight = angular.isDefined(vm.gridSettings.mobileAutoFillHeight) ? vm.gridSettings.mobileAutoFillHeight : false;
-        vm.gridSettings.mobileRowHeight = angular.isDefined(vm.gridSettings.mobileRowHeight) ? vm.gridSettings.mobileRowHeight : 70;
-        vm.hMargin = vm.gridSettings.margins[0];
-        vm.vMargin = vm.gridSettings.margins[1];
-        vm.gridSettings.backgroundSizeMode = vm.gridSettings.backgroundSizeMode || '100%';
-    }
-
     function cancel() {
         $mdDialog.cancel();
     }

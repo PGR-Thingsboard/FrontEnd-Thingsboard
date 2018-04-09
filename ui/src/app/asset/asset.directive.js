@@ -20,10 +20,14 @@ import assetFieldsetTemplate from './asset-fieldset.tpl.html';
 /* eslint-enable import/no-unresolved, import/default */
 
 /*@ngInject*/
-export default function AssetDirective($compile, $templateCache, toast, $translate, types, assetService, customerService) {
+export default function AssetDirective($compile, $templateCache, toast, $translate,$mdDialog, types, assetService, customerService, $log) {
+    
     var linker = function (scope, element) {
         var template = $templateCache.get(assetFieldsetTemplate);
         element.html(template);
+        
+        scope.stepsModel = [];
+
 
         scope.types = types;
         scope.isAssignedToCustomer = false;
@@ -52,6 +56,18 @@ export default function AssetDirective($compile, $templateCache, toast, $transla
             toast.showSuccess($translate.instant('asset.idCopiedMessage'), 750, angular.element(element).parent().parent(), 'bottom left');
         };
 
+        scope.uploadimage = function(files){
+            $log.log("entro");
+            var reader = new FileReader();
+            reader.onload = function(e){
+                scope.$apply(function(){
+                    $log.log("entro onload");
+                    scope.stepsModel.push(e.target.result);
+                });
+            }
+            reader.readAsDataURL(files[0]);
+            scope.asset.fachada = files[0];
+        };
 
         $compile(element.contents())(scope);
     }
