@@ -66,6 +66,21 @@
                     <input ng-model='latitudes[$index]' type='text' value='' />
                     <br ng-repeat-end>
                     <md-button ng-click="saveEverything()">Ubicar</md-button>
+                    <div layout-gt-sm="row">
+
+                        <md-input-container class="md-block">
+                            <label translate>parcel.totalArea</label>
+                            <input name="Area" ng-model="parcel.totalArea.extension" required="true" ng-pattern="/^[0-9]+\.?[0-9]*$/" >
+
+                        </md-input-container>
+
+                        <md-input-container style="margin-right: 10px;">
+                            <label translate>parcel.UnitOfMeasurement</label>
+                            <md-select ng-model="parcel.totalArea.symbol" >
+                                <md-option ng-repeat="sym in symbol" value="{{sym}}">{{sym}}</md-option>
+                            </md-select>
+                        </md-input-container>
+                    </div>
                 </md-content>
             </md-tab>
             <md-tab label="{{ 'Crops' | translate }}" ng-show="someCrop()">
@@ -91,7 +106,7 @@
                                         <textarea ng-model="parcel.crop.initialConditions" rows="2"></textarea>
                                     </md-input-container>
                                     <md-input-container class="md-block">
-                                        <label translate>State</label>
+                                        <label translate>Ground Properties</label>
                                         <textarea ng-model="parcel.crop.state" rows="2"></textarea>
                                     </md-input-container>
                                 </div>
@@ -100,9 +115,17 @@
                     <md-tab label="{{ 'Crop History' | translate }}">
                         <md-content class="md-padding">
                             <div style="min-height: 1000px;">
-                                <ul>
-                                    <li ng-repeat="crop in parcel.cropsHistory">{{crop.name}}  {{crop.startCrop |date :  "dd/MM/y"}}</li>
-                                </ul>
+                                <md-card md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" md-theme-watch ng-repeat="crop in parcel.cropsHistory">
+                                    <md-card-title>
+                                        <md-card-title-text>
+                                            <span class="md-headline">{{crop.name}}</span>
+                                            <span class="md-subhead">{{crop.startCrop |date :  "dd/MM/y"}}</span>
+                                        </md-card-title-text>
+                                        <md-card-title-media>
+                                            <div class="md-media-lg card-media"></div>
+                                        </md-card-title-media>
+                                    </md-card-title>
+                                </md-card>
                             </div>
                         </md-content>
                     </md-tab>

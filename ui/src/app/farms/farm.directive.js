@@ -1,5 +1,3 @@
-
-
 import farmFieldsetTemplate from './farm-fieldset.tpl.html';
 
 /* eslint-enable import/no-unresolved, import/default */
@@ -64,14 +62,25 @@ export default function FarmDirective($compile, $templateCache, toast, $translat
             this.waterPoints=[];
         }
 
-        /*function WaterPoints() {
+        function WaterPoint() {
             this.numberPoint = 0;
             this.resolution = '';
-            this.validity = null;
-        }*/
+            this.validity = new Date();
+        }
+
 //---------------------------------------------------------------------------------------------
 
+        scope.tempWaterPointNumber = 0;
+        scope.tempWaterPointResolution = '';
 
+        scope.addWaterPoint = function(){
+            var waterPoint = new WaterPoint();
+            waterPoint.numberPoint = scope.tempWaterPointNumber;
+            waterPoint.resolution = scope.tempWaterPointResolution;
+            scope.farm.farmDetails.waterPoints.push(waterPoint);
+            scope.tempWaterPointNumber = 0;
+            scope.tempWaterPointResolution = '';
+        }
 
 
         var polygon = new Polygon();

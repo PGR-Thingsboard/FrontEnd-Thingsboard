@@ -45,7 +45,7 @@ export default function ParcelDirective($compile, $templateCache, toast, $transl
 
         $compile(element.contents())(scope);
 
-
+        //-----------------------------------------------Class-------------------------------------------------------------
 
         function Crop(){
             this.name = '';
@@ -59,6 +59,14 @@ export default function ParcelDirective($compile, $templateCache, toast, $transl
             this.state = '';
         }
 
+        function Area(){
+            this.extension=0.0;
+            this.symbol='';
+
+        }
+
+        //-----------------------------------------------------------------------------------------------------------------
+        scope.symbol = ['ha','fg'];
 
         scope.finishCrop = function(){
             scope.parcel.crop.finish = true;
@@ -87,6 +95,9 @@ export default function ParcelDirective($compile, $templateCache, toast, $transl
             return crop;
         };
 
+        if(scope.parcel.totalArea === null){
+            scope.parcel.totalArea = new Area();
+        }
 
         //------------------------------------------------------------------------
         scope.labels = ['1','2','3','4'];

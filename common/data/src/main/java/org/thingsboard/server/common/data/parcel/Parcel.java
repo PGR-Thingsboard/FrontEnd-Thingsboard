@@ -10,6 +10,7 @@ import org.thingsboard.server.common.data.HasName;
 import org.thingsboard.server.common.data.Polygon;
 import org.thingsboard.server.common.data.SearchTextBasedWithAdditionalInfo;
 import org.thingsboard.server.common.data.crop.Crop;
+import org.thingsboard.server.common.data.farm.Area;
 import org.thingsboard.server.common.data.id.ParcelId;
 import org.thingsboard.server.common.data.id.CustomerId;
 import org.thingsboard.server.common.data.id.TenantId;
@@ -33,6 +34,7 @@ public class Parcel extends SearchTextBasedWithAdditionalInfo<ParcelId> implemen
     private Polygon location;
     private Crop crop;
     private List<Crop> cropsHistory;
+    private Area totalArea;
 
     public Parcel() {
         super();
@@ -51,6 +53,7 @@ public class Parcel extends SearchTextBasedWithAdditionalInfo<ParcelId> implemen
         this.farmId = parcel.getFarmId();
         this.setCrop(parcel.getCrop());
         this.cropsHistory = parcel.getCropsHistory();
+        this.totalArea = parcel.getTotalArea();
     }
 
     public TenantId getTenantId() {
@@ -156,5 +159,13 @@ public class Parcel extends SearchTextBasedWithAdditionalInfo<ParcelId> implemen
 
     public void setCropsHistory(List<Crop> cropsHistory) {
         this.cropsHistory = cropsHistory;
+    }
+
+    public Area getTotalArea() {
+        return totalArea;
+    }
+
+    public void setTotalArea(Area totalArea) {
+        this.totalArea = totalArea;
     }
 }
