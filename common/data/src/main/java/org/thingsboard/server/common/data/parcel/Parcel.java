@@ -35,6 +35,7 @@ public class Parcel extends SearchTextBasedWithAdditionalInfo<ParcelId> implemen
     private Crop crop;
     private List<Crop> cropsHistory;
     private Area totalArea;
+    private GroundFeatures groundFeatures;
 
     public Parcel() {
         super();
@@ -54,6 +55,7 @@ public class Parcel extends SearchTextBasedWithAdditionalInfo<ParcelId> implemen
         this.setCrop(parcel.getCrop());
         this.cropsHistory = parcel.getCropsHistory();
         this.totalArea = parcel.getTotalArea();
+        this.groundFeatures = parcel.getGroundFeatures();
     }
 
     public TenantId getTenantId() {
@@ -167,5 +169,13 @@ public class Parcel extends SearchTextBasedWithAdditionalInfo<ParcelId> implemen
 
     public void setTotalArea(Area totalArea) {
         this.totalArea = totalArea;
+    }
+
+    public GroundFeatures getGroundFeatures() {
+        return groundFeatures;
+    }
+
+    public void setGroundFeatures(GroundFeatures groundFeatures) {
+        this.groundFeatures = groundFeatures;
     }
 }

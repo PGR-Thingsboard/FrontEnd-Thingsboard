@@ -1,5 +1,6 @@
 import farmFieldsetTemplate from './farm-fieldset.tpl.html';
 
+
 /* eslint-enable import/no-unresolved, import/default */
 /*@ngInject*/
 export default function FarmDirective($compile, $templateCache, toast, $translate, types, farmService, customerService) {
@@ -68,6 +69,11 @@ export default function FarmDirective($compile, $templateCache, toast, $translat
             this.validity = new Date();
         }
 
+        function IrrigationSystem(){
+            this.name = '';
+            this.description = '';
+        }
+
 //---------------------------------------------------------------------------------------------
 
         scope.tempWaterPointNumber = 0;
@@ -82,18 +88,35 @@ export default function FarmDirective($compile, $templateCache, toast, $translat
             scope.tempWaterPointResolution = '';
         }
 
+        scope.tempNameIrrigation = '';
+        scope.tempDescriptionIrrigation = '';
+
+        scope.addIrrigationSystem = function(){
+            var irrigationSystem = new IrrigationSystem();
+            irrigationSystem.name = scope.tempNameIrrigation;
+            irrigationSystem.description = scope.tempDescriptionIrrigation;
+            scope.farm.irrigationsSystems.push(irrigationSystem);
+            scope.tempNameIrrigation = '';
+            scope.tempDescriptionIrrigation = '';
+        }
+
 
         var polygon = new Polygon();
         scope.destination = ['Familiar','Production'];
         scope.symbol = ['ha','fg'];
 
-        if(scope.farm.farmDetails === null){
+        if(scope.farm.farmDetails == null){
             scope.farm.farmDetails = new FarmDetails();
         }
 
-        if(scope.farm.totalArea === null){
+        if(scope.farm.totalArea == null){
             scope.farm.totalArea = new Area();
         }
+
+        if(scope.farm.irrigationsSystems == null){
+            scope.farm.irrigationsSystems = [];
+        }
+
 
         scope.saveEverything = function() {
             for (var i = 0; i < scope.labels.length; i++) {
@@ -105,9 +128,10 @@ export default function FarmDirective($compile, $templateCache, toast, $translat
 
 
 
+
     };
     return {
-        restrict: "E",
+        restrict: 'E',
         link: linker,
         scope: {
             farm: '=',

@@ -81,6 +81,25 @@
                             </md-select>
                         </md-input-container>
                     </div>
+                    <label>Ground Features</label>
+                    <div style="min-height: 1000px;">
+                        <md-input-container class="md-block">
+                            <label translate>ground.density</label>
+                            <textarea ng-model="parcel.groundFeatures.density" rows="2"></textarea>
+                        </md-input-container>
+                        <md-input-container class="md-block">
+                            <label translate>ground.compaction</label>
+                            <textarea ng-model="parcel.groundFeatures.compaction" rows="2"></textarea>
+                        </md-input-container>
+                        <md-input-container class="md-block">
+                            <label translate>ground.inclination</label>
+                            <textarea ng-model="parcel.groundFeatures.inclination" rows="2"></textarea>
+                        </md-input-container>
+                        <md-input-container class="md-block">
+                            <label translate>ground.higrologicData</label>
+                            <textarea ng-model="parcel.groundFeatures.higrologicData" rows="2"></textarea>
+                        </md-input-container>
+                    </div>
                 </md-content>
             </md-tab>
             <md-tab label="{{ 'Crops' | translate }}" ng-show="someCrop()">
@@ -106,7 +125,7 @@
                                         <textarea ng-model="parcel.crop.initialConditions" rows="2"></textarea>
                                     </md-input-container>
                                     <md-input-container class="md-block">
-                                        <label translate>Ground Properties</label>
+                                        <label translate>Crop State</label>
                                         <textarea ng-model="parcel.crop.state" rows="2"></textarea>
                                     </md-input-container>
                                 </div>
