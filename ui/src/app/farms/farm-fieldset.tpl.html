@@ -72,7 +72,7 @@
 
                     <md-input-container class="md-block">
                         <label translate>farm.totalArea</label>
-                        <input name="Area" ng-model="farm.totalArea.extension" required="true" ng-pattern="/^[0-9]+\.?[0-9]*$/" >
+                        <input name="Area" ng-model="farm.totalArea.extension" ng-pattern="/^[0-9]+\.?[0-9]*$/" >
 
                     </md-input-container>
 
@@ -140,20 +140,20 @@
                         <md-content class="md-padding">
                             <md-input-container class="md-block">
                                 <label translate>farm.homeDetails.rooms</label>
-                                <input name="Rooms" ng-model="farm.homeDetails.rooms" required="true" ng-pattern="/^[0-9]*$/">
+                                <input name="Rooms" ng-model="farm.homeDetails.rooms" ng-pattern="/^[0-9]*$/">
                             </md-input-container>
                         </md-content>
                         <md-content class="md-padding">
                             <md-input-container class="md-block">
                                 <label translate>farm.homeDetails.dependingPeople</label>
-                                <input name="DependingPeople" ng-model="farm.homeDetails.dependingPeople" required="true" ng-pattern="/^[0-9]*$/">
+                                <input name="DependingPeople" ng-model="farm.homeDetails.dependingPeople" ng-pattern="/^[0-9]*$/">
                             </md-input-container>
                         </md-content>
 
                         <md-content class="md-padding">
                             <md-input-container class="md-block">
                                 <label translate>farm.homeDetails.workers</label>
-                                <input name="Workers" ng-model="farm.homeDetails.workers" required="true" ng-pattern="/^[0-9]*$/">
+                                <input name="Workers" ng-model="farm.homeDetails.workers" ng-pattern="/^[0-9]*$/">
                             </md-input-container>
                         </md-content>
 
@@ -172,7 +172,56 @@
                         </md-content>
                     </md-tab>
                     <md-tab label="{{ 'People Information' | translate }}">
-                        <h1 class="md-display-2">PEOPLE One</h1>
+
+                        <ul>
+                            <li ng-repeat="person in farm.homeDetails.people">{{person}} </li>
+                        </ul>
+
+                        <button ng-click="addPerson()">Add Person</button>
+
+
+                        <md-content class="md-padding">
+                            <md-input-container class="md-block">
+                                <label translate>farm.person.name</label>
+                                <input name="Workers" ng-model="farm.person.name"  >
+                            </md-input-container>
+                        </md-content>
+
+                        <md-content class="md-padding">
+                        <div flex-gt-xs="">
+                            <h4>Date-picker that goes straight to the year view</h4>
+                            <md-datepicker ng-model="farm.person.birthday" md-current-view="year" md-placeholder="Enter date"></md-datepicker>
+                        </div>
+
+                        </md-content>
+                        <md-content class="md-padding">
+                            <md-input-container class="md-block">
+                                <label translate>farm.person.birthplace</label>
+                                <input name="Birthplace" ng-model="farm.person.birthplace" >
+                            </md-input-container>
+                        </md-content>
+
+                        <md-input-container style="margin-right: 10px;">
+                            <label translate>farm.maritalStatus</label>
+                            <md-select ng-model="farm.person.maritalStatus" >
+                                <md-option ng-repeat="mari in maritalStatus" value="{{mari}}">{{mari}}</md-option>
+                            </md-select>
+                        </md-input-container>
+
+                        <md-input-container style="margin-right: 10px;">
+                            <label translate>farm.ethnicGroup</label>
+                            <md-select ng-model="farm.person.ethnicGroup" >
+                                <md-option ng-repeat="eth in ethnicGroup" value="{{eth}}">{{eth}}</md-option>
+                            </md-select>
+                        </md-input-container>
+
+                        <md-input-container style="margin-right: 10px;">
+                            <label translate>farm.relation</label>
+                            <md-select ng-model="farm.person.relation" >
+                                <md-option ng-repeat="rela in relation" value="{{rela}}">{{rela}}</md-option>
+                            </md-select>
+                        </md-input-container>
+
                     </md-tab>
                 </md-tabs>
             </md-tab>
@@ -197,7 +246,7 @@
 
                     <md-input-container class="md-block">
                         <label translate>Municipal distance in km</label>
-                        <input name="Area" ng-model="farm.enviroment.municipalDistance" required="true" ng-pattern="/^[0-9]+\.?[0-9]*$/" >
+                        <input name="Area" ng-model="farm.enviroment.municipalDistance" ng-pattern="/^[0-9]+\.?[0-9]*$/" >
                     </md-input-container>
 
 

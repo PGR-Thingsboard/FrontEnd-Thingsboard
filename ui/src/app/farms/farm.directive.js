@@ -4,7 +4,7 @@ import farmFieldsetTemplate from './farm-fieldset.tpl.html';
 
 /* eslint-enable import/no-unresolved, import/default */
 /*@ngInject*/
-export default function FarmDirective($compile, $templateCache, toast, $translate, types, farmService, customerService) {
+export default function FarmDirective($compile, $templateCache, toast, $translate, types, farmService, customerService,$log) {
     var linker = function (scope, element) {
         var template = $templateCache.get(farmFieldsetTemplate);
         element.html(template);
@@ -98,15 +98,15 @@ export default function FarmDirective($compile, $templateCache, toast, $translat
             this.highwayState='';
         }
 
-       /* function Person() {
+       function Person() {
             this.name ="";
-            this.birthday = birthday;
+            this.birthday = new Date();
             this.birthplace="";
             this.maritalStatus="";
             this.ethnicGroup="";
             this.relation = "";
         }
-*/
+
         function HomeDetails(){
             this.homeMaterial="";
             this.floorMaterial="";
@@ -139,6 +139,10 @@ export default function FarmDirective($compile, $templateCache, toast, $translat
         scope.fmaterial=["Marble, Parquetry, Polished or lacquered wood","Tile, Vinyl, Tablet, Brick, Laminate","Carpet","Cement, Gravel","Crude wood, Board, Plank, Other vegetable","Soil, Sand, mud"]
         scope.kitchen=["In a room used only for cooking","In a room also used for sleeping","In a living room with dishwasher","In a living room without dishwasher","In a patio, corridor, trellis or outdoors","They do not prepare food in the house"]
         scope.bathroom=["Toilet connected to the sewer","Toilet connected to septic tank","Toilet without connection","Latrine","Toilet with direct discharge to water sources (low tide)","Does not have sanitary service"]
+        scope.person= new Person();
+        scope.maritalStatus=["Single","Married","Free Union","Widower"]
+        scope.ethnicGroup=["Native","Romani","Afrodescendant","None"]
+        scope.relation=["Spouse","Son/Daughter","Stepson/Stepdaughter","Son-in-law/Daughter-in-law","Father/Mother","Stepfather/Stepmother","Father in law/Mother in law","Brother/Sister","Stepbrother/Stepsister","Brother in law/Sister in law","Grandson/Granddaughter","Grandfather/Grandmother","Another relative","Not related"]
 
 
         if(scope.farm.farmDetails === null){
@@ -157,6 +161,7 @@ export default function FarmDirective($compile, $templateCache, toast, $translat
         if (scope.farm.homeDetails===null){
             scope.farm.homeDetails= new HomeDetails();
         }
+
         scope.saveEverything = function() {
             for (var i = 0; i < scope.labels.length; i++) {
                 polygon.coordinates[i]=[parseFloat(scope.longitudes[i]),parseFloat(scope.latitudes[i])]
@@ -164,6 +169,14 @@ export default function FarmDirective($compile, $templateCache, toast, $translat
             scope.farm.location = polygon;
         };
 
+        scope.addPerson = function(){
+            $log.log("su mensaje");
+            if (scope.farm.homeDetails===null){
+                scope.farm.homeDetails= new HomeDetails();
+            }
+            scope.farm.homeDetails.people.push(scope.person);
+            scope.person = new Person();
+        };
 
 
 
