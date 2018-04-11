@@ -53,26 +53,20 @@
                         <label translate>farm.description</label>
                         <textarea ng-model="farm.additionalInfo.description" rows="2"></textarea>
                     </md-input-container>
-
                     <label ng-repeat-start="label in labels">{{label}}</label>
                     <input ng-model='longitudes[$index]' type='text' value='' />
                     <input ng-model='latitudes[$index]' type='text' value='' />
                     <br ng-repeat-end>
                     <md-button ng-click="saveEverything()">Ubicar</md-button>
-
                     <md-input-container class="md-block">
                         <label translate>farm.location_description</label>
                         <textarea ng-model="farm.locationDescription" rows="2"></textarea>
                     </md-input-container>
-
                     <div layout-gt-sm="row">
-
                         <md-input-container class="md-block">
                             <label translate>farm.totalArea</label>
                             <input name="Area" ng-model="farm.totalArea.extension" required="true" ng-pattern="/^[0-9]+\.?[0-9]*$/" >
-
                         </md-input-container>
-
                         <md-input-container style="margin-right: 10px;">
                             <label translate>farm.UnitOfMeasurement</label>
                             <md-select ng-model="farm.totalArea.symbol" >
@@ -100,8 +94,16 @@
                         <label translate>farm.use_details</label>
                         <textarea ng-model="farm.farmDetails.useDetails" rows="2"></textarea>
                     </md-input-container>
-                    <label>Water Points</label>
+                    <label translate>farm.public_services</label>
+                    <md-input-container style="margin-right: 10px;"  >
+                        <div flex="50" ng-repeat="serv in publicServices">
+                            <md-checkbox ng-model="farm.farmDetails.publicServices[serv]">
+                                {{serv}}
+                            </md-checkbox>
+                        </div>
+                    </md-input-container>
                     <div style="min-height: 1000px;">
+                        <label>Water Points</label>
                         <md-input-container class="md-block">
                             <label translate>waterPoint.number</label>
                             <textarea ng-model="tempWaterPointNumber"></textarea>
@@ -127,10 +129,109 @@
                 </md-content>
             </md-tab>
             <md-tab label="{{ 'Home Details' | translate }}">
-                <md-content class="md-padding">
-                    <h1 class="md-display-2">Tab One</h1>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla venenatis ante augue. Phasellus volutpat neque ac dui mattis vulputate. Etiam consequat aliquam cursus. In sodales pretium ultrices. Maecenas lectus est, sollicitudin consectetur felis nec, feugiat ultricies mi.</p>
-                </md-content>
+                <md-tabs md-dynamic-height md-border-bottom>
+                    <md-tab label="{{ 'Home Information' | translate }}">
+                        <md-content class="md-padding">
+                            <label translate>farm.homeDetails.homeMaterial</label>
+                            <md-select ng-model="farm.homeDetails.homeMaterial" >
+                                <md-option ng-repeat="hmate in hmaterial" value="{{hmate}}">{{hmate}}</md-option>
+                            </md-select>
+                        </md-content>
+                        <md-content class="md-padding">
+                            <label translate>farm.homeDetails.floorMaterial</label>
+                            <md-select ng-model="farm.homeDetails.floorMaterial" >
+                                <md-option ng-repeat="fmate in fmaterial" value="{{fmate}}">{{fmate}}</md-option>
+                            </md-select>
+                        </md-content>
+                        <md-content class="md-padding">
+                            <md-input-container class="md-block">
+                                <label translate>farm.homeDetails.rooms</label>
+                                <input name="Rooms" ng-model="farm.homeDetails.rooms" ng-pattern="/^[0-9]*$/">
+                            </md-input-container>
+                        </md-content>
+                        <md-content class="md-padding">
+                            <md-input-container class="md-block">
+                                <label translate>farm.homeDetails.dependingPeople</label>
+                                <input name="DependingPeople" ng-model="farm.homeDetails.dependingPeople" ng-pattern="/^[0-9]*$/">
+                            </md-input-container>
+                        </md-content>
+                        <md-content class="md-padding">
+                            <md-input-container class="md-block">
+                                <label translate>farm.homeDetails.workers</label>
+                                <input name="Workers" ng-model="farm.homeDetails.workers" ng-pattern="/^[0-9]*$/">
+                            </md-input-container>
+                        </md-content>
+                        <md-content class="md-padding">
+                            <label translate>farm.homeDetails.bathroom</label>
+                            <md-select ng-model="farm.homeDetails.bathroom" >
+                                <md-option ng-repeat="bath in bathroom" value="{{bath}}">{{bath}}</md-option>
+                            </md-select>
+                        </md-content>
+                        <md-content class="md-padding">
+                            <label translate>farm.homeDetails.kitchen</label>
+                            <md-select ng-model="farm.homeDetails.kitchen" >
+                                <md-option ng-repeat="kit in kitchen" value="{{kit}}">{{kit}}</md-option>
+                            </md-select>
+                        </md-content>
+                    </md-tab>
+                    <md-tab label="{{ 'People Information' | translate }}">
+                        <table border="2 px">
+                            <tr>
+                                <td>Name</td>
+                                <td>Birthday</td>
+                                <td>Birthplace</td>
+                                <td>Marital Status</td>
+                                <td>Ethnic Group</td>
+                                <td>Relation</td>
+                            </tr>
+                            <tr ng-repeat="waterPoint in farm.farmDetails.waterPoints">
+                                <td>{{ person.name }}</td>
+                                <td>{{ person.birthday }}</td>
+                                <td>{{ person.birthplace |date :  "dd/MM/y"}}</td>
+                                <td>{{ person.maritalStatus }}</td>
+                                <td>{{ person.ethnicGroup }}</td>
+                                <td>{{ person.relation }}</td>
+                            </tr>
+                        </table>
+                        <md-content class="md-padding">
+                            <md-input-container class="md-block">
+                                <label translate>farm.person.name</label>
+                                <input name="Workers" ng-model="tempName"  >
+                            </md-input-container>
+                        </md-content>
+                        <md-content class="md-padding">
+                        <div flex-gt-xs="">
+                            <h4>Date-picker that goes straight to the year view</h4>
+                            <md-datepicker ng-model="tempBirthday" md-current-view="year" md-placeholder="Enter date"></md-datepicker>
+                        </div>
+                        </md-content>
+                        <md-content class="md-padding">
+                            <md-input-container class="md-block">
+                                <label translate>farm.person.birthplace</label>
+                                <input name="Birthplace" ng-model="tempBirthplace" >
+                            </md-input-container>
+                        </md-content>
+                        <md-input-container style="margin-right: 10px;">
+                            <label translate>farm.maritalStatus</label>
+                            <md-select ng-model="tempMaritalStatus" >
+                                <md-option ng-repeat="mari in maritalStatus" value="{{mari}}">{{mari}}</md-option>
+                            </md-select>
+                        </md-input-container>
+                        <md-input-container style="margin-right: 10px;">
+                            <label translate>farm.ethnicGroup</label>
+                            <md-select ng-model="tempEthnicGroup" >
+                                <md-option ng-repeat="eth in ethnicGroup" value="{{eth}}">{{eth}}</md-option>
+                            </md-select>
+                        </md-input-container>
+                        <md-input-container style="margin-right: 10px;">
+                            <label translate>farm.relation</label>
+                            <md-select ng-model="tempRelation" >
+                                <md-option ng-repeat="rela in relation" value="{{rela}}">{{rela}}</md-option>
+                            </md-select>
+                        </md-input-container>
+                        <md-button ng-click="addPerson()">Add Person</md-button>
+                    </md-tab>
+                </md-tabs>
             </md-tab>
             <md-tab label="{{ 'Technologies' | translate }}">
                 <md-content class="md-padding">
@@ -177,6 +278,29 @@
                         <label>Pressure: {{pressure}}</label><br>
                         <label>Wind Speed: {{windSpeed}}</label><br>
                     </div>
+                    <label>Orography</label>
+                    <md-input-container style="margin-right: 10px;">
+                        <label translate>farm.orography</label>
+                        <md-select ng-model="farm.enviroment.orography" >
+                            <md-option ng-repeat="oro in orography" value="{{oro}}">{{oro}}</md-option>
+                        </md-select>
+                    </md-input-container>
+                    <md-input-container class="md-block">
+                        <label translate>Municipal distance in km</label>
+                        <input name="Area" ng-model="farm.enviroment.municipalDistance" ng-pattern="/^[0-9]+\.?[0-9]*$/" >
+                    </md-input-container>
+                    <label translate>farm.accessWay</label>
+                    <md-input-container style="margin-right: 10px;"  >
+                        <div flex="50" ng-repeat="way in ways">
+                            <md-checkbox ng-model="farm.enviroment.access[way]">
+                                {{way}}
+                            </md-checkbox>
+                        </div>
+                    </md-input-container>
+                    <md-input-container style="margin-right: 10px;">
+                        <h1 class="md-display-2">Tab One</h1>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla venenatis ante augue. Phasellus volutpat neque ac dui mattis vulputate. Etiam consequat aliquam cursus. In sodales pretium ultrices. Maecenas lectus est, sollicitudin consectetur felis nec, feugiat ultricies mi.</p>
+                    </md-input-container>
                 </md-content>
             </md-tab>
         </md-tabs>

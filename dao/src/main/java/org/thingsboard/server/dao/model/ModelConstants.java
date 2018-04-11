@@ -197,6 +197,8 @@ public class ModelConstants {
     public static final String FARM_LOCATION_DESCRIPTION ="location_description";
     public static final String FARM_DETAILS = "farm_details";
     public static final String FARM_TOTAL_AREA = "total_area";
+    public static final String FARM_ENVIROMENT = "farm_enviroment";
+    public static final String FARM_HOME_DETAILS = "home_details";
     public static final String IRRIGATIONS_SYSTEMS = "irrigations_systems";
     public static final String FARM_ADDITIONAL_INFO_PROPERTY = ADDITIONAL_INFO_PROPERTY;
 

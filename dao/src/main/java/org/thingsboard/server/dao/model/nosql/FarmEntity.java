@@ -18,6 +18,7 @@ import com.datastax.driver.mapping.annotations.Table;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
+import org.thingsboard.server.common.data.farm.*;
 import org.thingsboard.server.common.data.farm.Area;
 import org.thingsboard.server.common.data.farm.Farm;
 import org.thingsboard.server.common.data.farm.FarmDetails;
@@ -76,6 +77,11 @@ public final class FarmEntity implements SearchTextEntity<Farm> {
     @Column(name = FARM_DETAILS)
     private String farmDetails;
 
+    @Column(name = FARM_ENVIROMENT)
+    private String farmEnviroment;
+
+    @Column(name = FARM_HOME_DETAILS)
+    private String homeDetails;
     @Column(name = IRRIGATIONS_SYSTEMS)
     private  String irrigationsSystems;
 
@@ -103,13 +109,13 @@ public final class FarmEntity implements SearchTextEntity<Farm> {
             ObjectMapper mapper = new ObjectMapper();
             this.farmDetails = mapper.writeValueAsString(farm.getFarmDetails());
             this.totalArea = mapper.writeValueAsString(farm.getTotalArea());
+            this.homeDetails= mapper.writeValueAsString(farm.getHomeDetails());
+            this.farmEnviroment= mapper.writeValueAsString(farm.getEnviroment());
             this.irrigationsSystems = mapper.writeValueAsString(farm.getIrrigationsSystems());
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
     }
-
-
 
     public UUID getId() {
         return id;
@@ -159,12 +165,24 @@ public final class FarmEntity implements SearchTextEntity<Farm> {
         this.additionalInfo = additionalInfo;
     }
 
+    public String getFarmEnviroment() {
+        return farmEnviroment;
+    }
+
+    public void setFarmEnviroment(String farmEnviroment) {
+        this.farmEnviroment = farmEnviroment;
+    }
+
     @Override
+
     public String getSearchTextSource() {
         return getName();
     }
 
+
+
     @Override
+
     public void setSearchText(String searchText) {
         this.searchText = searchText;
     }
@@ -192,6 +210,8 @@ public final class FarmEntity implements SearchTextEntity<Farm> {
             ObjectMapper mapper = new ObjectMapper();
             farm.setFarmDetails(mapper.readValue(farmDetails, FarmDetails.class));
             farm.setTotalArea(mapper.readValue(totalArea,Area.class));
+            farm.setEnviroment(mapper.readValue(farmEnviroment,Enviroment.class));
+            farm.setHomeDetails(mapper.readValue(homeDetails,HomeDetails.class));
             farm.setIrrigationsSystems(mapper.readValue(irrigationsSystems, mapper.getTypeFactory().constructParametricType(List.class, IrrigationSystem.class)));
         } catch (IOException e) {
             e.printStackTrace();
@@ -231,6 +251,13 @@ public final class FarmEntity implements SearchTextEntity<Farm> {
         this.farmDetails = farmDetails;
     }
 
+    public String getHomeDetails() {
+        return homeDetails;
+    }
+
+    public void setHomeDetails(String homeDetails) {
+        this.homeDetails = homeDetails;
+    }
     public String getIrrigationsSystems() {
         return irrigationsSystems;
     }

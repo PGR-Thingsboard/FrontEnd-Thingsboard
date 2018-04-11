@@ -7,11 +7,11 @@ public class FarmDetails {
 
     private String destination;
     private String useDetails;
-    private List<String> publicServices;
+    private PublicServices publicServices;
     private String productionTransport;
     private List<WaterPoint> waterPoints;
 
-    public FarmDetails(String destination, String useDetails, List<String> publicServices, String productionTransport, List<WaterPoint> waterPoints) {
+    public FarmDetails(String destination, String useDetails, PublicServices publicServices, String productionTransport, List<WaterPoint> waterPoints) {
         this.destination = destination;
         this.useDetails = useDetails;
         this.publicServices = publicServices;
@@ -37,11 +37,11 @@ public class FarmDetails {
         this.useDetails = useDetails;
     }
 
-    public List<String> getPublicServices() {
+    public PublicServices getPublicServices() {
         return publicServices;
     }
 
-    public void setPublicServices(List<String> publicServices) {
+    public void setPublicServices(PublicServices publicServices) {
         this.publicServices = publicServices;
     }
 
