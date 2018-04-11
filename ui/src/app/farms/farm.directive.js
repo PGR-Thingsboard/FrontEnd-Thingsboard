@@ -3,7 +3,7 @@ import farmFieldsetTemplate from './farm-fieldset.tpl.html';
 
 /* eslint-enable import/no-unresolved, import/default */
 /*@ngInject*/
-export default function FarmDirective($compile, $templateCache, toast, $translate, types, farmService, customerService) {
+export default function FarmDirective($compile, $templateCache, toast, $translate, types, farmService, customerService,$log) {
     var linker = function (scope, element) {
         var template = $templateCache.get(farmFieldsetTemplate);
         element.html(template);
@@ -33,6 +33,22 @@ export default function FarmDirective($compile, $templateCache, toast, $translat
 
         scope.onFarmIdCopied = function() {
             toast.showSuccess($translate.instant('farm.idCopiedMessage'), 750, angular.element(element).parent().parent(), 'bottom left');
+        };
+
+        scope.longitude = '';
+        scope.latitude = '';
+        scope.temperature = '';
+        scope.humidity = '';
+        scope.pressure = '';
+        scope.windSpeed = '';
+        scope.climatology = function(){
+            farmService.getFarmClimatology(scope.farm.name,scope.longitude,scope.latitude).then(function(result){
+                $log.log(result);
+                scope.temperature = result.main.temp;
+                scope.humidity = result.main.humidity;
+                scope.pressure = result.main.pressure;
+                scope.windSpeed = result.wind.speed;
+            });
         };
 
 
