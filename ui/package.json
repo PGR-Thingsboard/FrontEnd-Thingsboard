@@ -24,6 +24,7 @@
     "angular-cookies": "1.5.8",
     "angular-drag-and-drop-lists": "^1.4.0",
     "angular-fullscreen": "git://github.com/fabiobiondi/angular-fullscreen.git#master",
+    "angular-google-maps": "^2.4.1",
     "angular-gridster": "^0.13.14",
     "angular-hotkeys": "^1.7.0",
     "angular-jwt": "^0.1.6",

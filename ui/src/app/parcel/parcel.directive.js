@@ -10,7 +10,6 @@ export default function ParcelDirective($compile, $templateCache, toast, $transl
         var template = $templateCache.get(parcelFieldsetTemplate);
         element.html(template);
 
-
         scope.types = types;
         scope.isAssignedToCustomer = false;
         scope.isPublic = false;
@@ -45,7 +44,7 @@ export default function ParcelDirective($compile, $templateCache, toast, $transl
 
         $compile(element.contents())(scope);
 
-
+        //-----------------------------------------------Class-------------------------------------------------------------
 
         function Crop(){
             this.name = '';
@@ -59,6 +58,21 @@ export default function ParcelDirective($compile, $templateCache, toast, $transl
             this.state = '';
         }
 
+        function Area(){
+            this.extension=0.0;
+            this.symbol='';
+
+        }
+
+        function GroundFeatures(){
+            this.density = '';
+            this.compaction = '';
+            this.inclination = '';
+            this.higrologicData = '';
+        }
+
+        //-----------------------------------------------------------------------------------------------------------------
+        scope.symbol = ['ha','fg'];
 
         scope.finishCrop = function(){
             scope.parcel.crop.finish = true;
@@ -77,16 +91,22 @@ export default function ParcelDirective($compile, $templateCache, toast, $transl
 
         scope.someCrop = function(){
            var crop = false;
-            if(scope.parcel.crop === null) {
+            if(scope.parcel.name == null) {
                 scope.parcel.crop = new Crop();
                 scope.parcel.cropsHistory = [];
             }else{
                 crop = true;
             }
-
             return crop;
         };
 
+        if(scope.parcel.totalArea == null){
+            scope.parcel.totalArea = new Area();
+        }
+
+        if(scope.parcel.groundFeatures == null){
+            scope.parcel.groundFeatures = new GroundFeatures();
+        }
 
         //------------------------------------------------------------------------
         scope.labels = ['1','2','3','4'];

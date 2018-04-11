@@ -199,6 +199,7 @@ public class ModelConstants {
     public static final String FARM_TOTAL_AREA = "total_area";
     public static final String FARM_ENVIROMENT = "farm_enviroment";
     public static final String FARM_HOME_DETAILS = "home_details";
+    public static final String IRRIGATIONS_SYSTEMS = "irrigations_systems";
     public static final String FARM_ADDITIONAL_INFO_PROPERTY = ADDITIONAL_INFO_PROPERTY;
 
     public static final String ALL_FARMS = "all_farms";
@@ -221,6 +222,8 @@ public class ModelConstants {
     public static final String PARCEL_FARMID_PROPERTY = "farm_id";
     public static final String PARCEL_CROP = "crop";
     public static final String PARCEL_CROPS_HISTORY = "crops_history";
+    public static final String PARCEL_TOTAL_AREA = "total_area";
+    public static final String GROUND_FEATURES = "ground_features";
     public static final String PARCEL_ADDITIONAL_INFO_PROPERTY = ADDITIONAL_INFO_PROPERTY;
 
     public static final String PARCEL_BY_TENANT_AND_SEARCH_TEXT_COLUMN_FAMILY_NAME = "parcel_by_tenant_and_search_text";

@@ -1,6 +1,3 @@
-
-
-
 <md-button ng-click="onMakePublic({event: $event})"
            ng-show="!isEdit && farmScope === 'tenant' && !isAssignedToCustomer && !isPublic"
            class="md-raised md-primary">{{ 'farm.make-public' | translate }}</md-button>
@@ -70,30 +67,27 @@
 
                     <div layout-gt-sm="row">
 
-                    <md-input-container class="md-block">
-                        <label translate>farm.totalArea</label>
-                        <input name="Area" ng-model="farm.totalArea.extension" ng-pattern="/^[0-9]+\.?[0-9]*$/" >
+                        <md-input-container class="md-block">
+                            <label translate>farm.totalArea</label>
+                            <input name="Area" ng-model="farm.totalArea.extension" required="true" ng-pattern="/^[0-9]+\.?[0-9]*$/" >
 
-                    </md-input-container>
+                        </md-input-container>
 
-                    <md-input-container style="margin-right: 10px;">
-                        <label translate>farm.UnitOfMeasurement</label>
-                        <md-select ng-model="farm.totalArea.symbol" >
-                            <md-option ng-repeat="sym in symbol" value="{{sym}}">{{sym}}</md-option>
-                        </md-select>
-                    </md-input-container>
+                        <md-input-container style="margin-right: 10px;">
+                            <label translate>farm.UnitOfMeasurement</label>
+                            <md-select ng-model="farm.totalArea.symbol" >
+                                <md-option ng-repeat="sym in symbol" value="{{sym}}">{{sym}}</md-option>
+                            </md-select>
+                        </md-input-container>
                     </div>
                 </md-content>
-
-
-
             </md-tab>
-        <md-tab label="{{ 'Photograps' | translate }}">
-            <md-content class="md-padding">
-                <h1 class="md-display-2">Tab One</h1>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla venenatis ante augue. Phasellus volutpat neque ac dui mattis vulputate. Etiam consequat aliquam cursus. In sodales pretium ultrices. Maecenas lectus est, sollicitudin consectetur felis nec, feugiat ultricies mi.</p>
-            </md-content>
-        </md-tab>
+            <md-tab label="{{ 'Photograps' | translate }}">
+                <md-content class="md-padding">
+                    <h1 class="md-display-2">Tab One</h1>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla venenatis ante augue. Phasellus volutpat neque ac dui mattis vulputate. Etiam consequat aliquam cursus. In sodales pretium ultrices. Maecenas lectus est, sollicitudin consectetur felis nec, feugiat ultricies mi.</p>
+                </md-content>
+            </md-tab>
             <md-tab label="{{ 'Details' | translate }}">
                 <md-content class="md-padding">
                     <md-input-container style="margin-right: 10px;">
@@ -116,7 +110,30 @@
                         </div>
                     </md-input-container>
 
-
+                    <label>Water Points</label>
+                    <div style="min-height: 1000px;">
+                        <md-input-container class="md-block">
+                            <label translate>waterPoint.number</label>
+                            <textarea ng-model="tempWaterPointNumber"></textarea>
+                        </md-input-container>
+                        <md-input-container class="md-block">
+                            <label translate>waterPoint.resolution</label>
+                            <textarea ng-model="tempWaterPointResolution"></textarea>
+                        </md-input-container>
+                        <md-button ng-click="addWaterPoint()">Add Water Point</md-button>
+                        <table border="2 px">
+                            <tr>
+                                <td>Number</td>
+                                <td>Resolution</td>
+                                <td>Date</td>
+                            </tr>
+                            <tr ng-repeat="waterPoint in farm.farmDetails.waterPoints">
+                                <td>{{ waterPoint.numberPoint }}</td>
+                                <td>{{ waterPoint.resolution }}</td>
+                                <td>{{ waterPoint.validity |date :  "dd/MM/y"}}</td>
+                            </tr>
+                        </table>
+                    </div>
                 </md-content>
             </md-tab>
 
@@ -230,8 +247,29 @@
 
             <md-tab label="{{ 'Technologies' | translate }}">
                 <md-content class="md-padding">
-                    <h1 class="md-display-2">Tab One</h1>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla venenatis ante augue. Phasellus volutpat neque ac dui mattis vulputate. Etiam consequat aliquam cursus. In sodales pretium ultrices. Maecenas lectus est, sollicitudin consectetur felis nec, feugiat ultricies mi.</p>
+                    <label>Irrigations Systems</label>
+                    <div style="min-height: 1000px;">
+                        <md-input-container class="md-block">
+                            <label translate>irrigationSystem.name</label>
+                            <textarea ng-model="tempNameIrrigation"></textarea>
+                        </md-input-container>
+                        <md-input-container class="md-block">
+                            <label translate>irrigationSystem.description</label>
+                            <textarea ng-model="tempDescriptionIrrigation"></textarea>
+                        </md-input-container>
+                        <button ng-click="addIrrigationSystem()">Add Irrigation System</button>
+                        <md-card md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" md-theme-watch ng-repeat="irrigation in farm.irrigationsSystems">
+                            <md-card-title>
+                                <md-card-title-text>
+                                    <span class="md-headline">{{irrigation.name}}</span>
+                                    <span class="md-subhead">{{irrigation.description}}</span>
+                                </md-card-title-text>
+                                <md-card-title-media>
+                                    <div class="md-media-lg card-media"></div>
+                                </md-card-title-media>
+                            </md-card-title>
+                        </md-card>
+                    </div>
                 </md-content>
             </md-tab>
             <md-tab label="{{ 'Enviroment' | translate }}">

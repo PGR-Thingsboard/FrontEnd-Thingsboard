@@ -13,6 +13,8 @@ import org.thingsboard.server.common.data.id.CustomerId;
 import org.thingsboard.server.common.data.id.FarmId;
 import org.thingsboard.server.common.data.id.TenantId;
 
+import java.util.List;
+
 /**
  *
  * @author German Lopez
@@ -35,6 +37,7 @@ public class Farm extends SearchTextBasedWithAdditionalInfo<FarmId> implements H
     private Technology technology;
     private Enviroment enviroment;
     private Area totalArea;
+    private List<IrrigationSystem> irrigationsSystems;
 
     public Farm() {
         super();
@@ -59,6 +62,7 @@ public class Farm extends SearchTextBasedWithAdditionalInfo<FarmId> implements H
         this.technology = farm.getTechnology();
         this.enviroment = farm.getEnviroment();
         this.totalArea = farm.getTotalArea();
+        this.irrigationsSystems = farm.getIrrigationsSystems();
     }
 
 
@@ -198,5 +202,13 @@ public class Farm extends SearchTextBasedWithAdditionalInfo<FarmId> implements H
 
     public void setEnviroment(Enviroment enviroment) {
         this.enviroment = enviroment;
+    }
+
+    public List<IrrigationSystem> getIrrigationsSystems() {
+        return irrigationsSystems;
+    }
+
+    public void setIrrigationsSystems(List<IrrigationSystem> irrigationsSystems) {
+        this.irrigationsSystems = irrigationsSystems;
     }
 }

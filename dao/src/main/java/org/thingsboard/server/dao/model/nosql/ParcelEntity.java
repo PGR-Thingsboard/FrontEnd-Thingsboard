@@ -19,6 +19,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import org.thingsboard.server.common.data.crop.Crop;
+import org.thingsboard.server.common.data.farm.Area;
+import org.thingsboard.server.common.data.parcel.GroundFeatures;
 import org.thingsboard.server.common.data.parcel.Parcel;
 import org.thingsboard.server.common.data.id.ParcelId;
 import org.thingsboard.server.common.data.id.CustomerId;
@@ -80,6 +82,12 @@ public final class ParcelEntity implements SearchTextEntity<Parcel> {
     @Column(name = PARCEL_CROPS_HISTORY)
     private String cropsHistory;
 
+    @Column(name = PARCEL_TOTAL_AREA)
+    private String totalArea;
+
+    @Column(name = GROUND_FEATURES)
+    private String groundFeatures;
+
     public ParcelEntity() {
         super();
     }
@@ -101,13 +109,9 @@ public final class ParcelEntity implements SearchTextEntity<Parcel> {
         try {
             ObjectMapper mapper = new ObjectMapper();
             this.crop = mapper.writeValueAsString(parcel.getCrop());
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
-
-        try {
-            ObjectMapper mapper = new ObjectMapper();
             this.cropsHistory = mapper.writeValueAsString(parcel.getCropsHistory());
+            this.totalArea = mapper.writeValueAsString(parcel.getTotalArea());
+            this.groundFeatures = mapper.writeValueAsString(parcel.getGroundFeatures());
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
@@ -192,13 +196,9 @@ public final class ParcelEntity implements SearchTextEntity<Parcel> {
         try {
             ObjectMapper mapper = new ObjectMapper();
             parcel.setCrop(mapper.readValue(crop, Crop.class));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        try {
-            ObjectMapper mapper = new ObjectMapper();
             parcel.setCropsHistory(mapper.readValue(cropsHistory, mapper.getTypeFactory().constructParametricType(List.class, Crop.class)));
+            parcel.setTotalArea(mapper.readValue(totalArea, Area.class));
+            parcel.setGroundFeatures(mapper.readValue(groundFeatures, GroundFeatures.class));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -221,5 +221,21 @@ public final class ParcelEntity implements SearchTextEntity<Parcel> {
 
     public void setCropsHistory(String cropsHistory) {
         this.cropsHistory = cropsHistory;
+    }
+
+    public String getTotalArea() {
+        return totalArea;
+    }
+
+    public void setTotalArea(String totalArea) {
+        this.totalArea = totalArea;
+    }
+
+    public String getGroundFeatures() {
+        return groundFeatures;
+    }
+
+    public void setGroundFeatures(String groundFeatures) {
+        this.groundFeatures = groundFeatures;
     }
 }

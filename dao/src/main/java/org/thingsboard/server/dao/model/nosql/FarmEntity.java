@@ -11,6 +11,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.UUID;
 import com.datastax.driver.mapping.annotations.Column;
 import com.datastax.driver.mapping.annotations.Table;
@@ -18,6 +19,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import org.thingsboard.server.common.data.farm.*;
+import org.thingsboard.server.common.data.farm.Area;
+import org.thingsboard.server.common.data.farm.Farm;
+import org.thingsboard.server.common.data.farm.FarmDetails;
+import org.thingsboard.server.common.data.farm.IrrigationSystem;
 import org.thingsboard.server.common.data.id.CustomerId;
 import org.thingsboard.server.common.data.id.FarmId;
 import org.thingsboard.server.common.data.id.TenantId;
@@ -77,6 +82,9 @@ public final class FarmEntity implements SearchTextEntity<Farm> {
 
     @Column(name = FARM_HOME_DETAILS)
     private String homeDetails;
+    @Column(name = IRRIGATIONS_SYSTEMS)
+    private  String irrigationsSystems;
+
 
     public FarmEntity() {
         super();
@@ -103,6 +111,7 @@ public final class FarmEntity implements SearchTextEntity<Farm> {
             this.totalArea = mapper.writeValueAsString(farm.getTotalArea());
             this.homeDetails= mapper.writeValueAsString(farm.getHomeDetails());
             this.farmEnviroment= mapper.writeValueAsString(farm.getEnviroment());
+            this.irrigationsSystems = mapper.writeValueAsString(farm.getIrrigationsSystems());
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
@@ -203,6 +212,7 @@ public final class FarmEntity implements SearchTextEntity<Farm> {
             farm.setTotalArea(mapper.readValue(totalArea,Area.class));
             farm.setEnviroment(mapper.readValue(farmEnviroment,Enviroment.class));
             farm.setHomeDetails(mapper.readValue(homeDetails,HomeDetails.class));
+            farm.setIrrigationsSystems(mapper.readValue(irrigationsSystems, mapper.getTypeFactory().constructParametricType(List.class, IrrigationSystem.class)));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -248,4 +258,12 @@ public final class FarmEntity implements SearchTextEntity<Farm> {
     public void setHomeDetails(String homeDetails) {
         this.homeDetails = homeDetails;
     }
+    public String getIrrigationsSystems() {
+        return irrigationsSystems;
+    }
+
+    public void setIrrigationsSystems(String irrigationsSystems) {
+        this.irrigationsSystems = irrigationsSystems;
+    }
+    
 }

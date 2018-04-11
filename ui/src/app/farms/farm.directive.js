@@ -1,6 +1,5 @@
-
-
 import farmFieldsetTemplate from './farm-fieldset.tpl.html';
+
 
 /* eslint-enable import/no-unresolved, import/default */
 /*@ngInject*/
@@ -43,7 +42,6 @@ export default function FarmDirective($compile, $templateCache, toast, $translat
         scope.latitudes = new Array(scope.labels.size);
         scope.longitudes = new Array(scope.labels.size);
 
-//------------------------------------------------Class--------------------------------------
         function Polygon() {
             this.coordinates = [];
             this.type = 'Polygon';
@@ -119,14 +117,41 @@ export default function FarmDirective($compile, $templateCache, toast, $translat
         }
 
 
-        /*function WaterPoints() {
+
+        function WaterPoint() {
             this.numberPoint = 0;
             this.resolution = '';
-            this.validity = null;
-        }*/
-//---------------------------------------------------------------------------------------------
+            this.validity = new Date();
+        }
 
+        function IrrigationSystem(){
+            this.name = '';
+            this.description = '';
+        }
 
+        scope.tempWaterPointNumber = 0;
+        scope.tempWaterPointResolution = '';
+
+        scope.addWaterPoint = function(){
+            var waterPoint = new WaterPoint();
+            waterPoint.numberPoint = scope.tempWaterPointNumber;
+            waterPoint.resolution = scope.tempWaterPointResolution;
+            scope.farm.farmDetails.waterPoints.push(waterPoint);
+            scope.tempWaterPointNumber = 0;
+            scope.tempWaterPointResolution = '';
+        }
+
+        scope.tempNameIrrigation = '';
+        scope.tempDescriptionIrrigation = '';
+
+        scope.addIrrigationSystem = function(){
+            var irrigationSystem = new IrrigationSystem();
+            irrigationSystem.name = scope.tempNameIrrigation;
+            irrigationSystem.description = scope.tempDescriptionIrrigation;
+            scope.farm.irrigationsSystems.push(irrigationSystem);
+            scope.tempNameIrrigation = '';
+            scope.tempDescriptionIrrigation = '';
+        }
 
 
         var polygon = new Polygon();
@@ -145,7 +170,7 @@ export default function FarmDirective($compile, $templateCache, toast, $translat
         scope.relation=["Spouse","Son/Daughter","Stepson/Stepdaughter","Son-in-law/Daughter-in-law","Father/Mother","Stepfather/Stepmother","Father in law/Mother in law","Brother/Sister","Stepbrother/Stepsister","Brother in law/Sister in law","Grandson/Granddaughter","Grandfather/Grandmother","Another relative","Not related"]
 
 
-        if(scope.farm.farmDetails === null){
+        if(scope.farm.farmDetails == null){
             scope.farm.farmDetails = new FarmDetails();
         }
 
@@ -161,6 +186,11 @@ export default function FarmDirective($compile, $templateCache, toast, $translat
         if (scope.farm.homeDetails===null){
             scope.farm.homeDetails= new HomeDetails();
         }
+
+        if(scope.farm.irrigationsSystems == null){
+            scope.farm.irrigationsSystems = [];
+        }
+
 
         scope.saveEverything = function() {
             for (var i = 0; i < scope.labels.length; i++) {
@@ -180,9 +210,10 @@ export default function FarmDirective($compile, $templateCache, toast, $translat
 
 
 
+
     };
     return {
-        restrict: "E",
+        restrict: 'E',
         link: linker,
         scope: {
             farm: '=',
