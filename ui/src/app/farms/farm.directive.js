@@ -3,7 +3,7 @@ import farmFieldsetTemplate from './farm-fieldset.tpl.html';
 
 /* eslint-enable import/no-unresolved, import/default */
 /*@ngInject*/
-export default function FarmDirective($compile, $templateCache, toast, $translate, types, farmService, customerService,$log) {
+export default function FarmDirective($compile, $templateCache, toast, $translate, types, farmService, customerService) {
     var linker = function (scope, element) {
         var template = $templateCache.get(farmFieldsetTemplate);
         element.html(template);
@@ -141,6 +141,30 @@ export default function FarmDirective($compile, $templateCache, toast, $translat
             scope.tempWaterPointResolution = '';
         }
 
+        scope.tempName ="";
+        scope.tempBirthday = new Date();
+        scope.tempBirthplace="";
+        scope.tempMaritalStatus="";
+        scope.tempEthnicGroup="";
+        scope.tempRelation = "";
+        scope.addPerson = function(){
+            var person = new Person();
+            person.name =scope.tempName;
+            person.birthday=scope.tempBirthday;
+            person.birthplace=scope.tempBirthplace;
+            person.maritalStatus=scope.tempMaritalStatus;
+            person.ethnicGroup=scope.tempEthnicGroup;
+            person.relation = scope.tempRelation;
+            scope.farm.homeDetails.people.push(person);
+            scope.tempName ="";
+            scope.tempBirthday = new Date();
+            scope.tempBirthplace="";
+            scope.tempMaritalStatus="";
+            scope.tempEthnicGroup="";
+            scope.tempRelation = "";
+
+        }
+
         scope.tempNameIrrigation = '';
         scope.tempDescriptionIrrigation = '';
 
@@ -199,14 +223,6 @@ export default function FarmDirective($compile, $templateCache, toast, $translat
             scope.farm.location = polygon;
         };
 
-        scope.addPerson = function(){
-            $log.log("su mensaje");
-            if (scope.farm.homeDetails===null){
-                scope.farm.homeDetails= new HomeDetails();
-            }
-            scope.farm.homeDetails.people.push(scope.person);
-            scope.person = new Person();
-        };
 
 
 

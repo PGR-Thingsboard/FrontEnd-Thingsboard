@@ -110,8 +110,8 @@
                         </div>
                     </md-input-container>
 
-                    <label>Water Points</label>
                     <div style="min-height: 1000px;">
+                        <label>Water Points</label>
                         <md-input-container class="md-block">
                             <label translate>waterPoint.number</label>
                             <textarea ng-model="tempWaterPointNumber"></textarea>
@@ -190,54 +190,69 @@
                     </md-tab>
                     <md-tab label="{{ 'People Information' | translate }}">
 
-                        <ul>
-                            <li ng-repeat="person in farm.homeDetails.people">{{person}} </li>
-                        </ul>
-
-                        <button ng-click="addPerson()">Add Person</button>
+                        <table border="2 px">
+                            <tr>
+                                <td>Name</td>
+                                <td>Birthday</td>
+                                <td>Birthplace</td>
+                                <td>Marital Status</td>
+                                <td>Ethnic Group</td>
+                                <td>Relation</td>
+                            </tr>
+                            <tr ng-repeat="waterPoint in farm.farmDetails.waterPoints">
+                                <td>{{ person.name }}</td>
+                                <td>{{ person.birthday }}</td>
+                                <td>{{ person.birthplace |date :  "dd/MM/y"}}</td>
+                                <td>{{ person.maritalStatus }}</td>
+                                <td>{{ person.ethnicGroup }}</td>
+                                <td>{{ person.relation }}</td>
+                            </tr>
+                        </table>
 
 
                         <md-content class="md-padding">
                             <md-input-container class="md-block">
                                 <label translate>farm.person.name</label>
-                                <input name="Workers" ng-model="farm.person.name"  >
+                                <input name="Workers" ng-model="tempName"  >
                             </md-input-container>
                         </md-content>
 
                         <md-content class="md-padding">
                         <div flex-gt-xs="">
                             <h4>Date-picker that goes straight to the year view</h4>
-                            <md-datepicker ng-model="farm.person.birthday" md-current-view="year" md-placeholder="Enter date"></md-datepicker>
+                            <md-datepicker ng-model="tempBirthday" md-current-view="year" md-placeholder="Enter date"></md-datepicker>
                         </div>
 
                         </md-content>
                         <md-content class="md-padding">
                             <md-input-container class="md-block">
                                 <label translate>farm.person.birthplace</label>
-                                <input name="Birthplace" ng-model="farm.person.birthplace" >
+                                <input name="Birthplace" ng-model="tempBirthplace" >
                             </md-input-container>
                         </md-content>
 
                         <md-input-container style="margin-right: 10px;">
                             <label translate>farm.maritalStatus</label>
-                            <md-select ng-model="farm.person.maritalStatus" >
+                            <md-select ng-model="tempMaritalStatus" >
                                 <md-option ng-repeat="mari in maritalStatus" value="{{mari}}">{{mari}}</md-option>
                             </md-select>
                         </md-input-container>
 
                         <md-input-container style="margin-right: 10px;">
                             <label translate>farm.ethnicGroup</label>
-                            <md-select ng-model="farm.person.ethnicGroup" >
+                            <md-select ng-model="tempEthnicGroup" >
                                 <md-option ng-repeat="eth in ethnicGroup" value="{{eth}}">{{eth}}</md-option>
                             </md-select>
                         </md-input-container>
 
                         <md-input-container style="margin-right: 10px;">
                             <label translate>farm.relation</label>
-                            <md-select ng-model="farm.person.relation" >
+                            <md-select ng-model="tempRelation" >
                                 <md-option ng-repeat="rela in relation" value="{{rela}}">{{rela}}</md-option>
                             </md-select>
                         </md-input-container>
+
+                        <md-button ng-click="addPerson()">Add Person</md-button>
 
                     </md-tab>
                 </md-tabs>
@@ -257,7 +272,7 @@
                             <label translate>irrigationSystem.description</label>
                             <textarea ng-model="tempDescriptionIrrigation"></textarea>
                         </md-input-container>
-                        <button ng-click="addIrrigationSystem()">Add Irrigation System</button>
+                        <md-button ng-click="addIrrigationSystem()">Add Irrigation System</md-button>
                         <md-card md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" md-theme-watch ng-repeat="irrigation in farm.irrigationsSystems">
                             <md-card-title>
                                 <md-card-title-text>
