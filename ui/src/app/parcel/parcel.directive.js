@@ -73,7 +73,6 @@ export default function ParcelDirective($compile, $templateCache, toast, $transl
 
         //-----------------------------------------------------------------------------------------------------------------
         scope.symbol = ['ha','fg'];
-        scope.orography = ['Valley','Mountain',"Plain","Volcano"];
 
         scope.finishCrop = function(){
             scope.parcel.crop.finish = true;

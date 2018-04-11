@@ -3,7 +3,6 @@ import farmFieldsetTemplate from './farm-fieldset.tpl.html';
 
 /* eslint-enable import/no-unresolved, import/default */
 /*@ngInject*/
-
 export default function FarmDirective($compile, $templateCache, toast, $translate, types, farmService, customerService,$log) {
     var linker = function (scope, element) {
         var template = $templateCache.get(farmFieldsetTemplate);
@@ -55,6 +54,7 @@ export default function FarmDirective($compile, $templateCache, toast, $translat
 
         }
 
+
         function PublicServices(){
             this.electricity=false;
             this.water=false;
@@ -99,7 +99,7 @@ export default function FarmDirective($compile, $templateCache, toast, $translat
 
        function Person() {
             this.name ="";
-            this.birthday = "";
+            this.birthday = new Date();
             this.birthplace="";
             this.maritalStatus="";
             this.ethnicGroup="";
@@ -143,7 +143,7 @@ export default function FarmDirective($compile, $templateCache, toast, $translat
         }
         
         scope.tempName ="";
-        scope.tempBirthday = "";
+        scope.tempBirthday = new Date();
         scope.tempBirthplace="";
         scope.tempMaritalStatus="";
         scope.tempEthnicGroup="";
@@ -159,7 +159,7 @@ export default function FarmDirective($compile, $templateCache, toast, $translat
             person.relation = scope.tempRelation;
             scope.farm.homeDetails.people.push(person);
             scope.tempName ="";
-            scope.tempBirthday = "";
+            scope.tempBirthday = new Date();
             scope.tempBirthplace="";
             scope.tempMaritalStatus="";
             scope.tempEthnicGroup="";
@@ -205,8 +205,8 @@ export default function FarmDirective($compile, $templateCache, toast, $translat
         scope.maritalStatus=["Single","Married","Free Union","Widower"]
         scope.ethnicGroup=["Native","Romani","Afrodescendant","None"]
         scope.relation=["Spouse","Son/Daughter","Stepson/Stepdaughter","Son-in-law/Daughter-in-law","Father/Mother","Stepfather/Stepmother","Father in law/Mother in law","Brother/Sister","Stepbrother/Stepsister","Brother in law/Sister in law","Grandson/Granddaughter","Grandfather/Grandmother","Another relative","Not related"]
-        scope.highwayState=['Paved','Not Paved',"Passable","Volcano"];
-        scope.productionTransport=['Own','Cooperative',"Third"];
+        scope.highwayState=["Paved","Not Paved","Passable","Volcano"];
+        scope.productionTransport=["Own","Cooperative","Third"];
 
 
         if(scope.farm.farmDetails == null){
