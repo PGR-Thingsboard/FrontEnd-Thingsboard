@@ -3,7 +3,8 @@ import farmFieldsetTemplate from './farm-fieldset.tpl.html';
 
 /* eslint-enable import/no-unresolved, import/default */
 /*@ngInject*/
-export default function FarmDirective($compile, $templateCache, toast, $translate, types, farmService, customerService,$log ) {
+
+export default function FarmDirective($compile, $templateCache, toast, $translate, types, farmService, customerService,$log) {
     var linker = function (scope, element) {
         var template = $templateCache.get(farmFieldsetTemplate);
         element.html(template);
@@ -178,6 +179,18 @@ export default function FarmDirective($compile, $templateCache, toast, $translat
             scope.tempDescriptionIrrigation = '';
         }
 
+        scope.longitude = '';
+        scope.latitude = '';
+        scope.climatology = function(){
+            farmService.getFarmClimatology(scope.farm.name,scope.longitude,scope.latitude).then(function(result){
+                $log.log(result);
+                scope.farm.enviroment.climatology.temperature = result.main.temp;
+                scope.farm.enviroment.climatology.humidity = result.main.humidity;
+                scope.farm.enviroment.climatology.rainFall = result.main.pressure;
+                scope.farm.enviroment.climatology.solarIrradiance = result.wind.speed;
+            });
+        };
+
 
         var polygon = new Polygon();
         scope.destination = ['Familiar','Production'];
@@ -209,7 +222,12 @@ export default function FarmDirective($compile, $templateCache, toast, $translat
             scope.farm.enviroment= new Enviroment();
         }
 
-        if (scope.farm.homeDetails==null){
+
+        if (scope.farm.enviroment == null){
+            scope.farm.enviroment= new Enviroment();
+        }
+
+        if (scope.farm.homeDetails == null){
             scope.farm.homeDetails= new HomeDetails();
         }
 
@@ -223,7 +241,6 @@ export default function FarmDirective($compile, $templateCache, toast, $translat
             }
             scope.farm.location = polygon;
         };
-
 
     };
     return {

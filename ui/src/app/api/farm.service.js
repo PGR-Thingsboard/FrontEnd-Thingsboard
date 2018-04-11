@@ -12,6 +12,7 @@ function FarmService($http, $q, customerService, userService, $log) {
         getFarms: getFarms,
         getAllFarms : getAllFarms,
         saveFarm: saveFarm,
+        getFarmClimatology: getFarmClimatology,
         deleteFarm: deleteFarm,
         assignFarmToCustomer: assignFarmToCustomer,
         unassignFarmFromCustomer: unassignFarmFromCustomer,
@@ -73,6 +74,22 @@ function FarmService($http, $q, customerService, userService, $log) {
         $http.get(url,config).then(function success(response) {
             farms=response.data;
             deferred.resolve(farms);
+        }, function fail() {
+            deferred.reject();
+        });
+        $log.log(deferred.promise);
+        return deferred.promise;
+    }
+
+    function getFarmClimatology(farmId,lon,lat,config) {
+        $log.log(lon);
+        $log.log(lat);
+        var deferred = $q.defer();
+        var farmClimatology;
+        var url = '/api/farm/'+farmId+'/climatology/'+ lon+'/'+lat;
+        $http.get(url,config).then(function success(response) {
+            farmClimatology=response.data;
+            deferred.resolve(farmClimatology);
         }, function fail() {
             deferred.reject();
         });

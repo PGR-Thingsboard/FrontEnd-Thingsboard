@@ -265,5 +265,5 @@ public final class FarmEntity implements SearchTextEntity<Farm> {
     public void setIrrigationsSystems(String irrigationsSystems) {
         this.irrigationsSystems = irrigationsSystems;
     }
-    
+
 }
