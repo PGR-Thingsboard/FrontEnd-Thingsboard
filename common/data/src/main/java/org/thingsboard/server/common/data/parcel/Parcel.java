@@ -37,6 +37,7 @@ public class Parcel extends SearchTextBasedWithAdditionalInfo<ParcelId> implemen
     private Area totalArea;
     private GroundFeatures groundFeatures;
 
+
     public Parcel() {
         super();
     }

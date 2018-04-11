@@ -110,6 +110,14 @@
                         </div>
                     </md-input-container>
 
+                    <label translate>farm.productionTransport</label>
+                    <md-input-container style="margin-right: 10px;">
+                        <md-select ng-model="farm.farmDetails.productionTransport" >
+                            <md-option ng-repeat="prod in productionTransport" value="{{prod}}">{{prod}}</md-option>
+                        </md-select>
+                    </md-input-container>
+
+
                     <div style="min-height: 1000px;">
                         <label>Water Points</label>
                         <md-input-container class="md-block">
@@ -141,7 +149,10 @@
             <md-tab label="{{ 'Home Details' | translate }}">
 
                 <md-tabs md-dynamic-height md-border-bottom>
+
                     <md-tab label="{{ 'Home Information' | translate }}">
+                        <div style="min-height: 1300px;">
+
                         <md-content class="md-padding">
                             <label translate>farm.homeDetails.homeMaterial</label>
                             <md-select ng-model="farm.homeDetails.homeMaterial" >
@@ -187,30 +198,32 @@
                                 <md-option ng-repeat="kit in kitchen" value="{{kit}}">{{kit}}</md-option>
                             </md-select>
                         </md-content>
+                    </div>
                     </md-tab>
                     <md-tab label="{{ 'People Information' | translate }}">
 
-                        <table border="2 px">
-                            <tr>
-                                <td>Name</td>
-                                <td>Birthday</td>
-                                <td>Birthplace</td>
-                                <td>Marital Status</td>
-                                <td>Ethnic Group</td>
-                                <td>Relation</td>
-                            </tr>
-                            <tr ng-repeat="waterPoint in farm.farmDetails.waterPoints">
-                                <td>{{ person.name }}</td>
-                                <td>{{ person.birthday }}</td>
-                                <td>{{ person.birthplace |date :  "dd/MM/y"}}</td>
-                                <td>{{ person.maritalStatus }}</td>
-                                <td>{{ person.ethnicGroup }}</td>
-                                <td>{{ person.relation }}</td>
-                            </tr>
-                        </table>
+                        <div style="min-height: 1000px;">
 
+                            <table border="2 px">
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Birthdate </td>
+                                    <td>Birthplace</td>
+                                    <td>Marital Status</td>
+                                    <td>Ethnic Group</td>
+                                    <td>Relation</td>
+                                </tr>
+                                <tr ng-repeat="person in farm.homeDetails.people">
+                                    <td>{{ person.name }}</td>
+                                    <td>{{ person.birthday |date :  "dd/MM/y"}}</td>
+                                    <td>{{ person.birthplace }}</td>
+                                    <td>{{ person.maritalStatus }}</td>
+                                    <td>{{ person.ethnicGroup }}</td>
+                                    <td>{{ person.relation }}</td>
+                                </tr>
+                            </table>
 
-                        <md-content class="md-padding">
+                            <md-content class="md-padding">
                             <md-input-container class="md-block">
                                 <label translate>farm.person.name</label>
                                 <input name="Workers" ng-model="tempName"  >
@@ -219,7 +232,7 @@
 
                         <md-content class="md-padding">
                         <div flex-gt-xs="">
-                            <h4>Date-picker that goes straight to the year view</h4>
+                            <h4>Birthdate</h4>
                             <md-datepicker ng-model="tempBirthday" md-current-view="year" md-placeholder="Enter date"></md-datepicker>
                         </div>
 
@@ -253,6 +266,9 @@
                         </md-input-container>
 
                         <md-button ng-click="addPerson()">Add Person</md-button>
+
+
+                        </div>
 
                     </md-tab>
                 </md-tabs>
@@ -311,6 +327,13 @@
                             </md-checkbox>
                         </div>
 
+                    </md-input-container>
+
+                    <label translate>farm.RoadState</label>
+                    <md-input-container style="margin-right: 10px;">
+                        <md-select ng-model="farm.enviroment.highwayState" >
+                            <md-option ng-repeat="hig in highwayState" value="{{hig}}">{{hig}}</md-option>
+                        </md-select>
                     </md-input-container>
 
                     <md-input-container style="margin-right: 10px;">
