@@ -273,10 +273,10 @@
                             <textarea ng-model="latitude"></textarea>
                         </md-input-container>
                         <button ng-click="climatology()">Current Climatology</button><br>
-                        <label>Temperature: {{temperature}}</label><br>
-                        <label>Humidity: {{humidity}}</label><br>
-                        <label>Pressure: {{pressure}}</label><br>
-                        <label>Wind Speed: {{windSpeed}}</label><br>
+                        <label>Temperature: {{farm.enviroment.climatology.temperature}}</label><br>
+                        <label>Humidity: {{farm.enviroment.climatology.humidity}}</label><br>
+                        <label>Pressure: {{farm.enviroment.climatology.rainFall}}</label><br>
+                        <label>Wind Speed: {{farm.enviroment.climatology.solarIrradiance}}</label><br>
                     </div>
                     <label>Orography</label>
                     <md-input-container style="margin-right: 10px;">

@@ -35,22 +35,6 @@ export default function FarmDirective($compile, $templateCache, toast, $translat
             toast.showSuccess($translate.instant('farm.idCopiedMessage'), 750, angular.element(element).parent().parent(), 'bottom left');
         };
 
-        scope.longitude = '';
-        scope.latitude = '';
-        scope.temperature = '';
-        scope.humidity = '';
-        scope.pressure = '';
-        scope.windSpeed = '';
-        scope.climatology = function(){
-            farmService.getFarmClimatology(scope.farm.name,scope.longitude,scope.latitude).then(function(result){
-                $log.log(result);
-                scope.temperature = result.main.temp;
-                scope.humidity = result.main.humidity;
-                scope.pressure = result.main.pressure;
-                scope.windSpeed = result.wind.speed;
-            });
-        };
-
 
         $compile(element.contents())(scope);
 
@@ -193,6 +177,18 @@ export default function FarmDirective($compile, $templateCache, toast, $translat
             scope.tempDescriptionIrrigation = '';
         }
 
+        scope.longitude = '';
+        scope.latitude = '';
+        scope.climatology = function(){
+            farmService.getFarmClimatology(scope.farm.name,scope.longitude,scope.latitude).then(function(result){
+                $log.log(result);
+                scope.farm.enviroment.climatology.temperature = result.main.temp;
+                scope.farm.enviroment.climatology.humidity = result.main.humidity;
+                scope.farm.enviroment.climatology.rainFall = result.main.pressure;
+                scope.farm.enviroment.climatology.solarIrradiance = result.wind.speed;
+            });
+        };
+
 
         var polygon = new Polygon();
         scope.destination = ['Familiar','Production'];
@@ -215,15 +211,15 @@ export default function FarmDirective($compile, $templateCache, toast, $translat
         }
 
 
-        if(scope.farm.totalArea === null){
+        if(scope.farm.totalArea == null){
             scope.farm.totalArea = new Area();
         }
 
-        if (scope.farm.enviroment===null){
+        if (scope.farm.enviroment == null){
             scope.farm.enviroment= new Enviroment();
         }
 
-        if (scope.farm.homeDetails===null){
+        if (scope.farm.homeDetails == null){
             scope.farm.homeDetails= new HomeDetails();
         }
 
@@ -238,10 +234,6 @@ export default function FarmDirective($compile, $templateCache, toast, $translat
             }
             scope.farm.location = polygon;
         };
-
-
-
-
 
     };
     return {
