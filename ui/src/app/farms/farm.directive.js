@@ -3,11 +3,12 @@ import farmFieldsetTemplate from './farm-fieldset.tpl.html';
 
 /* eslint-enable import/no-unresolved, import/default */
 /*@ngInject*/
-
 export default function FarmDirective($compile, $templateCache, toast, $translate, types, farmService, customerService,$log) {
     var linker = function (scope, element) {
         var template = $templateCache.get(farmFieldsetTemplate);
         element.html(template);
+
+
 
         scope.types = types;
         scope.isAssignedToCustomer = false;
@@ -97,9 +98,9 @@ export default function FarmDirective($compile, $templateCache, toast, $translat
             this.highwayState='';
         }
 
-       function Person() {
+        function Person() {
             this.name ="";
-            this.birthday = "";
+            this.birthday = new Date();
             this.birthplace="";
             this.maritalStatus="";
             this.ethnicGroup="";
@@ -141,15 +142,14 @@ export default function FarmDirective($compile, $templateCache, toast, $translat
             scope.tempWaterPointNumber = 0;
             scope.tempWaterPointResolution = '';
         }
-        
+
         scope.tempName ="";
-        scope.tempBirthday = "";
+        scope.tempBirthday = new Date();
         scope.tempBirthplace="";
         scope.tempMaritalStatus="";
         scope.tempEthnicGroup="";
         scope.tempRelation = "";
         scope.addPerson = function(){
-            $log.log("su mensaje")
             var person = new Person();
             person.name =scope.tempName;
             person.birthday=scope.tempBirthday;
@@ -159,7 +159,7 @@ export default function FarmDirective($compile, $templateCache, toast, $translat
             person.relation = scope.tempRelation;
             scope.farm.homeDetails.people.push(person);
             scope.tempName ="";
-            scope.tempBirthday = "";
+            scope.tempBirthday = new Date();
             scope.tempBirthplace="";
             scope.tempMaritalStatus="";
             scope.tempEthnicGroup="";
@@ -189,7 +189,7 @@ export default function FarmDirective($compile, $templateCache, toast, $translat
                 scope.farm.enviroment.climatology.rainFall = result.main.pressure;
                 scope.farm.enviroment.climatology.solarIrradiance = result.wind.speed;
             });
-        };
+        }
 
 
         var polygon = new Polygon();
@@ -198,15 +198,14 @@ export default function FarmDirective($compile, $templateCache, toast, $translat
         scope.orography = ['Valley','Mountain',"Plain","Volcano"];
         scope.ways=["air","land","fluvial"];
         scope.publicServices=["electricity","water","sewerage","gas","garbage_collection","internet","telephony","television"];
-        scope.hmaterial=["Block, Brick, Stone, Polished wood","Concrete drained","Prefabricated material","Tapia tread, Bahareque, Adobe", "Crude wood, Board, Plank","Reed (Plant), Mat, Other vegetables"]
-        scope.fmaterial=["Marble, Parquetry, Polished or lacquered wood","Tile, Vinyl, Tablet, Brick, Laminate","Carpet","Cement, Gravel","Crude wood, Board, Plank, Other vegetable","Soil, Sand, mud"]
-        scope.kitchen=["In a room used only for cooking","In a room also used for sleeping","In a living room with dishwasher","In a living room without dishwasher","In a patio, corridor, trellis or outdoors","They do not prepare food in the house"]
-        scope.bathroom=["Toilet connected to the sewer","Toilet connected to septic tank","Toilet without connection","Latrine","Toilet with direct discharge to water sources (low tide)","Does not have sanitary service"]
-        scope.maritalStatus=["Single","Married","Free Union","Widower"]
-        scope.ethnicGroup=["Native","Romani","Afrodescendant","None"]
-        scope.relation=["Spouse","Son/Daughter","Stepson/Stepdaughter","Son-in-law/Daughter-in-law","Father/Mother","Stepfather/Stepmother","Father in law/Mother in law","Brother/Sister","Stepbrother/Stepsister","Brother in law/Sister in law","Grandson/Granddaughter","Grandfather/Grandmother","Another relative","Not related"]
-        scope.highwayState=['Paved','Not Paved',"Passable","Volcano"];
-        scope.productionTransport=['Own','Cooperative',"Third"];
+        scope.hmaterial=["Block, Brick, Stone, Polished wood","Concrete drained","Prefabricated material","Tapia tread, Bahareque, Adobe", "Crude wood, Board, Plank","Reed (Plant), Mat, Other vegetables"];
+        scope.fmaterial=["Marble, Parquetry, Polished or lacquered wood","Tile, Vinyl, Tablet, Brick, Laminate","Carpet","Cement, Gravel","Crude wood, Board, Plank, Other vegetable","Soil, Sand, mud"];
+        scope.kitchen=["In a room used only for cooking","In a room also used for sleeping","In a living room with dishwasher","In a living room without dishwasher","In a patio, corridor, trellis or outdoors","They do not prepare food in the house"];
+        scope.bathroom=["Toilet connected to the sewer","Toilet connected to septic tank","Toilet without connection","Latrine","Toilet with direct discharge to water sources (low tide)","Does not have sanitary service"];
+        scope.person= new Person();
+        scope.maritalStatus=["Single","Married","Free Union","Widower"];
+        scope.ethnicGroup=["Native","Romani","Afrodescendant","None"];
+        scope.relation=["Spouse","Son/Daughter","Stepson/Stepdaughter","Son-in-law/Daughter-in-law","Father/Mother","Stepfather/Stepmother","Father in law/Mother in law","Brother/Sister","Stepbrother/Stepsister","Brother in law/Sister in law","Grandson/Granddaughter","Grandfather/Grandmother","Another relative","Not related"];
 
 
         if(scope.farm.farmDetails == null){
@@ -217,11 +216,6 @@ export default function FarmDirective($compile, $templateCache, toast, $translat
         if(scope.farm.totalArea == null){
             scope.farm.totalArea = new Area();
         }
-
-        if (scope.farm.enviroment==null){
-            scope.farm.enviroment= new Enviroment();
-        }
-
 
         if (scope.farm.enviroment == null){
             scope.farm.enviroment= new Enviroment();
@@ -234,6 +228,7 @@ export default function FarmDirective($compile, $templateCache, toast, $translat
         if(scope.farm.irrigationsSystems == null){
             scope.farm.irrigationsSystems = [];
         }
+
 
         scope.saveEverything = function() {
             for (var i = 0; i < scope.labels.length; i++) {
