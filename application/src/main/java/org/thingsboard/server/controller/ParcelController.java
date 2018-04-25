@@ -39,6 +39,8 @@ import org.thingsboard.server.exception.ThingsboardErrorCode;
 import org.thingsboard.server.exception.ThingsboardException;
 import org.thingsboard.server.service.security.model.SecurityUser;
 
+import javax.xml.soap.Text;
+
 /**
  *
  * @author German Lopez
@@ -217,9 +219,17 @@ public class ParcelController extends BaseController{
             TenantId tenantId = getCurrentUser().getTenantId();
             TextPageLink pageLink = createPageLink(limit, textSearch, idOffset, textOffset);
             if (type != null && type.trim().length()>0) {
-                return checkNotNull(parcelService.findParcelsByTenantIdAndType(tenantId, type, pageLink));
+                TextPageData<Parcel> parcels = parcelService.findParcelsByTenantIdAndType(tenantId, type, pageLink);
+                for(Parcel p : parcels.getData()){
+                    p.setLocation(mongoService.getMongodbparcel().findById(p.getId().getId().toString()).getPolygons());
+                }
+                return checkNotNull(parcels);
             } else {
-                return checkNotNull(parcelService.findParcelsByTenantId(tenantId, pageLink));
+                TextPageData<Parcel> parcels = parcelService.findParcelsByTenantId(tenantId, pageLink);
+                for(Parcel p : parcels.getData()){
+                    p.setLocation(mongoService.getMongodbparcel().findById(p.getId().getId().toString()).getPolygons());
+                }
+                return checkNotNull(parcels);
             }
         } catch (Exception e) {
             throw handleException(e);

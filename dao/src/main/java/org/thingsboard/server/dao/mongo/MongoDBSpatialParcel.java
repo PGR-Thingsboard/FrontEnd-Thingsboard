@@ -12,6 +12,8 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.result.DeleteResult;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
+
+import org.bson.Document;
 import org.bson.conversions.Bson;
 import org.thingsboard.server.common.data.SpatialParcel;
 
@@ -42,9 +44,14 @@ public class MongoDBSpatialParcel extends MongoConnectionPOJO<SpatialParcel> imp
     }
 
     @Override
+    //Revisar que poligono del lote este contenido en el poligono de la finca
     public SpatialParcel save(SpatialParcel t){
         try{
-            getCollectionDependClass().insertOne(t);
+            if(this.findById(t.getId()) == null){
+                getCollectionDependClass().insertOne(t);
+            }else{
+                getCollectionDependClass().updateOne(eq("_id",t.getId()),new Document("$set", new Document("polygons", t.getPolygons())));
+            }
             return t;
         }catch(MongoWriteException ex){
             System.out.println("No fue posible agregar el parcel");

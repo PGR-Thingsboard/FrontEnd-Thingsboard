@@ -154,7 +154,7 @@ public class FarmController extends BaseController {
             FarmId farmId = new FarmId(toUUID(strFarmId));
             Farm farm = checkFarmId(farmId);
             farmService.deleteFarm(farmId);
-
+            mongoService.getMongodbFarm().removeById(strFarmId);
             logEntityAction(farmId, farm,
                     farm.getCustomerId(),
                     ActionType.DELETED, null, strFarmId);
@@ -269,9 +269,17 @@ public class FarmController extends BaseController {
             TenantId tenantId = getCurrentUser().getTenantId();
             TextPageLink pageLink = createPageLink(limit, textSearch, idOffset, textOffset);
             if (type != null && type.trim().length()>0) {
-                return checkNotNull(farmService.findFarmsByTenantIdAndType(tenantId, type, pageLink));
+                TextPageData<Farm> farms = farmService.findFarmsByTenantIdAndType(tenantId, type, pageLink);
+                for(Farm f : farms.getData()){
+                    f.setLocation(mongoService.getMongodbFarm().findById(f.getId().getId().toString()).getPolygons());
+                }
+                return checkNotNull(farms);
             } else {
-                return checkNotNull(farmService.findFarmsByTenantId(tenantId, pageLink));
+                TextPageData<Farm> farms = farmService.findFarmsByTenantId(tenantId, pageLink);
+                for(Farm f : farms.getData()){
+                    f.setLocation(mongoService.getMongodbFarm().findById(f.getId().getId().toString()).getPolygons());
+                }
+                return checkNotNull(farms);
             }
         } catch (Exception e) {
             throw handleException(e);
@@ -334,8 +342,14 @@ public class FarmController extends BaseController {
             ListenableFuture<List<Farm>> farms;
             if (customerId == null || customerId.isNullUid()) {
                 farms = farmService.findFarmsByTenantIdAndIdsAsync(tenantId, farmIds);
+                for(Farm f : farms.get()){
+                    f.setLocation(mongoService.getMongodbFarm().findById(f.getId().getId().toString()).getPolygons());
+                }
             } else {
                 farms = farmService.findFarmsByTenantIdCustomerIdAndIdsAsync(tenantId, customerId, farmIds);
+                for(Farm f : farms.get()){
+                    f.setLocation(mongoService.getMongodbFarm().findById(f.getId().getId().toString()).getPolygons());
+                }
             }
             return checkNotNull(farms.get());
         } catch (Exception e) {

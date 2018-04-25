@@ -377,6 +377,7 @@ public abstract class BaseController {
         try {
             validateId(farmId, "Incorrect farmId " + farmId);
             Farm farm = farmService.findFarmById(farmId);
+            farm.setLocation(mongoService.getMongodbFarm().findById(farmId.getId().toString()).getPolygons());
             checkFarm(farm);
             return farm;
         } catch (Exception e) {
@@ -396,6 +397,7 @@ public abstract class BaseController {
         try {
             validateId(parcelId, "Incorrect parcelId " + parcelId);
             Parcel parcel = parcelService.findParcelById(parcelId);
+            parcel.setLocation(mongoService.getMongodbparcel().findById(parcelId.getId().toString()).getPolygons());
             checkParcel(parcel);
             return parcel;
         } catch (Exception e) {

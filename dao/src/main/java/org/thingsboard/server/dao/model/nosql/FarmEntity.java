@@ -28,6 +28,8 @@ import org.thingsboard.server.common.data.id.FarmId;
 import org.thingsboard.server.common.data.id.TenantId;
 import org.thingsboard.server.dao.model.SearchTextEntity;
 import org.thingsboard.server.dao.model.type.JsonCodec;
+import org.thingsboard.server.dao.mongo.MongoDBException;
+import org.thingsboard.server.dao.mongo.MongoDBSpatial;
 
 import static org.thingsboard.server.dao.model.ModelConstants.*;
 
@@ -39,6 +41,8 @@ import static org.thingsboard.server.dao.model.ModelConstants.*;
 @EqualsAndHashCode
 @ToString
 public final class FarmEntity implements SearchTextEntity<Farm> {
+
+
 
     @PartitionKey(value = 0)
     @Column(name = ID_PROPERTY)
@@ -216,6 +220,14 @@ public final class FarmEntity implements SearchTextEntity<Farm> {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        /*MongoDBSpatial mongoService = new MongoDBSpatial();
+        if(farm.getId() == null){
+            System.out.println("Id: "+id.toString());
+            farm.setLocation(mongoService.getMongodbFarm().findById(id.toString()).getPolygons());
+        }else if(id == null){
+            System.out.println("FARM.GETID: "+farm.getId().getId().toString());
+            farm.setLocation(mongoService.getMongodbFarm().findById(farm.getId().getId().toString()).getPolygons());
+        }*/
         return farm;
     }
 

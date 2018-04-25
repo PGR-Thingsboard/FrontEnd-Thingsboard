@@ -61,11 +61,10 @@
                         <label translate>parcel.description</label>
                         <textarea ng-model="parcel.additionalInfo.description" rows="2"></textarea>
                     </md-input-container>
-                    <label ng-repeat-start="label in labels">{{label}}</label>
-                    <input ng-model='longitudes[$index]' type='text' value='' />
-                    <input ng-model='latitudes[$index]' type='text' value='' />
-                    <br ng-repeat-end>
-                    <md-button ng-click="saveEverything()">Ubicar</md-button>
+                    <md-button ng-click="mostrarMapaParcel()">Refresh</md-button>
+                    <div style="min-height: 1000px;">
+                        <div id="mapa"  style="height: 450px; width: 450px;"></div>
+                    </div>
                     <div layout-gt-sm="row">
 
                         <md-input-container class="md-block">

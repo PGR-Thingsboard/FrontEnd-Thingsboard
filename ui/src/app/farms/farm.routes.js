@@ -52,5 +52,4 @@ export default function FarmRoutes($stateProvider, types) {
                 label: '{"icon": "domain", "label": "{{ vm.customerFarmsTitle }}", "translate": "false"}'
             }
         });
-
 }
