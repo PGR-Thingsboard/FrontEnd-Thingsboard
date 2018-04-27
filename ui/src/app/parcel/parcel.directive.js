@@ -115,6 +115,7 @@ export default function ParcelDirective($compile, $templateCache, toast, $transl
                 scope.tempLatitude = -34.397;
                 scope.tempLongitude = 150.644;
                 scope.cropFarm = result;
+                $log.log(scope.cropFarm)
                 if(scope.cropFarm.location.coordinates.length > 0){
                     scope.tempLatitude = scope.cropFarm.location.coordinates[0][1];
                     scope.tempLongitude = scope.cropFarm.location.coordinates[0][0];
@@ -122,8 +123,10 @@ export default function ParcelDirective($compile, $templateCache, toast, $transl
                         drawMapFarm.push({lat: scope.cropFarm.location.coordinates[i][1],lng:  scope.cropFarm.location.coordinates[i][0]});
                     }
                     drawMapFarm.push({lat: scope.cropFarm.location.coordinates[0][1],lng:  scope.cropFarm.location.coordinates[0][0]});
-                    for(var j = 0; j<scope.parcel.location.coordinates.length; j++){
-                        drawMapParcel.push({lat: scope.parcel.location.coordinates[j][1],lng: scope.parcel.location.coordinates[j][0]});
+                    if(scope.parcel.location != null){
+                        for(var j = 0; j<scope.parcel.location.coordinates.length; j++){
+                            drawMapParcel.push({lat: scope.parcel.location.coordinates[j][1],lng: scope.parcel.location.coordinates[j][0]});
+                        }
                     }
                     $log.log(drawMapParcel);
                 }
@@ -131,6 +134,7 @@ export default function ParcelDirective($compile, $templateCache, toast, $transl
                     center: {lat: scope.tempLatitude, lng: scope.tempLongitude},
                     zoom: 8
                 });
+
                 new google.maps.Polyline({
                     path: drawMapFarm,
                     geodesic: true,
@@ -140,15 +144,17 @@ export default function ParcelDirective($compile, $templateCache, toast, $transl
                 }).setMap(map);
                 drawMapFarm = [];
 
-                new google.maps.Polygon({
-                    paths: drawMapParcel,
-                    strokeColor: '#FF0000',
-                    strokeOpacity: 0.8,
-                    strokeWeight: 2,
-                    fillColor: '#FF0000',
-                    fillOpacity: 0.35
-                }).setMap(map);
-                drawMapParcel=[];
+                if(scope.parcel.location != null){
+                    new google.maps.Polygon({
+                        paths: drawMapParcel,
+                        strokeColor: '#FF0000',
+                        strokeOpacity: 0.8,
+                        strokeWeight: 2,
+                        fillColor: '#FF0000',
+                        fillOpacity: 0.35
+                    }).setMap(map);
+                    drawMapParcel=[];
+                }
 
 
                 var isClosed = false;
