@@ -257,6 +257,11 @@
             <groupId>org.hsqldb</groupId>
             <artifactId>hsqldb</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.thingsboard.extensions</groupId>
+            <artifactId>extension-kafka</artifactId>
+            <classifier>extension</classifier>
+        </dependency>
     </dependencies>
 
     <build>
