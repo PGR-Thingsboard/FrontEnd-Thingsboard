@@ -55,10 +55,11 @@
                         </md-input-container>
                         <md-button ng-click="addCoordinate()" background-color="grey">Add Coordinate</md-button>
                         <md-button ng-click="deleteCoordinate()" background-color="grey">Remove Coordinate</md-button><br>
-                        <label ng-repeat-start="label in labels">{{label}}</label>
-                        <input ng-model='longitudes[$index]' type='text' value='' />
-                        <input ng-model='latitudes[$index]' type='text' value='' />
-                        <br ng-repeat-end>
+                        <div style="min-height: 200px;">
+                            <label ng-repeat-start="label in labels">{{label}}</label>
+                            <input ng-model='longitudes[$index]' type='text' value='' />
+                            <input ng-model='latitudes[$index]' type='text' value='' /><br ng-repeat-end>
+                        </div>
                         <md-button ng-click="saveEverything()">Ubicar</md-button>
                         <md-input-container class="md-block">
                             <label translate>farm.location_description</label>
