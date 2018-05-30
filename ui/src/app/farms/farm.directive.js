@@ -52,23 +52,10 @@ export default function FarmDirective($compile, $templateCache, toast, $translat
 
         }
 
-
-        function PublicServices(){
-            this.electricity=false;
-            this.water=false;
-            this.sewerage=false;
-            this.gas=false;
-            this.garbage_collection=false;
-            this.collection=false;
-            this.internet=false;
-            this.telephony=false;
-            this.television=false;
-        }
-
         function FarmDetails(){
             this.destination='';
             this.useDetails='';
-            this.publicServices=new PublicServices();
+            this.publicServices=[];
             this.productionTransport='';
             this.waterPoints=[];
         }
@@ -80,18 +67,13 @@ export default function FarmDirective($compile, $templateCache, toast, $translat
             this.solarIrradiance='';
         }
 
-        function Access(){
-            this.air=false;
-            this.land=false;
-            this.fluvial=false;
-        }
 
 
         function Enviroment(){
             this.climatology= new Climatology();
             this.orography='';
             this.municipalDistance=0.0;
-            this.access=new Access();
+            this.access=[];
             this.highwayState='';
         }
 
@@ -141,6 +123,19 @@ export default function FarmDirective($compile, $templateCache, toast, $translat
         }
 
 
+        scope.exists = function (item, list) {
+            return list.indexOf(item) > -1;
+        };
+
+        scope.toggle = function (item, list) {
+            var idx = list.indexOf(item);
+            if (idx > -1) {
+                list.splice(idx, 1);
+            }
+            else {
+                list.push(item);
+            }
+        };
 
         scope.tempName ="";
         scope.tempBirthday = new Date();
@@ -238,7 +233,7 @@ export default function FarmDirective($compile, $templateCache, toast, $translat
         scope.symbol = ['ha','fg'];
         scope.orography = ['Valley','Mountain',"Plain","Volcano"];
         scope.ways=["air","land","fluvial"];
-        scope.publicServices=["electricity","water","sewerage","gas","garbage_collection","internet","telephony","television"];
+        scope.publicServices=["electricity","water","sewerage","gas","garbage collection","internet","telephony","television"];
         scope.hmaterial=["Block, Brick, Stone, Polished wood","Concrete drained","Prefabricated material","Tapia tread, Bahareque, Adobe", "Crude wood, Board, Plank","Reed (Plant), Mat, Other vegetables"]
         scope.fmaterial=["Marble, Parquetry, Polished or lacquered wood","Tile, Vinyl, Tablet, Brick, Laminate","Carpet","Cement, Gravel","Crude wood, Board, Plank, Other vegetable","Soil, Sand, mud"]
         scope.kitchen=["In a room used only for cooking","In a room also used for sleeping","In a living room with dishwasher","In a living room without dishwasher","In a patio, corridor, trellis or outdoors","They do not prepare food in the house"]
@@ -260,11 +255,6 @@ export default function FarmDirective($compile, $templateCache, toast, $translat
         }
 
         if (scope.farm.enviroment==null){
-            scope.farm.enviroment= new Enviroment();
-        }
-
-
-        if (scope.farm.enviroment == null){
             scope.farm.enviroment= new Enviroment();
         }
 

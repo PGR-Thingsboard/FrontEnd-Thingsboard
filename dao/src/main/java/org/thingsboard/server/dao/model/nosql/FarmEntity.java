@@ -86,6 +86,7 @@ public final class FarmEntity implements SearchTextEntity<Farm> {
 
     @Column(name = FARM_HOME_DETAILS)
     private String homeDetails;
+
     @Column(name = IRRIGATIONS_SYSTEMS)
     private  String irrigationsSystems;
 

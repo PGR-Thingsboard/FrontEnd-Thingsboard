@@ -58,6 +58,7 @@ export default function ParcelDirective($compile, $templateCache, toast, $transl
             this.actions = [];
             this.finish = false;
             this.state = '';
+            this.practices=[];
         }
 
         function Area(){
@@ -75,11 +76,26 @@ export default function ParcelDirective($compile, $templateCache, toast, $transl
 
         //-----------------------------------------------------------------------------------------------------------------
         scope.symbol = ['ha','fg'];
+        scope.practices=["The field should be free of trash, papers,plastics and empty containers","Check there is no risk of water contamination","Be acquainted with the type of pests, diseases and weeds that exist, mainly in the crop area.","Check on possible contamination sources from neighboring plots.","Signpost the place where the crop will be planted with the number of the lot or name of the crop.","With the support of the technician analyze the type of soil and its depth for good growth of the roots.","Consider the slope of the field where the planting will be done.","Avoid soil erosion and compression","Install rubbish bins in strategic zones of the field and throw the rubbish in them once the working day is over","Sow at an adequate distance"];
 
         scope.finishCrop = function(){
             scope.parcel.crop.finish = true;
             scope.parcel.cropsHistory.push(scope.parcel.crop);
             scope.parcel.crop = new Crop();
+        };
+
+        scope.exists = function (item, list) {
+            return list.indexOf(item) > -1;
+        };
+
+        scope.toggle = function (item, list) {
+            var idx = list.indexOf(item);
+            if (idx > -1) {
+                list.splice(idx, 1);
+            }
+            else {
+                list.push(item);
+            }
         };
 
         scope.action = '';
