@@ -76,11 +76,33 @@ export default function ParcelDirective($compile, $templateCache, toast, $transl
         //-----------------------------------------------------------------------------------------------------------------
         scope.symbol = ['ha','fg'];
 
+        scope.practices=["The field should be free of trash, papers, plastics and empty containers.","Check there is no risk of water contamination","Be acquainted with the type of pests, diseases and weeds that exist, mainly in the crop area.","Check on possible contamination sources from neighboring plots.","Signpost the place where the crop will be planted with the number of the lot or name of the crop","With the support of the technician analyze the type of soil and its depth for good growth of the roots.","Consider the slope of the field where the planting will be done.","Avoid soil erosion and compression","Practice crop rotation","Density: sow at an adequate distance"];
+
         scope.finishCrop = function(){
             scope.parcel.crop.finish = true;
             scope.parcel.cropsHistory.push(scope.parcel.crop);
             scope.parcel.crop = new Crop();
         };
+
+        scope.startDate = new Date();
+        scope.finishDate = new Date();
+
+        scope.$watch('slider', function (value) {
+            if (value != null) {
+                $log.log(value);
+                var updatedDate = scope.startDate;
+                scope.selectedDate = new Date(updatedDate.setTime(value));
+            }
+        });
+
+        scope.maxDate = scope.finishDate.getTime();
+        scope.minDate = scope.startDate.getTime();
+        scope.updateSelectedDate = function(){
+            scope.selectedDate = scope.startDate;
+            scope.maxDate = scope.finishDate.getTime();
+            scope.minDate = scope.startDate.getTime();
+        };
+
 
         scope.action = '';
         scope.addActionCrop = function(){
@@ -115,7 +137,7 @@ export default function ParcelDirective($compile, $templateCache, toast, $transl
                 scope.tempLatitude = -34.397;
                 scope.tempLongitude = 150.644;
                 scope.cropFarm = result;
-                $log.log(scope.cropFarm)
+                $log.log(scope.cropFarm);
                 if(scope.cropFarm.location.coordinates.length > 0){
                     scope.tempLatitude = scope.cropFarm.location.coordinates[0][1];
                     scope.tempLongitude = scope.cropFarm.location.coordinates[0][0];

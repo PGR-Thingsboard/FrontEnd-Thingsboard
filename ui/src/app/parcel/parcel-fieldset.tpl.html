@@ -149,8 +149,11 @@
                     </md-tab>
                     <md-tab label="{{ 'Good Practices' | translate }}">
                         <md-content class="md-padding">
-                            <h1 class="md-display-2">Tab One</h1>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla venenatis ante augue. Phasellus volutpat neque ac dui mattis vulputate. Etiam consequat aliquam cursus. In sodales pretium ultrices. Maecenas lectus est, sollicitudin consectetur felis nec, feugiat ultricies mi.</p>
+                            <div flex="50" ng-repeat="prac in practices">
+                                <md-checkbox ng-model="prac">
+                                    {{prac}}
+                                </md-checkbox>
+                            </div>
                         </md-content>
                     </md-tab>
                     <md-tab label="{{ 'Actions' | translate }}">
@@ -168,6 +171,29 @@
                         </md-content>
                     </md-tab>
                 </md-tabs>
+            </md-tab>
+            <md-tab label="{{ 'Parcel Tags' | translate }}">
+                <md-content class="md-padding">
+                    <div style="min-height: 1000px;">
+                        <div layout-gt-xs="row">
+                            <div flex-gt-xs>
+                                <label>Start Date</label>
+                                <md-datepicker ng-model="startDate" md-current-view="year" md-placeholder="Enter date"></md-datepicker>
+                            </div>
+                            <div flex-gt-xs>
+                                <label>Finish Date</label>
+                                <md-datepicker ng-model="finishDate" md-current-view="year" md-placeholder="Enter date"></md-datepicker>
+                            </div>
+                        </div>
+                        <md-button ng-click="updateSelectedDate()">Update Dates</md-button>
+                        <md-slider-container style="display:inline-block;width:90%;float: left;">
+                            <md-slider ng-model="slider" min="{{minDate}}}" max="{{maxDate}}}" aria-label="nav Date" flex></md-slider>
+                        </md-slider-container>
+                        <md-input-container>
+                            <input flex type="text" value="{{selectedDate |date:'dd/MM/yyyy'}}" aria-label="green" aria-controls="green-slider" style="width: 300px;">
+                        </md-input-container>
+                    </div>
+                </md-content>
             </md-tab>
         </md-tabs>
     </fieldset>
