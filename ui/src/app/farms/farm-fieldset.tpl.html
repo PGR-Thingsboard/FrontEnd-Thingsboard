@@ -112,7 +112,7 @@
                     <label translate>farm.public_services</label>
                     <md-input-container style="margin-right: 10px;"  >
                         <div flex="50" ng-repeat="serv in publicServices">
-                            <md-checkbox ng-model="farm.farmDetails.publicServices[serv]">
+                            <md-checkbox ng-click= "toggle(serv, farm.farmDetails.publicServices)" ng-checked="exists(serv, farm.farmDetails.publicServices)" >
                                 {{serv}}
                             </md-checkbox>
                         </div>
@@ -325,12 +325,18 @@
                             <label translate>Municipal distance in km</label>
                             <input name="Area" ng-model="farm.enviroment.municipalDistance" ng-pattern="/^[0-9]+\.?[0-9]*$/" >
                         </md-input-container>
+
+
+
+
                         <label translate>farm.accessWay</label>
                         <md-input-container style="margin-right: 10px;"  >
                             <div flex="50" ng-repeat="way in ways">
-                                <md-checkbox ng-model="farm.enviroment.access[way]">
+
+                                <md-checkbox ng-checked="exists(way, farm.enviroment.access)" ng-click="toggle(way, farm.enviroment.access)" >
                                     {{way}}
                                 </md-checkbox>
+
                             </div>
                         </md-input-container>
                         <br>

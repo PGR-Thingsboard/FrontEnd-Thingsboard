@@ -14,8 +14,9 @@ public class Crop {
     private List<Action> actions;
     private Boolean finish;
     private String state;
+    private List<String> practices;
 
-    public Crop(String name, String why, String cause, Date startCrop, String initialConditions, List<Action> actions,Boolean finish,String state) {
+    public Crop(String name, String why, String cause, Date startCrop, String initialConditions, List<Action> actions,Boolean finish,String state,List<String> practices) {
         this.name = name;
         this.why = why;
         this.cause = cause;
@@ -25,6 +26,7 @@ public class Crop {
         this.actions = actions;
         this.setFinish(finish);
         this.setState(state);
+        this.setPractices(practices);
     }
 
     public Crop(){}
@@ -106,5 +108,13 @@ public class Crop {
 
     public void setState(String state) {
         this.state = state;
+    }
+
+    public List<String> getPractices() {
+        return practices;
+    }
+
+    public void setPractices(List<String> practices) {
+        this.practices = practices;
     }
 }

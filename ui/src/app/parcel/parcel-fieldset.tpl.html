@@ -147,13 +147,20 @@
                             </div>
                         </md-content>
                     </md-tab>
-                    <md-tab label="{{ 'Good Practices' | translate }}">
+                    <md-tab label="{{ 'Good Practices' | translate }}" ng-show="someCrop()">
                         <md-content class="md-padding">
                             <div flex="50" ng-repeat="prac in practices">
                                 <md-checkbox ng-model="prac">
                                     {{prac}}
                                 </md-checkbox>
                             </div>
+                            <md-input-container style="margin-right: 10px;"  >
+                                <div flex="50" ng-repeat="prac in practices">
+                                    <md-checkbox ng-checked="exists(prac, parcel.crop.practices)" ng-click= "toggle(prac, parcel.crop.practices)" >
+                                        {{prac}}
+                                    </md-checkbox>
+                                </div>
+                            </md-input-container>
                         </md-content>
                     </md-tab>
                     <md-tab label="{{ 'Actions' | translate }}">
